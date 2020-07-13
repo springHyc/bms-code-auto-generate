@@ -1,7 +1,7 @@
 import React from 'react';
 import { HomeOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
-import TabDemo from '../components/demo/tab';
+import TabDemo from './components/demo/tab';
 /**
  * 整个路由走的是hash路由。
  * path:导航路径，必填

@@ -6,8 +6,8 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Route, Redirect, Link } from 'react-router-dom';
-import MENUS from './configs/menus.js';
-import './App.css';
+import MENUS from './menus.js';
+import './App.less';
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -45,9 +45,9 @@ export default class Layouts extends Component {
 
   onOpenChange = (openKeys) => {
     const latestOpenKey = openKeys.find(
-      (key) => this.state.openKeys.indexOf(key) === -1
+      (key) => this.state.openKeys.indexOf(key) == -1
     );
-    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) == -1) {
       this.setState({ openKeys });
     } else {
       this.setState({
