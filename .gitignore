@@ -1,0 +1,13 @@
+.idea/
+node_modules/
+npm-debug.log
+.DS_Store
+build.json
+build/
+deploy/
+package-lock.json
+log/
+docs/_book/
+docs/readme.html
+yarn.lock
+package-lock.json
