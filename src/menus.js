@@ -1,13 +1,17 @@
 import React from "react";
 import {
-  HomeOutlined,
-  QuestionCircleOutlined,
   EditOutlined,
   SnippetsOutlined,
   TableOutlined,
+  BlockOutlined,
+  BulbOutlined,
 } from "@ant-design/icons";
 
 import TabDemo from "./components/demo/tab";
+import Customize from "./components/customize";
+import ReactBeautifulDndTest from "./components/test/reactBeautifulDndTest/";
+import UsegestureTest from "./components/test/usegestureTest";
+
 /**
  * 整个路由走的是hash路由。
  * path:导航路径，必填
@@ -35,7 +39,19 @@ const MENUS = [
     path: "/customize",
     name: "自定义生成页面",
     icon: <EditOutlined />,
-    component: TabDemo,
+    component: Customize,
+  },
+  {
+    path: "/test1",
+    name: "react-beautiful-dnd实验",
+    icon: <BlockOutlined />,
+    component: ReactBeautifulDndTest,
+  },
+  {
+    path: "/test2",
+    name: "use-gesture实验",
+    icon: <BulbOutlined />,
+    component: UsegestureTest,
   },
 ];
 

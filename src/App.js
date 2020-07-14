@@ -22,7 +22,7 @@ export default class Layouts extends Component {
       ..._state,
     };
     this.defaultSelectedKeys =
-      window.location.hash.split("#")[1] == "/"
+      window.location.hash.split("#")[1] === "/"
         ? [MENUS[0].path]
         : [window.location.hash.split("#")[1]];
   }
@@ -41,9 +41,9 @@ export default class Layouts extends Component {
 
   onOpenChange = (openKeys) => {
     const latestOpenKey = openKeys.find(
-      (key) => this.state.openKeys.indexOf(key) == -1
+      (key) => this.state.openKeys.indexOf(key) === -1
     );
-    if (this.rootSubmenuKeys.indexOf(latestOpenKey) == -1) {
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       this.setState({ openKeys });
     } else {
       this.setState({
@@ -55,15 +55,16 @@ export default class Layouts extends Component {
     let breadcrumbs = [];
     const hashStr = window.location.hash.split("#/")[1];
     const targetRoute = MENUS.filter((menu) => {
-      if (menu.path.split("/")[1] == hashStr.split("/")[0]) {
+      if (menu.path.split("/")[1] === hashStr.split("/")[0]) {
         return menu;
       }
+      return [];
     })[0];
     if (!targetRoute) return breadcrumbs;
     breadcrumbs.push({ path: targetRoute.path, name: targetRoute.name });
     if (targetRoute.subset && targetRoute.subset.length > 0) {
       targetRoute.subset.forEach((item) => {
-        if (item.path == "/" + hashStr) {
+        if (item.path === "/" + hashStr) {
           breadcrumbs.push({ path: item.path, name: item.name });
           return breadcrumbs;
         }
@@ -211,7 +212,7 @@ export default class Layouts extends Component {
               render={() => (
                 <Redirect
                   to={
-                    window.location.hash.split("#")[1] == "/"
+                    window.location.hash.split("#")[1] === "/"
                       ? this.state.current[0].path
                       : window.location.hash.split("#")[1]
                   }
