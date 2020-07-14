@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
-import {
-  HomeOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { Route, Redirect, Link } from 'react-router-dom';
-import MENUS from './menus.js';
-import './App.less';
+import React, { Component } from "react";
+import { HomeOutlined } from "@ant-design/icons";
+import { Layout, Menu, Breadcrumb } from "antd";
+import { Route, Redirect, Link } from "react-router-dom";
+import MENUS from "./menus.js";
+import "./App.less";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const avater =
-  '//img.shurongdai.cn/group1/M00/00/0C/wKgX2FrNcZKAa92mAAAI-XyxqgY410.jpg';
+  "//img.shurongdai.cn/group1/M00/00/0C/wKgX2FrNcZKAa92mAAAI-XyxqgY410.jpg";
 export default class Layouts extends Component {
   constructor(props) {
     super(props);
@@ -26,17 +22,17 @@ export default class Layouts extends Component {
       ..._state,
     };
     this.defaultSelectedKeys =
-      window.location.hash.split('#')[1] == '/'
+      window.location.hash.split("#")[1] == "/"
         ? [MENUS[0].path]
-        : [window.location.hash.split('#')[1]];
+        : [window.location.hash.split("#")[1]];
   }
   rootSubmenuKeys = MENUS.map((menu) => menu.path);
 
   getDefaultKeys = () => {
     this.defaultOpenKeys = [];
-    const hashStr = window.location.hash.split('#')[1];
-    if (hashStr.split('/').length > 2) {
-      const openKeys = [`/${hashStr.split('/')[1]}`];
+    const hashStr = window.location.hash.split("#")[1];
+    if (hashStr.split("/").length > 2) {
+      const openKeys = [`/${hashStr.split("/")[1]}`];
       this.defaultOpenKeys = openKeys;
       return { openKeys };
     }
@@ -57,9 +53,9 @@ export default class Layouts extends Component {
   };
   getBreadcrumb = () => {
     let breadcrumbs = [];
-    const hashStr = window.location.hash.split('#/')[1];
+    const hashStr = window.location.hash.split("#/")[1];
     const targetRoute = MENUS.filter((menu) => {
-      if (menu.path.split('/')[1] == hashStr.split('/')[0]) {
+      if (menu.path.split("/")[1] == hashStr.split("/")[0]) {
         return menu;
       }
     })[0];
@@ -67,7 +63,7 @@ export default class Layouts extends Component {
     breadcrumbs.push({ path: targetRoute.path, name: targetRoute.name });
     if (targetRoute.subset && targetRoute.subset.length > 0) {
       targetRoute.subset.forEach((item) => {
-        if (item.path == '/' + hashStr) {
+        if (item.path == "/" + hashStr) {
           breadcrumbs.push({ path: item.path, name: item.name });
           return breadcrumbs;
         }
@@ -84,14 +80,14 @@ export default class Layouts extends Component {
 
   renderMenus() {
     return (
-      <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-        <div className='br-logo'>
+      //   <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+      <>
+        <div className="br-logo">
           <HomeOutlined style={{ fontSize: 20 }} />
-          {/* <span>样板间</span> */}
         </div>
         <Menu
-          theme='dark'
-          mode='inline'
+          theme="dark"
+          mode="horizontal"
           defaultSelectedKeys={this.defaultSelectedKeys}
           defaultOpenKeys={this.defaultOpenKeys}
           openKeys={this.state.openKeys}
@@ -130,31 +126,38 @@ export default class Layouts extends Component {
             );
           })}
         </Menu>
-      </Sider>
+      </>
     );
   }
 
   renderHeader() {
     return (
-      <Header>
-        {this.state.collapsed && (
-          <MenuUnfoldOutlined className='br-trigger' onClick={this.toggle} />
+      <Header className="hyc-header">
+        {/* {this.state.collapsed && (
+          <MenuUnfoldOutlined className="br-trigger" onClick={this.toggle} />
         )}
         {!this.state.collapsed && (
-          <MenuFoldOutlined className='br-trigger' onClick={this.toggle} />
-        )}
+          <MenuFoldOutlined className="br-trigger" onClick={this.toggle} />
+        )} */}
 
-        <Menu mode='horizontal' onClick={this.menuClick}>
+        {this.renderMenus()}
+
+        <Menu
+          mode="horizontal"
+          theme="dark"
+          onClick={this.menuClick}
+          style={{ marginLeft: "auto" }}
+        >
           <SubMenu
             title={
-              <span className='br-avatar'>
-                <img src={avater} alt='头像' />
+              <span className="br-avatar">
+                <img src={avater} alt="头像" />
                 yignchun.he
               </span>
             }
           >
             <MenuItemGroup>
-              <Menu.Item key='logout'>
+              <Menu.Item key="logout">
                 <span>退出登录</span>
               </Menu.Item>
             </MenuItemGroup>
@@ -165,18 +168,23 @@ export default class Layouts extends Component {
   }
   render() {
     return (
-      <Layout className='br-layout'>
-        {this.renderMenus()}
-        <Layout>
-          {this.renderHeader()}
-          <Breadcrumb>
+      <Layout className="hyc-layout">
+        {this.renderHeader()}
+        <Content
+          className="site-layout"
+          style={{ padding: "0 50px", marginTop: 64 }}
+        >
+          <Breadcrumb style={{ margin: "16px 0" }}>
             {this.getBreadcrumb().map((item, index) => (
               <Breadcrumb.Item key={index}>
                 <Link to={item.path}>{item.name}</Link>
               </Breadcrumb.Item>
             ))}
           </Breadcrumb>
-          <Content>
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: "calc(100vh - 188px)" }}
+          >
             {MENUS.map((item) => {
               if (item.subset && item.subset.length > 0) {
                 return item.subset.map((sub) => (
@@ -199,23 +207,24 @@ export default class Layouts extends Component {
               }
             })}
             <Route
-              path='/'
+              path="/"
               render={() => (
                 <Redirect
                   to={
-                    window.location.hash.split('#')[1] == '/'
+                    window.location.hash.split("#")[1] == "/"
                       ? this.state.current[0].path
-                      : window.location.hash.split('#')[1]
+                      : window.location.hash.split("#")[1]
                   }
                 />
               )}
             />
-          </Content>
-          <Footer>
-            前端组 版权所有 | 采用默认主题的后台管理系统样板间 | 基于 React+Antd
-            构建©2020 | 托管于GitLab
-          </Footer>
-        </Layout>
+          </div>
+        </Content>
+        <Footer>
+          贺贺 版权所有 | 采用默认主题的后台管理系统页面自动生成工具 | 基于
+          React+Antd 构建©2020 | 托管于GitHub
+        </Footer>
+        {/* </Layout> */}
       </Layout>
     );
   }

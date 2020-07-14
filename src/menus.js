@@ -1,7 +1,13 @@
-import React from 'react';
-import { HomeOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import React from "react";
+import {
+  HomeOutlined,
+  QuestionCircleOutlined,
+  EditOutlined,
+  SnippetsOutlined,
+  TableOutlined,
+} from "@ant-design/icons";
 
-import TabDemo from './components/demo/tab';
+import TabDemo from "./components/demo/tab";
 /**
  * 整个路由走的是hash路由。
  * path:导航路径，必填
@@ -13,23 +19,23 @@ import TabDemo from './components/demo/tab';
  */
 const MENUS = [
   {
-    path: '/demo1',
-    name: 'DEMO1',
-    icon: <QuestionCircleOutlined />,
-    component: TabDemo,
-  },
-  {
-    path: '/demo2',
-    name: 'DEMO2',
-    icon: <QuestionCircleOutlined />,
+    path: "/default",
+    name: "生成默认页面",
+    icon: <SnippetsOutlined />,
     subset: [
       {
-        path: '/demo2/tab',
-        name: 'Tab',
-        icon: <HomeOutlined />,
+        path: "/default/normal-page",
+        name: "普通列表页",
+        icon: <TableOutlined />,
         component: TabDemo,
       },
     ],
+  },
+  {
+    path: "/customize",
+    name: "自定义生成页面",
+    icon: <EditOutlined />,
+    component: TabDemo,
   },
 ];
 
