@@ -1,0 +1,17 @@
+{
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "printWidth": 140,
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "overrides": [
+        {
+            "files": ".prettierrc",
+            "options": { "parser": "json" }
+        },
+        {
+            "files": ["readme.md"],
+            "options": { "tabWidth": 2, "parser": "markdown" }
+        }
+    ]
+}
