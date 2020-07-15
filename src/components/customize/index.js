@@ -1,43 +1,61 @@
-import React from "react";
-import Sider from "antd/lib/layout/Sider";
-import { Menu } from "antd";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
+import React from 'react';
+import Sider from 'antd/lib/layout/Sider';
+import { Menu } from 'antd';
+import OPTIONAL_CONPONENT_MENUS_DATA from './optional-component-menus';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import './index.less';
 
-const { SubMenu } = Menu;
-export default function Customize() {
-  return (
-    <div>
-      <Sider className="site-layout-background" width={200}>
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          style={{ height: "100%" }}
-        >
-          <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
-            <Menu.Item key="1">option1</Menu.Item>
-            <Menu.Item key="2">option2</Menu.Item>
-            <Menu.Item key="3">option3</Menu.Item>
-            <Menu.Item key="4">option4</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
-            <Menu.Item key="5">option5</Menu.Item>
-            <Menu.Item key="6">option6</Menu.Item>
-            <Menu.Item key="7">option7</Menu.Item>
-            <Menu.Item key="8">option8</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
-            <Menu.Item key="9">option9</Menu.Item>
-            <Menu.Item key="10">option10</Menu.Item>
-            <Menu.Item key="11">option11</Menu.Item>
-            <Menu.Item key="12">option12</Menu.Item>
-          </SubMenu>
-        </Menu>
-      </Sider>
-    </div>
-  );
+const { ItemGroup, Divider } = Menu;
+export default class Customize extends React.Component {
+    // 左侧可选择区域
+    renderSider() {
+        return (
+            <Droppable droppableId='menus' type='TASK'>
+                {(provided, snapshot) => (
+                    <Sider className='site-layout-background' width={200} ref={provided.innerRef}>
+                        <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['1-1']} style={{ height: '100%' }}>
+                            {OPTIONAL_CONPONENT_MENUS_DATA.map((group) => {
+                                return (
+                                    <ItemGroup title={group.title} key={group.key}>
+                                        <Divider />
+                                        {group.menus.map((menu) => {
+                                            return (
+                                                <Draggable draggableId={menu.key}>
+                                                    {(provided, snapshot) => (
+                                                        <Menu.Item ref={provided.innerRef} key={menu.key}>
+                                                            {menu.name}
+                                                        </Menu.Item>
+                                                    )}
+                                                </Draggable>
+                                            );
+                                        })}
+                                    </ItemGroup>
+                                );
+                            })}
+                        </Menu>
+                    </Sider>
+                )}
+            </Droppable>
+        );
+    }
+    render() {
+        return (
+            <DragDropContext onDragEnd={this.onDragEnd}>
+                <div className='hyc-wrapper'>
+                    {this.renderSider()}
+                    <div className='customize-wrapper'>
+                        <div className='customize-operate-wrapper'>
+                            <span>ccc</span>
+                        </div>
+                        <div className='customize-search-wrapper'>
+                            <span>ccc</span>
+                        </div>
+                        <div className='customize-table-wrapper'>
+                            <span>ccc</span>
+                        </div>
+                    </div>
+                </div>
+            </DragDropContext>
+        );
+    }
 }
