@@ -46,7 +46,6 @@ export default class Layouts extends Component {
         }
     };
     getBreadcrumb = () => {
-        debugger;
         let breadcrumbs = [];
         const hashStr = window.location.hash.split('#/')[1];
         const targetRoute = MENUS.filter((menu) => {
@@ -152,15 +151,15 @@ export default class Layouts extends Component {
         return (
             <Layout className='hyc-layout'>
                 {this.renderHeader()}
-                <Content className='site-layout' style={{ padding: '0 50px', marginTop: 64 }}>
-                    <Breadcrumb style={{ margin: '16px 0' }}>
+                <Content className='site-layout' style={{ marginTop: 64 }}>
+                    <Breadcrumb style={{ margin: '16px ' }}>
                         {this.getBreadcrumb().map((item, index) => (
                             <Breadcrumb.Item key={index}>
                                 <Link to={item.path}>{item.name}</Link>
                             </Breadcrumb.Item>
                         ))}
                     </Breadcrumb>
-                    <div className='site-layout-background' style={{ padding: 24, minHeight: 'calc(100vh - 188px)' }}>
+                    <div className='site-layout-background' style={{ minHeight: 'calc(100vh - 188px)' }}>
                         {MENUS.map((item) => {
                             if (item.subset && item.subset.length > 0) {
                                 return item.subset.map((sub) => (
