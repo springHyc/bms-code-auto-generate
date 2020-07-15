@@ -5,12 +5,14 @@ import {
   TableOutlined,
   BlockOutlined,
   BulbOutlined,
+  LayoutOutlined,
 } from "@ant-design/icons";
 
 import TabDemo from "./components/demo/tab";
 import Customize from "./components/customize";
-import ReactBeautifulDndTest from "./components/test/reactBeautifulDndTest/";
+import ReactBeautifulDndTest from "./components/test/react-beautiful-dnd-test";
 import UsegestureTest from "./components/test/usegestureTest";
+import ReactGridLayoutTest from "./components/test/react-grid-layout-test/";
 
 /**
  * 整个路由走的是hash路由。
@@ -52,6 +54,12 @@ const MENUS = [
     name: "use-gesture实验",
     icon: <BulbOutlined />,
     component: UsegestureTest,
+  },
+  {
+    path: "/test3",
+    name: "React-Grid-Layout实验", //https://github.com/STRML/react-grid-layout
+    icon: <LayoutOutlined />,
+    component: ReactGridLayoutTest,
   },
 ];
 

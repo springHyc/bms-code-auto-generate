@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import styled from "styled-components";
 
 import initialData from "./todoData";
 import Column from "./column";
-
-const Container = styled.div`
-  display: flex;
-`;
 
 export default class ReactBeautifulDndTest extends Component {
   state = initialData;
@@ -80,7 +75,7 @@ export default class ReactBeautifulDndTest extends Component {
     console.log(this.state);
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Container>
+        <div style={{ display: "flex" }}>
           {this.state.columnOrder.map((columnId) => {
             const column = this.state.columns[columnId];
             const tasks = column.taskIds.map(
@@ -89,7 +84,7 @@ export default class ReactBeautifulDndTest extends Component {
 
             return <Column key={column.id} column={column} tasks={tasks} />;
           })}
-        </Container>
+        </div>
       </DragDropContext>
     );
   }

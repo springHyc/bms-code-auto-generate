@@ -36,7 +36,7 @@ export default class Layouts extends Component {
       this.defaultOpenKeys = openKeys;
       return { openKeys };
     }
-    return {};
+    return { openKeys: [] };
   };
 
   onOpenChange = (openKeys) => {
@@ -81,7 +81,6 @@ export default class Layouts extends Component {
 
   renderMenus() {
     return (
-      //   <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
       <>
         <div className="br-logo">
           <HomeOutlined style={{ fontSize: 20 }} />
@@ -134,13 +133,6 @@ export default class Layouts extends Component {
   renderHeader() {
     return (
       <Header className="hyc-header">
-        {/* {this.state.collapsed && (
-          <MenuUnfoldOutlined className="br-trigger" onClick={this.toggle} />
-        )}
-        {!this.state.collapsed && (
-          <MenuFoldOutlined className="br-trigger" onClick={this.toggle} />
-        )} */}
-
         {this.renderMenus()}
 
         <Menu
