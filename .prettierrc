@@ -10,7 +10,7 @@
             "options": { "parser": "json" }
         },
         {
-            "files": ["readme.md"],
+            "files": ["README.md", "README 2.md"],
             "options": { "tabWidth": 2, "parser": "markdown" }
         }
     ]

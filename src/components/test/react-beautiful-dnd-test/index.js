@@ -9,7 +9,6 @@ export default class ReactBeautifulDndTest extends Component {
 
     onDragEnd = (result) => {
         const { destination, source, draggableId } = result;
-        debugger;
         if (!destination) {
             return;
         }
