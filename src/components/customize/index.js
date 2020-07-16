@@ -190,14 +190,14 @@ export default class Customize extends React.Component {
                                 return (
                                     <Draggable draggableId={task.key} key={task.key} index={index}>
                                         {(provided, snapshot) => (
-                                            <Container
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
+                                            <Item
                                                 ref={provided.innerRef}
+                                                {...provided.draggableProps}
                                                 isDragging={snapshot.isDragging}
+                                                style={provided.draggableProps.style}
                                             >
                                                 {task.component}
-                                            </Container>
+                                            </Item>
                                         )}
                                     </Draggable>
                                 );
@@ -212,9 +212,9 @@ export default class Customize extends React.Component {
     renderOperateArea() {
         const area = this.state.areas['area-operate'];
         return (
-            <div>
-                <span>{area.title}</span>
-                <Droppable droppableId={area.id} type={area.id}>
+            <Droppable droppableId={area.id} type={area.id}>
+                <div>
+                    <span>{area.title}</span>
                     {(provided, snapshot) => (
                         <div ref={provided.innerRef}>
                             {area.taskIds.map((taskId, index) => {
@@ -236,8 +236,8 @@ export default class Customize extends React.Component {
                             })}
                         </div>
                     )}
-                </Droppable>
-            </div>
+                </div>
+            </Droppable>
         );
     }
 
