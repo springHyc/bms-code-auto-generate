@@ -1,12 +1,12 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
 import { OPTIONAL_CONPONENT_MENUS_DATA, INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
 import styled from 'styled-components';
 import _ from 'lodash';
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 const { ItemGroup, Divider } = Menu;
 
@@ -55,7 +55,7 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
     const destClone = Array.from(destination);
     const item = sourceClone[droppableSource.index];
 
-    destClone.splice(droppableDestination.index, 0, { ...item, id: uuid(), key: uuid() });
+    destClone.splice(droppableDestination.index, 0, { ...item, id: uuidv4(), key: uuidv4() });
     return destClone;
 };
 
@@ -76,10 +76,10 @@ export default class Customize extends React.Component {
     state = INIT_DATA;
     onDragEnd = (result) => {
         const { source, destination } = result;
-        debugger;
 
         // dropped outside the list
         if (!destination) {
+            message.warning('目标区域没有找到');
             return;
         }
 
@@ -139,11 +139,11 @@ export default class Customize extends React.Component {
                     <Sider className='site-layout-background' width={200}>
                         {OPTIONAL_CONPONENT_MENUS_DATA.map((group) => {
                             return (
-                                <div ref={provided.innerRef}>
+                                <div ref={provided.innerRef} key={group.key}>
                                     <h3>{group.title}</h3>
                                     {group.menus.map((menu, index) => {
                                         return (
-                                            <Draggable key={menu.key} draggableId={menu.key} index={menu.key}>
+                                            <Draggable key={menu.key} draggableId={menu.key} index={index}>
                                                 {(provided, snapshot) => (
                                                     <React.Fragment>
                                                         {/* <Container
@@ -180,7 +180,7 @@ export default class Customize extends React.Component {
 
     renderArea(area) {
         return (
-            <Droppable droppableId={area.id} type={area.id}>
+            <Droppable droppableId={area.id} type={area.id} key={area.id}>
                 {(provided, snapshot) => (
                     <div ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
                         <span>{area.title}</span>
@@ -211,16 +211,17 @@ export default class Customize extends React.Component {
 
     renderOperateArea() {
         const area = this.state.areas['area-operate'];
+        console.log('area=', area);
         return (
-            <Droppable droppableId={area.id} type={area.id}>
-                <div>
-                    <span>{area.title}</span>
-                    {(provided, snapshot) => (
-                        <div ref={provided.innerRef}>
+            <Droppable droppableId={area.id} type={area.id} isDropDisabled={true}>
+                {(provided, snapshot) => (
+                    <div ref={provided.innerRef}>
+                        <span>{area.title}</span>
+                        <div>
                             {area.taskIds.map((taskId, index) => {
                                 const task = this.getTask(taskId);
                                 return (
-                                    <Draggable draggableId={task.key} index={index}>
+                                    <Draggable draggableId={task.key} key={index} index={index}>
                                         {(provided, snapshot) => (
                                             <Container
                                                 {...provided.draggableProps}
@@ -233,10 +234,10 @@ export default class Customize extends React.Component {
                                         )}
                                     </Draggable>
                                 );
-                            })}
+                            }) || <span>no data</span>}
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </Droppable>
         );
     }
@@ -254,14 +255,14 @@ export default class Customize extends React.Component {
     }
     render() {
         return (
-            <DragDropContext onDragEnd={this.onDragEnd}>
-                <div className='hyc-wrapper'>
+            <div className='hyc-wrapper'>
+                <DragDropContext onDragEnd={this.onDragEnd}>
                     {this.renderSider()}
                     <div className='customize-wrapper'>
                         <div className='customize-operate-wrapper'>{this.renderOperateArea()}</div>
                     </div>
-                </div>
-            </DragDropContext>
+                </DragDropContext>
+            </div>
         );
     }
 }

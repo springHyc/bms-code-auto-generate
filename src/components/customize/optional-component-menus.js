@@ -4,35 +4,43 @@ import { Button, Input } from 'antd';
 const OPTIONAL_CONPONENT_MENUS_DATA = [
     {
         title: '通用',
+        id: 1,
         key: '1',
-        menus: [{ key: '1-1', name: 'Button 按钮', component: <Button>新增</Button> }]
+        menus: [{ id: 11, key: '1-1', name: 'Button 按钮', component: <Button>新增</Button> }]
     },
     {
         title: '数据录入',
+        id: 2,
         key: '2',
         menus: [
-            { key: '2-1', name: 'Input 输入框', component: <Input placeholder='请输入' /> },
+            { id: 21, key: '2-1', name: 'Input 输入框', component: <Input placeholder='请输入' /> },
             {
+                id: 22,
                 key: '2-2',
                 name: 'Checkbox 多选框'
             },
             {
+                id: 23,
                 key: '2-3',
                 name: 'DatePicker 日期选择框'
             },
             {
+                id: 24,
                 key: '2-4',
                 name: 'InputNumber 数字输入框'
             },
             {
+                id: 25,
                 key: '2-5',
                 name: 'Radio 单选框'
             },
             {
+                id: 26,
                 key: '2-6',
                 name: 'Switch 开关'
             },
             {
+                id: 27,
                 key: '2-7',
                 name: 'Select 选择器'
             }
@@ -40,10 +48,11 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
     },
     {
         title: '数据展示',
+        id: 3,
         key: '3',
         menus: [
-            { key: '3-1', name: 'Tabs 标签页' },
-            { key: '3-2', name: 'Table 表格' }
+            { id: 31, key: '3-1', name: 'Tabs 标签页' },
+            { id: 32, key: '3-2', name: 'Table 表格' }
         ]
     }
 ];
