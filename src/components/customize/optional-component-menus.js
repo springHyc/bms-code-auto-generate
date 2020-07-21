@@ -1,55 +1,67 @@
 import React from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, DatePicker, InputNumber, Radio, Switch } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
+
+const { RangePicker } = DatePicker;
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
     {
         title: '通用',
         id: 1,
-        id2: uuidv4(),
         key: '1',
-        menus: [{ id: 11, id2: uuidv4(), key: '1-1', name: 'Button 按钮', component: <Button>新增</Button> }]
+        menus: [{ index: 0, id: uuidv4(), key: '1-1', name: 'Button 按钮', component: <Button>新增</Button> }]
     },
     {
         title: '数据录入',
         id: 2,
-        id2: uuidv4(),
         key: '2',
         menus: [
-            { id: 21, id2: uuidv4(), key: '2-1', name: 'Input 输入框', component: <Input placeholder='请输入' /> },
+            { index: 1, id: uuidv4(), key: '2-1', name: 'Input 输入框', component: <Input placeholder='请输入' /> },
             {
-                id: 22,
-                id2: uuidv4(),
+                index: 2,
+                id: uuidv4(),
                 key: '2-2',
-                name: 'Checkbox 多选框'
+                name: 'Checkbox 多选框',
+                component: <span>this is Checkbox</span>
             },
             {
-                id: 23,
-                id2: uuidv4(),
+                index: 3,
+                id: uuidv4(),
                 key: '2-3',
-                name: 'DatePicker 日期选择框'
+                name: 'DatePicker 日期选择框',
+                component: <RangePicker />
             },
             {
-                id: 24,
-                id2: uuidv4(),
+                index: 4,
+                id: uuidv4(),
                 key: '2-4',
-                name: 'InputNumber 数字输入框'
+                name: 'InputNumber 数字输入框',
+                component: <InputNumber />
             },
             {
-                id: 25,
-                id2: uuidv4(),
+                index: 5,
+                id: uuidv4(),
                 key: '2-5',
-                name: 'Radio 单选框'
+                name: 'Radio 单选框',
+                component: (
+                    <Radio.Group>
+                        <Radio value={1}>A</Radio>
+                        <Radio value={2}>B</Radio>
+                        <Radio value={3}>C</Radio>
+                        <Radio value={4}>D</Radio>
+                    </Radio.Group>
+                )
             },
             {
-                id: 26,
-                id2: uuidv4(),
+                index: 6,
+                id: uuidv4(),
                 key: '2-6',
-                name: 'Switch 开关'
+                name: 'Switch 开关',
+                component: <Switch defaultChecked />
             },
             {
-                id: 27,
-                id2: uuidv4(),
+                index: 7,
+                id: uuidv4(),
                 key: '2-7',
                 name: 'Select 选择器'
             }
@@ -58,11 +70,10 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
     {
         title: '数据展示',
         id: 3,
-        id2: uuidv4(),
         key: '3',
         menus: [
-            { id: 31, id2: uuidv4(), key: '3-1', name: 'Tabs 标签页' },
-            { id: 32, id2: uuidv4(), key: '3-2', name: 'Table 表格' }
+            { index: 8, id: uuidv4(), key: '3-1', name: 'Tabs 标签页' },
+            { index: 9, id: uuidv4(), key: '3-2', name: 'Table 表格' }
         ]
     }
 ];
@@ -78,9 +89,11 @@ function getMenusIds() {
 
 function getMenus() {
     const tasks = [];
-    OPTIONAL_CONPONENT_MENUS_DATA.forEach((group) => {
-        group.menus.forEach((menu) => {
-            tasks.push(menu);
+    let _index = 0;
+    OPTIONAL_CONPONENT_MENUS_DATA.forEach((group, index) => {
+        group.menus.forEach((menu, index2) => {
+            tasks.push({ ...menu, index: _index });
+            _index++;
         });
     });
     return tasks;
@@ -89,25 +102,23 @@ function getMenus() {
 const INIT_DATA = {
     menus: getMenus(),
     areas: {
-        'area-menus': {
-            id: 'areas-menus',
-            title: 'Menus',
-            taskIds: getMenusIds()
-        },
         'area-operate': {
             id: 'area-operate',
+            className: 'customize-operate-wrapper',
             title: '按钮操作区域',
-            taskIds: []
+            tasks: []
         },
         'area-search': {
             id: 'area-search',
+            className: 'customize-search-wrapper',
             title: '搜索区域',
-            taskIds: []
+            tasks: []
         },
         'area-table': {
             id: 'area-table',
+            className: 'customize-table-wrapper',
             title: 'Table区域',
-            taskIds: []
+            tasks: []
         }
     }
 };

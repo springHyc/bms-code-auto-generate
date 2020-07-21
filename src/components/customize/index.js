@@ -10,20 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 const { ItemGroup, Divider } = Menu;
 
-const Handle = styled.div`
-    display: flex;
-    align-items: center;
-    align-content: center;
-    user-select: none;
-    margin: -0.5rem 0.5rem -0.5rem -0.5rem;
-    padding: 0.5rem;
-    line-height: 1.5;
-    border-radius: 3px 0 0 3px;
-    background: #fff;
-    border-right: 1px solid #ddd;
-    color: #000;
-`;
-
 const List = styled.div`
     border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
     background: #fff;
@@ -90,8 +76,7 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
     const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = sourceClone[droppableSource.index];
-    destClone.splice(droppableDestination.index, 0, { ...item, id2: uuidv4() });
-    console.log('copy==', destClone);
+    destClone.splice(droppableDestination.index, 0, { ...item, id: uuidv4() });
     return destClone;
 };
 
@@ -119,16 +104,17 @@ export default class Customize extends React.Component {
         }
 
         switch (source.droppableId) {
-            case destination.droppableId:
-                this.setState({
-                    [destination.droppableId]: reorder(this.state[source.droppableId], source.index, destination.index)
-                });
+            case destination.droppableId: {
+                const resultTasks = reorder(this.state.areas[source.droppableId].tasks, source.index, destination.index);
+                const areas = this.state.areas;
+                areas[destination.droppableId].tasks = resultTasks;
+                this.setState({ areas: areas });
                 break;
+            }
             case 'areas-menus': {
-                debugger;
                 const destClone = copy(this.state.menus, this.state[destination.droppableId] || [], source, destination);
                 const areas = this.state.areas;
-                areas[destination.droppableId].taskIds = areas[destination.droppableId].taskIds.concat(destClone.map((item) => item.key));
+                areas[destination.droppableId].tasks = areas[destination.droppableId].tasks.concat(destClone);
                 this.setState({ areas: areas });
                 break;
             }
@@ -138,68 +124,50 @@ export default class Customize extends React.Component {
         }
     };
 
-    getTask = (taskId) => {
-        let task = { component: <div>我是谁？</div> };
-        OPTIONAL_CONPONENT_MENUS_DATA.forEach((group) => {
-            group.menus.forEach((menu) => {
-                if (menu.key === taskId) {
-                    task = menu;
-                }
-            });
-        });
-
-        return task;
-    };
-    renderSider1() {
-        return (
-            <Sider className='site-layout-background' width={200}>
-                <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['1-1']} style={{ height: '100%' }}>
-                    {OPTIONAL_CONPONENT_MENUS_DATA.map((group) => {
-                        return (
-                            <ItemGroup title={group.title} key={group.key}>
-                                <Divider />
-                                {group.menus.map((menu) => {
-                                    return <Menu.Item key={menu.key}>{menu.name}</Menu.Item>;
-                                })}
-                            </ItemGroup>
-                        );
-                    })}
-                </Menu>
-            </Sider>
-        );
-    }
+    // renderSider1() {
+    //     return (
+    //         <Sider className='site-layout-background' width={200}>
+    //             <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['1-1']} style={{ height: '100%' }}>
+    //                 {OPTIONAL_CONPONENT_MENUS_DATA.map((group) => {
+    //                     return (
+    //                         <ItemGroup title={group.title} key={group.key}>
+    //                             <Divider />
+    //                             {group.menus.map((menu) => {
+    //                                 return <Menu.Item key={menu.key}>{menu.name}</Menu.Item>;
+    //                             })}
+    //                         </ItemGroup>
+    //                     );
+    //                 })}
+    //             </Menu>
+    //         </Sider>
+    //     );
+    // }
     // 左侧可选择区域
     renderSider() {
+        const menus = this.state.menus;
         return (
             <Droppable droppableId='areas-menus' isDropDisabled={true}>
                 {(provided, snapshot) => (
                     <Sider className='site-layout-background' width={200}>
                         <Kiosk ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
-                            {OPTIONAL_CONPONENT_MENUS_DATA.map((group) => {
+                            {menus.map((menu, index) => {
                                 return (
-                                    <div key={group.id2}>
-                                        <h3>{group.title}</h3>
-                                        {group.menus.map((menu, index) => {
-                                            return (
-                                                <Draggable key={menu.id2} draggableId={menu.id2} index={index}>
-                                                    {(provided, snapshot) => (
-                                                        <React.Fragment>
-                                                            <Item
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}
-                                                                isDragging={snapshot.isDragging}
-                                                                style={provided.draggableProps.style}
-                                                            >
-                                                                {menu.name}
-                                                            </Item>
-                                                            {snapshot.isDragging && <Clone>{menu.name}</Clone>}
-                                                        </React.Fragment>
-                                                    )}
-                                                </Draggable>
-                                            );
-                                        })}
-                                    </div>
+                                    <Draggable key={menu.id} draggableId={menu.id} index={index}>
+                                        {(provided, snapshot) => (
+                                            <React.Fragment>
+                                                <Item
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    isDragging={snapshot.isDragging}
+                                                    style={provided.draggableProps.style}
+                                                >
+                                                    {menu.name}
+                                                </Item>
+                                                {snapshot.isDragging && <Clone>{menu.name}</Clone>}
+                                            </React.Fragment>
+                                        )}
+                                    </Draggable>
                                 );
                             })}
                         </Kiosk>
@@ -208,97 +176,91 @@ export default class Customize extends React.Component {
                 )}
             </Droppable>
         );
+        // return (
+        //     <Droppable droppableId='areas-menus' isDropDisabled={true}>
+        //         {(provided, snapshot) => (
+        //             <Sider className='site-layout-background' width={200}>
+        //                 <Kiosk ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+        //                     {OPTIONAL_CONPONENT_MENUS_DATA.map((group) => {
+        //                         return (
+        //                             <div key={group.id}>
+        //                                 <h3>{group.title}</h3>
+        //                                 {group.menus.map((menu, index) => {
+        //                                     return (
+        //                                         <Draggable key={menu.id} draggableId={menu.id} index={menu.index}>
+        //                                             {(provided, snapshot) => (
+        //                                                 <React.Fragment>
+        //                                                     <Item
+        //                                                         ref={provided.innerRef}
+        //                                                         {...provided.draggableProps}
+        //                                                         {...provided.dragHandleProps}
+        //                                                         isDragging={snapshot.isDragging}
+        //                                                         style={provided.draggableProps.style}
+        //                                                     >
+        //                                                         {menu.name}
+        //                                                     </Item>
+        //                                                     {snapshot.isDragging && <Clone>{menu.name}</Clone>}
+        //                                                 </React.Fragment>
+        //                                             )}
+        //                                         </Draggable>
+        //                                     );
+        //                                 })}
+        //                             </div>
+        //                         );
+        //                     })}
+        //                 </Kiosk>
+        //                 {provided.placeholder}
+        //             </Sider>
+        //         )}
+        //     </Droppable>
+        // );
     }
 
     renderArea(area) {
         return (
-            <Droppable droppableId={area.id}>
+            <Droppable droppableId={area.id} key={area.id} className={area.className}>
                 {(provided, snapshot) => (
-                    <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
-                        <span>{area.title}</span>
-                        {area.taskIds.length > 0
-                            ? area.taskIds.map((taskId, index) => {
-                                  const task = this.getTask(taskId);
+                    // <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+                    <div
+                        ref={provided.innerRef}
+                        className={area.className}
+                        style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'solid #ddd'}` }}
+                    >
+                        <span className='title'>{area.title}</span>
+                        {area.tasks.length > 0
+                            ? area.tasks.map((task, index) => {
                                   return (
-                                      <Draggable draggableId={task.id2} key={task.id2} index={index}>
+                                      <Draggable draggableId={task.id} key={task.id} index={task.index}>
                                           {(provided, snapshot) => (
-                                              <Item
+                                              <div
                                                   ref={provided.innerRef}
                                                   {...provided.draggableProps}
-                                                  isDragging={snapshot.isDragging}
-                                                  style={provided.draggableProps.style}
+                                                  style={{
+                                                      ...provided.draggableProps.style,
+                                                      border: `1px ${snapshot.isDragging ? 'dashed #000' : 'solid #ddd'}`
+                                                  }}
+                                                  {...provided.dragHandleProps}
                                               >
-                                                  {/* <Handle {...provided.dragHandleProps}>
-                                                      <svg width='24' height='24' viewBox='0 0 24 24'>
-                                                          <path
-                                                              fill='currentColor'
-                                                              d='M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z'
-                                                          />
-                                                      </svg>
-                                                  </Handle> */}
                                                   {task.component}
-                                              </Item>
+                                              </div>
                                           )}
                                       </Draggable>
                                   );
                               })
                             : provided.placeholder && <Notice>Drop items here</Notice>}
                         {provided.placeholder}
-                    </Container>
+                    </div>
                 )}
             </Droppable>
         );
     }
 
-    // renderOperateArea() {
-    //     const area = this.state.areas['area-operate'];
-    //     return (
-    //         <Droppable droppableId={area.id}>
-    //             {(provided, snapshot) => (
-    //                 <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
-    //                     <span>{area.title}</span>
-    //                     {area.taskIds.length > 0
-    //                         ? area.taskIds.map((taskId, index) => {
-    //                               const task = this.getTask(taskId);
-    //                               return (
-    //                                   <Draggable draggableId={task.id2} key={task.id2} index={index}>
-    //                                       {(provided, snapshot) => (
-    //                                           <Item
-    //                                               ref={provided.innerRef}
-    //                                               {...provided.draggableProps}
-    //                                               isDragging={snapshot.isDragging}
-    //                                               style={provided.draggableProps.style}
-    //                                           >
-    //                                               <Handle {...provided.dragHandleProps}>
-    //                                                   <svg width='24' height='24' viewBox='0 0 24 24'>
-    //                                                       <path
-    //                                                           fill='currentColor'
-    //                                                           d='M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z'
-    //                                                       />
-    //                                                   </svg>
-    //                                               </Handle>
-    //                                               {task.name}
-    //                                           </Item>
-    //                                       )}
-    //                                   </Draggable>
-    //                               );
-    //                           })
-    //                         : provided.placeholder && <Notice>Drop items here</Notice>}
-    //                     {provided.placeholder}
-    //                 </Container>
-    //             )}
-    //         </Droppable>
-    //     );
-    // }
-
     renderAreas() {
         const areas = _.cloneDeep(this.state.areas);
         let nodes = [];
         for (let key in areas) {
-            if (key !== 'area-menus') {
-                const area = areas[key];
-                nodes.push(<div className='customize-operate-wrapper'>{this.renderArea(area)}</div>);
-            }
+            const area = areas[key];
+            nodes.push(this.renderArea(area));
         }
         return nodes;
     }
@@ -307,11 +269,7 @@ export default class Customize extends React.Component {
             <div className='hyc-wrapper'>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     {this.renderSider()}
-                    <div className='customize-wrapper'>
-                        {/* <div className='customize-operate-wrapper'>{this.renderOperateArea()}</div>
-                         */}
-                        {this.renderAreas()}
-                    </div>
+                    <div className='customize-wrapper'>{this.renderAreas()}</div>
                 </DragDropContext>
             </div>
         );
