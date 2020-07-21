@@ -10,10 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 const { ItemGroup, Divider } = Menu;
 
-const Content = styled.div`
-    margin-right: 200px;
-`;
-
 const Handle = styled.div`
     display: flex;
     align-items: center;
@@ -91,12 +87,11 @@ const reorder = (list, startIndex, endIndex) => {
  * Moves an item from one list to another list.
  */
 const copy = (source, destination, droppableSource, droppableDestination) => {
-    debugger;
-    const sourceClone = Array.from(source);
+    const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = sourceClone[droppableSource.index];
-
-    destClone.splice(droppableDestination.index, 0, { ...item, id: uuidv4(), key: uuidv4() });
+    destClone.splice(droppableDestination.index, 0, { ...item, id2: uuidv4() });
+    console.log('copy==', destClone);
     return destClone;
 };
 
@@ -114,7 +109,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
     return result;
 };
 export default class Customize extends React.Component {
-    state = { ...INIT_DATA, [uuidv4()]: [] };
+    state = { ...INIT_DATA };
     onDragEnd = (result) => {
         const { source, destination } = result;
         // dropped outside the list
@@ -129,12 +124,14 @@ export default class Customize extends React.Component {
                     [destination.droppableId]: reorder(this.state[source.droppableId], source.index, destination.index)
                 });
                 break;
-            case 'areas-menus':
+            case 'areas-menus': {
                 debugger;
-                this.setState({
-                    [destination.droppableId]: copy(this.state.menus, this.state[destination.droppableId] || [], source, destination)
-                });
+                const destClone = copy(this.state.menus, this.state[destination.droppableId] || [], source, destination);
+                const areas = this.state.areas;
+                areas[destination.droppableId].taskIds = areas[destination.droppableId].taskIds.concat(destClone.map((item) => item.key));
+                this.setState({ areas: areas });
                 break;
+            }
             default:
                 this.setState(move(this.state[source.droppableId], this.state[destination.droppableId], source, destination));
                 break;
@@ -231,14 +228,14 @@ export default class Customize extends React.Component {
                                                   isDragging={snapshot.isDragging}
                                                   style={provided.draggableProps.style}
                                               >
-                                                  <Handle {...provided.dragHandleProps}>
+                                                  {/* <Handle {...provided.dragHandleProps}>
                                                       <svg width='24' height='24' viewBox='0 0 24 24'>
                                                           <path
                                                               fill='currentColor'
                                                               d='M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z'
                                                           />
                                                       </svg>
-                                                  </Handle>
+                                                  </Handle> */}
                                                   {task.component}
                                               </Item>
                                           )}
@@ -253,46 +250,46 @@ export default class Customize extends React.Component {
         );
     }
 
-    renderOperateArea() {
-        const area = this.state.areas['area-operate'];
-        return (
-            <Droppable droppableId={area.id}>
-                {(provided, snapshot) => (
-                    <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
-                        <span>{area.title}</span>
-                        {area.taskIds.length > 0
-                            ? area.taskIds.map((taskId, index) => {
-                                  const task = this.getTask(taskId);
-                                  return (
-                                      <Draggable draggableId={task.id2} key={task.id2} index={index}>
-                                          {(provided, snapshot) => (
-                                              <Item
-                                                  ref={provided.innerRef}
-                                                  {...provided.draggableProps}
-                                                  isDragging={snapshot.isDragging}
-                                                  style={provided.draggableProps.style}
-                                              >
-                                                  <Handle {...provided.dragHandleProps}>
-                                                      <svg width='24' height='24' viewBox='0 0 24 24'>
-                                                          <path
-                                                              fill='currentColor'
-                                                              d='M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z'
-                                                          />
-                                                      </svg>
-                                                  </Handle>
-                                                  {task.name}
-                                              </Item>
-                                          )}
-                                      </Draggable>
-                                  );
-                              })
-                            : provided.placeholder && <Notice>Drop items here</Notice>}
-                        {provided.placeholder}
-                    </Container>
-                )}
-            </Droppable>
-        );
-    }
+    // renderOperateArea() {
+    //     const area = this.state.areas['area-operate'];
+    //     return (
+    //         <Droppable droppableId={area.id}>
+    //             {(provided, snapshot) => (
+    //                 <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+    //                     <span>{area.title}</span>
+    //                     {area.taskIds.length > 0
+    //                         ? area.taskIds.map((taskId, index) => {
+    //                               const task = this.getTask(taskId);
+    //                               return (
+    //                                   <Draggable draggableId={task.id2} key={task.id2} index={index}>
+    //                                       {(provided, snapshot) => (
+    //                                           <Item
+    //                                               ref={provided.innerRef}
+    //                                               {...provided.draggableProps}
+    //                                               isDragging={snapshot.isDragging}
+    //                                               style={provided.draggableProps.style}
+    //                                           >
+    //                                               <Handle {...provided.dragHandleProps}>
+    //                                                   <svg width='24' height='24' viewBox='0 0 24 24'>
+    //                                                       <path
+    //                                                           fill='currentColor'
+    //                                                           d='M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z'
+    //                                                       />
+    //                                                   </svg>
+    //                                               </Handle>
+    //                                               {task.name}
+    //                                           </Item>
+    //                                       )}
+    //                                   </Draggable>
+    //                               );
+    //                           })
+    //                         : provided.placeholder && <Notice>Drop items here</Notice>}
+    //                     {provided.placeholder}
+    //                 </Container>
+    //             )}
+    //         </Droppable>
+    //     );
+    // }
 
     renderAreas() {
         const areas = _.cloneDeep(this.state.areas);
