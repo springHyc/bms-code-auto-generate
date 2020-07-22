@@ -1,61 +1,14 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { Menu, message } from 'antd';
+import { message } from 'antd';
 import { INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
-import styled from 'styled-components';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import { Clone, Item, Notice, Kiosk } from './common';
+import '../../less/index.less';
 
-const List = styled.div`
-    border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
-    background: #fff;
-    padding: 0.5rem 0.5rem 0;
-    border-radius: 3px;
-    flex: 0 0 150px;
-    font-family: sans-serif;
-`;
-
-const Kiosk = styled(List)`
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 200px;
-`;
-
-const Notice = styled.div`
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    padding: 0.5rem;
-    margin: 0 0.5rem 0.5rem;
-    border: 1px solid transparent;
-    line-height: 1.5;
-    color: #aaa;
-`;
-
-const Item = styled.div`
-    display: flex;
-    user-select: none;
-    padding: 0.5rem;
-    margin: 0 0 0.5rem 0;
-    align-items: flex-start;
-    align-content: flex-start;
-    line-height: 1.5;
-    border-radius: 3px;
-    background: #fff;
-    border: 1px ${(props) => (props.isDragging ? 'dashed #000' : 'solid #ddd')};
-`;
-const Clone = styled(Item)`
-    + div {
-        display: none !important;
-    }
-`;
-
-// a little function to help us with reordering the result
 /**
  * 同一区域内排序
  */
@@ -169,7 +122,11 @@ export default class Customize extends React.Component {
             <Droppable droppableId='areas-menus' isDropDisabled={true}>
                 {(provided, snapshot) => (
                     <Sider className='site-layout-background' width={200}>
-                        <Kiosk ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+                        <Kiosk
+                            ref={provided.innerRef}
+                            isDraggingOver={snapshot.isDraggingOver}
+                            style={{ overflow: 'scroll', position: 'initial' }}
+                        >
                             {menus.map((menu, index) => {
                                 return (
                                     <Draggable key={menu.id} draggableId={menu.id} index={index}>
@@ -251,7 +208,7 @@ export default class Customize extends React.Component {
             <div className='hyc-wrapper'>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     {this.renderSider()}
-                    <div className='customize-wrapper'>{this.renderAreas()}</div>
+                    <div className='customize-wrapper br-page'>{this.renderAreas()}</div>
                 </DragDropContext>
             </div>
         );

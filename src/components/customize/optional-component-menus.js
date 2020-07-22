@@ -91,13 +91,13 @@ const INIT_DATA = {
     areas: {
         'area-operate': {
             id: 'area-operate',
-            className: 'customize-operate-wrapper',
+            className: 'customize-operate-wrapper br-operate-container ',
             title: '按钮操作区域',
             tasks: []
         },
         'area-search': {
             id: 'area-search',
-            className: 'customize-search-wrapper',
+            className: 'customize-search-wrapper br-select-container',
             title: '搜索区域',
             tasks: []
         },

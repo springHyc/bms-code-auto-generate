@@ -51,7 +51,6 @@ export default class Layouts extends Component {
             if (menu.path.split('/')[1] === hashStr.split('/')[0]) {
                 return menu;
             }
-            return [];
         })[0];
         if (!targetRoute) return breadcrumbs;
         breadcrumbs.push({ path: targetRoute.path, name: targetRoute.name });
