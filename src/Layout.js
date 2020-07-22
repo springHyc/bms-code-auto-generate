@@ -3,12 +3,11 @@ import { HomeOutlined } from '@ant-design/icons';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Route, Redirect, Link } from 'react-router-dom';
 import MENUS from './menus.js';
-import './App.less';
+import './Layout.less';
 
 const { Header, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-const avater = '//img.shurongdai.cn/group1/M00/00/0C/wKgX2FrNcZKAa92mAAAI-XyxqgY410.jpg';
+
 export default class Layouts extends Component {
     constructor(props) {
         super(props);
@@ -128,8 +127,8 @@ export default class Layouts extends Component {
         return (
             <Header className='hyc-header'>
                 {this.renderMenus()}
-
-                <Menu mode='horizontal' theme='dark' onClick={this.menuClick} style={{ marginLeft: 'auto' }}>
+                {/* 屏蔽个人信息 */}
+                {/* <Menu mode='horizontal' theme='dark' onClick={this.menuClick} style={{ marginLeft: 'auto' }}>
                     <SubMenu
                         title={
                             <span className='br-avatar'>
@@ -144,7 +143,7 @@ export default class Layouts extends Component {
                             </Menu.Item>
                         </MenuItemGroup>
                     </SubMenu>
-                </Menu>
+                </Menu> */}
             </Header>
         );
     }
