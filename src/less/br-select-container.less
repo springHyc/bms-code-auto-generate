@@ -1,0 +1,40 @@
+/**
+ * 整体页面中B区域（搜索区域）样式，例子是：src/c/page-layout/normal-page-content.js
+ */
+@br-select-container: {
+    margin: 16px 0;
+    padding: 8px 16px 0 16px;
+    background-color: #fff;
+    border-radius: 4px;
+    & > * {
+        transform: translateY(8px);
+    }
+    .ant-form,
+    .ant-legacy-form {
+        width: 100%;
+    }
+
+    // 适配antd@3.x 与升级后过渡期-  --start---
+    // 从 @ant-design/compatible 引入的老版本 Form 组件，样式类名会从 .ant-form 变成 .ant-legacy-form，如果你对其进行了样式覆盖，也需要相应修改。
+    .ant-form-item-control,
+    .ant-legacy-form-item-control,
+    .ant-form-item-children,
+    .ant-legacy-form-item-children,
+    .ant-form-item-control-input-content,
+    .ant-legacy-form-item-control-input-content {
+        & > * {
+            width: 100% !important;
+            min-width: 224px !important;
+        }
+    }
+    // 适配antd@3.x --end--
+    .br-btn-inline {
+        display: flex;
+        justify-content: flex-end;
+        min-height: 56px;
+        padding-top: 4px;
+        button {
+            margin-left: 8px;
+        }
+    }
+};

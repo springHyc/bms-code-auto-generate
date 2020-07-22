@@ -1,0 +1,81 @@
+/**
+ * 整体页面中有card的区域，例子是：src/c/page-layout/with-tab.js
+ */
+.triangle(@color: #eee, @width: 3px) {
+    &::before {
+        content: '';
+        display: block;
+        width: 0px;
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        border: @width solid rgba(0, 0, 0, 0);
+        border-top-width: 0;
+        border-bottom-color: @color;
+    }
+}
+// >antd@4.4.0
+.ant-tabs-tab-btn:active {
+    color: #999 !important;
+}
+
+.tab-active-dark(@color: #1890ff) {
+    background-color: @color;
+    border-color: @color;
+    color: #fff;
+    position: relative;
+    // >antd@4.4.0
+    .ant-tabs-tab-btn {
+        color: #fff;
+    }
+    // antd@4.4.0
+}
+
+.tab-active-white(@color: #fff) {
+    background-color: #fff;
+    border-color: #e4e4e4;
+    border-bottom-color: #fff;
+    border-bottom-width: 1px;
+    color: @color;
+
+    &::before {
+        content: '';
+        display: block;
+    }
+}
+
+.ant-tabs.ant-tabs-card,
+.ant-tabs.br-tabs.ant-tabs-card {
+    @main-color: #f7932b;
+
+    //antd@4.2.4
+    .ant-tabs-bar,
+    // >=antd@4.3.3
+    .ant-tabs-nav {
+        margin-bottom: 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    //antd@4.2.4
+    .ant-tabs-card-bar,
+    // >=antd@4.3.3
+    .ant-tabs-nav-wrap .ant-tabs-nav-list {
+        .ant-tabs-tab {
+            margin-right: 8px;
+            color: #999;
+            background-color: #eee;
+            border-color: darken(#eee, 4%);
+            border-bottom-color: #e0e0e0;
+        }
+
+        .ant-tabs-tab-active {
+            .tab-active-dark(@main-color);
+        }
+    }
+    // >=antd@4.3.3
+    .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab {
+        border-bottom: 0;
+    }
+}

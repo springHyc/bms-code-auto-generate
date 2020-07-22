@@ -1,0 +1,32 @@
+/**
+ * 整体页面中A区域（按钮操作区域）样式，例子是：src/c/page-layout/normal-page-content.js
+ */
+@br-operate-container: {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    button {
+        margin: 8px;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+};
+
+.br-tabs {
+    .br-page {
+        .br-operate-container {
+            margin-top: 16px;
+        }
+    }
+}
+
+.br-tabs + .br-operate-container {
+    margin-top: 16px;
+}
+
+// 当A区域下方直接跟着Table区域，没有搜索区域时
+.br-operate-container + .br-table-wrapper {
+    margin-top: 16px;
+}

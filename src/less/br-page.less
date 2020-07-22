@@ -1,0 +1,20 @@
+// 整个页面的公共的less文件
+
+@import './br-operate-container.less'; // 已做好，可复用
+@import './br-select-container.less'; // @何春做好后，放进去即可
+@import './br-table.less'; // 已做好，可复用
+@import './br-common.less';
+.br-page {
+    // 按钮操作区域,对应在页面中的css className
+    .br-operate-container {
+        @br-operate-container();
+    }
+    // 搜索区域,对应在页面中的css className
+    .br-select-container {
+        @br-select-container();
+    }
+    // 表单区域
+    .br-table-wrapper {
+        @br-table-wrapper();
+    }
+}
