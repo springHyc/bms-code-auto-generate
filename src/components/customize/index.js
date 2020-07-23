@@ -175,8 +175,7 @@ export default class Customize extends React.Component {
                                                   {...provided.draggableProps}
                                                   style={{
                                                       ...provided.draggableProps.style,
-                                                      border: `1px ${snapshot.isDragging ? 'dashed #000' : 'dashed #ddd'}`,
-                                                      padding: '4px' // todo 临时添加
+                                                      border: `1px ${snapshot.isDragging ? 'dashed #000' : 'dashed #fff1f0'}`
                                                   }}
                                                   {...provided.dragHandleProps}
                                               >
