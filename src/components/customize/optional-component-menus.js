@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Input, DatePicker, InputNumber, Radio, Switch } from 'antd';
+import { Button, Input, DatePicker, InputNumber, Radio, Switch, Select } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
     {
@@ -40,13 +41,13 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 name: 'InputNumber 数字输入框',
-                component: <InputNumber />
+                component: <InputNumber placeholder='请填写数字' />
             },
             {
                 id: uuidv4(),
                 name: 'Radio 单选框',
                 component: (
-                    <Radio.Group>
+                    <Radio.Group placeholder='单选'>
                         <Radio value={1}>A</Radio>
                         <Radio value={2}>B</Radio>
                         <Radio value={3}>C</Radio>
@@ -61,7 +62,17 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             },
             {
                 id: uuidv4(),
-                name: 'Select 选择器'
+                name: 'Select 选择器',
+                component: (
+                    <Select style={{ width: 120 }} placeholder='Select'>
+                        <Option value='jack'>Jack</Option>
+                        <Option value='lucy'>Lucy</Option>
+                        <Option value='disabled' disabled>
+                            Disabled
+                        </Option>
+                        <Option value='Yiminghe'>yiminghe</Option>
+                    </Select>
+                )
             }
         ]
     },

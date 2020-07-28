@@ -1,6 +1,6 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { message } from 'antd';
+import { message, Form, Row, Col, Button } from 'antd';
 import { INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
@@ -115,7 +115,10 @@ export default class Customize extends React.Component {
     //         </Sider>
     //     );
     // }
-    // 左侧可选择区域
+
+    /**
+     * 左侧可选择区域
+     */
     renderSider() {
         const menus = this.state.menus;
         return (
@@ -150,6 +153,76 @@ export default class Customize extends React.Component {
                         </Kiosk>
                         {provided.placeholder}
                     </Sider>
+                )}
+            </Droppable>
+        );
+    }
+
+    /**
+     * 搜索区域的处理
+     * 需要将其包裹在`Form`中
+     * @param {*} area
+     */
+    renderAreaSearch(area) {
+        const layout = {
+            labelCol: { span: 8 },
+            wrapperCol: { span: 16 }
+        };
+        const offsetNum = area.tasks.length % 3 === 0 ? 16 : area.tasks.length % 3 === 1 ? 8 : 0;
+        return (
+            <Droppable droppableId={area.id} key={area.id} className={area.className}>
+                {(provided, snapshot) => (
+                    <div
+                        ref={provided.innerRef}
+                        className={area.className}
+                        style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
+                    >
+                        {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
+                        {area.tasks.length > 0 ? (
+                            <Form {...layout} ref={this.formRef}>
+                                <Row gutter={24}>
+                                    {area.tasks.map((task, index) => {
+                                        return (
+                                            <Draggable draggableId={task.id} key={task.id} index={index}>
+                                                {(provided, snapshot) => (
+                                                    <Col
+                                                        span={8}
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        style={{
+                                                            ...provided.draggableProps.style,
+                                                            top: '0px'
+                                                            // border: `1px ${snapshot.isDragging ? 'dashed #000' : 'dashed #fff1f0'}`
+                                                        }}
+                                                        {...provided.dragHandleProps}
+                                                    >
+                                                        <Form.Item
+                                                            name={uuidv4()}
+                                                            label='名称自取'
+                                                            rules={[{ required: true, message: '最少2个字符' }]}
+                                                        >
+                                                            {task.component}
+                                                        </Form.Item>
+                                                    </Col>
+                                                )}
+                                            </Draggable>
+                                        );
+                                    })}
+                                    <Col offset={offsetNum} span={8}>
+                                        <div className='br-btn-inline'>
+                                            <Button onClick={() => {}}>重置</Button>
+                                            <Button type='primary' onClick={() => {}}>
+                                                搜索
+                                            </Button>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        ) : (
+                            provided.placeholder && <Notice>Drop items here</Notice>
+                        )}
+                        {provided.placeholder}
+                    </div>
                 )}
             </Droppable>
         );
@@ -198,7 +271,11 @@ export default class Customize extends React.Component {
         let nodes = [];
         for (let key in areas) {
             const area = areas[key];
-            nodes.push(this.renderArea(area));
+            if (key === 'area-search') {
+                nodes.push(this.renderAreaSearch(area));
+            } else {
+                nodes.push(this.renderArea(area));
+            }
         }
         return nodes;
     }
