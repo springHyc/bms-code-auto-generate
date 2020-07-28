@@ -237,7 +237,7 @@ export default class Customize extends React.Component {
                         className={area.className}
                         style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
                     >
-                        <span className='title'>{area.title}</span>
+                        {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0
                             ? area.tasks.map((task, index) => {
                                   return (

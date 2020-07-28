@@ -1,9 +1,14 @@
 import React from 'react';
-import { Button, Input, DatePicker, InputNumber, Radio, Switch, Select } from 'antd';
+import { Button, Input, DatePicker, InputNumber, Radio, Switch, Select, Table, Tabs } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
+import columns from './assistFile/columns';
+import Data from './assistFile/mockTableData';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
+const { TabPane } = Tabs;
+const pageSizeOptions = ['10', '20', '50', '100'];
+const pageInfo = { pageSize: 10, pageNum: 1 };
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
     {
@@ -81,8 +86,56 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
         id: 3,
         key: '3',
         menus: [
-            { id: uuidv4(), name: 'Tabs 标签页' },
-            { id: uuidv4(), name: 'Table 表格' }
+            {
+                id: uuidv4(),
+                name: 'Tabs 标签页',
+                component: (
+                    <Tabs
+                        type='card'
+                        animated={true}
+                        className='br-tabs'
+                        onChange={() => {
+                            // * 将值存储到redux中，这样当从某个tab进入详情后，退回，还能退回这个tab标签
+                        }}
+                    >
+                        <TabPane tab='标签展示1' key='1'>
+                            {/* <span>标签展示1</span> */}
+                        </TabPane>
+                        <TabPane tab='标签展示2' key='2'>
+                            <span>标签展示2</span>
+                        </TabPane>
+                        <TabPane tab='标签展示3' key='3'>
+                            <span>标签展示3</span>
+                        </TabPane>
+                    </Tabs>
+                )
+            },
+            {
+                id: uuidv4(),
+                name: 'Table 表格',
+                component: (
+                    <Table
+                        rowKey={(row) => row.id}
+                        columns={columns}
+                        dataSource={Data.dataList}
+                        locale={{ emptyText: '暂无数据' }}
+                        className='br-table-wrapper'
+                        pagination={{
+                            showSizeChanger: true,
+                            current: pageInfo.pageNum,
+                            // onChange: this.onPageChange,
+                            // onShowSizeChange: this.onShowSizeChange,
+                            total: Number(Data.totalCount),
+                            pageSizeOptions: pageSizeOptions,
+                            showQuickJumper: true, // 添加
+                            showTotal(total) {
+                                return `共 ${total} 条`; // 统一文字
+                            }
+                        }}
+                        scroll={{ scrollToFirstRowOnChange: true }} // 添加
+                    />
+                )
+            }
         ]
     }
 ];
