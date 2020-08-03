@@ -19,11 +19,18 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 name: 'Button 按钮',
-                component: (
-                    <Button type='primary' onClick={(e) => e.preventDefault()}>
-                        新增
-                    </Button>
-                )
+                component: <Button type='primary'>新增</Button>,
+                // 属性
+                attrs: [
+                    { id: uuidv4(), name: '按钮文本', type: 'string', required: true, value: '按钮文本' },
+                    {
+                        id: uuidv4(),
+                        name: 'onClick事件',
+                        type: 'function', // todo 生成diamante时是：() => {}
+                        required: false,
+                        value: ''
+                    }
+                ]
             }
         ]
     },

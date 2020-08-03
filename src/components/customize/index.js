@@ -7,9 +7,10 @@ import './index.less';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { Clone, Item, Notice, Kiosk } from './common';
-import ComponentNormalConfig from './componentNormalConfig';
+import ComponentAttrsConfig from './componentAttrsConfig';
 
 const { TabPane } = Tabs;
+
 /**
  * 同一区域内排序
  */
@@ -24,11 +25,21 @@ const reorder = (list, startIndex, endIndex) => {
 /**
  * 从左侧栏复制到右侧可移动区域
  */
-const copy = (source, destination, droppableSource, droppableDestination) => {
+const copy = (source, destination, droppableSource, droppableDestination, that) => {
     const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
-    const item = sourceClone[droppableSource.index];
-    destClone.splice(droppableDestination.index, 0, { ...item, id: uuidv4() });
+    const item = _.cloneDeep(sourceClone[droppableSource.index]);
+    const _component = _.cloneDeep(item.component);
+    const newId = uuidv4();
+    _component.props = {
+        ..._component.props,
+        children: item.attrs[0].value,
+        onClick: (e) => {
+            that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableDestination.droppableId } });
+            e.preventDefault();
+        }
+    };
+    destClone.splice(droppableDestination.index, 0, { ...item, id: newId, component: _component });
     return destClone;
 };
 /**
@@ -46,7 +57,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
     return result;
 };
 export default class Customize extends React.Component {
-    state = { ...INIT_DATA };
+    state = { ...INIT_DATA, selectedNode: {} };
 
     updateArea = (key, tasks) => {
         const areas = this.state.areas;
@@ -79,7 +90,7 @@ export default class Customize extends React.Component {
                 break;
             }
             case 'areas-menus': {
-                const destClone = copy(this.state.menus, this.state[destination.droppableId] || [], source, destination);
+                const destClone = copy(this.state.menus, this.state[destination.droppableId] || [], source, destination, this);
                 const areas = this.state.areas;
                 this.updateArea(destination.droppableId, areas[destination.droppableId].tasks.concat(destClone));
                 break;
@@ -241,6 +252,11 @@ export default class Customize extends React.Component {
                         {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0
                             ? area.tasks.map((task, index) => {
+                                  const _component = _.cloneDeep(task.component);
+                                  _component.props = {
+                                      ..._component.props,
+                                      children: task.attrs[0].value
+                                  };
                                   return (
                                       <Draggable draggableId={task.id} key={task.id} index={index}>
                                           {(provided, snapshot) => (
@@ -253,7 +269,7 @@ export default class Customize extends React.Component {
                                                   }}
                                                   {...provided.dragHandleProps}
                                               >
-                                                  {task.component}
+                                                  {_component}
                                               </div>
                                           )}
                                       </Draggable>
@@ -289,12 +305,22 @@ export default class Customize extends React.Component {
             <React.Fragment>
                 <h2>Node</h2>
                 <Tabs defaultActiveKey='1' onChange={() => {}}>
-                    <TabPane tab='组件通用配置' key='1'>
-                        <ComponentNormalConfig />
+                    <TabPane tab='组件属性配置' key='1'>
+                        <ComponentAttrsConfig
+                            node={this.state.selectedNode.node}
+                            updateSelectedNode={(node) => {
+                                const newAreas = this.state.areas;
+                                newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
+                                    debugger;
+                                    if (item.id === node.id) {
+                                        item = node;
+                                    }
+                                });
+                                this.setState({ areas: newAreas });
+                            }}
+                        />
                     </TabPane>
-                    <TabPane tab='组件属性配置' key='2'>
-                        Content of Tab Pane 2
-                    </TabPane>
+
                     <TabPane tab='表单配置' key='3'>
                         Content of Tab Pane 3
                     </TabPane>
