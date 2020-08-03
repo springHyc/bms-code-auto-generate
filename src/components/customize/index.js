@@ -1,14 +1,15 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { message, Form, Row, Col, Button } from 'antd';
+import { message, Form, Row, Col, Button, Tabs } from 'antd';
 import { INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { Clone, Item, Notice, Kiosk } from './common';
-import '../../less/index.less';
+import ComponentNormalConfig from './componentNormalConfig';
 
+const { TabPane } = Tabs;
 /**
  * 同一区域内排序
  */
@@ -279,6 +280,28 @@ export default class Customize extends React.Component {
         }
         return nodes;
     }
+
+    /**
+     * 可编辑区域
+     */
+    renderEditContext() {
+        return (
+            <React.Fragment>
+                <h2>Node</h2>
+                <Tabs defaultActiveKey='1' onChange={() => {}}>
+                    <TabPane tab='组件通用配置' key='1'>
+                        <ComponentNormalConfig />
+                    </TabPane>
+                    <TabPane tab='组件属性配置' key='2'>
+                        Content of Tab Pane 2
+                    </TabPane>
+                    <TabPane tab='表单配置' key='3'>
+                        Content of Tab Pane 3
+                    </TabPane>
+                </Tabs>
+            </React.Fragment>
+        );
+    }
     render() {
         return (
             <div className='hyc-wrapper'>
@@ -286,6 +309,7 @@ export default class Customize extends React.Component {
                     {this.renderSider()}
                     <div className='customize-wrapper br-page'>{this.renderAreas()}</div>
                 </DragDropContext>
+                <div className='edit-wrapper'>{this.renderEditContext()}</div>
             </div>
         );
     }
