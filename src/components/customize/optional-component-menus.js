@@ -18,11 +18,13 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
         menus: [
             {
                 id: uuidv4(),
+                key: 'button',
                 name: 'Button 按钮',
                 component: <Button type='primary'>新增</Button>,
                 // 属性
                 attrs: [
                     { id: uuidv4(), name: '按钮文本', type: 'string', required: true, value: '按钮文本' },
+                    { id: uuidv4(), name: 'type', type: 'string', required: false, value: 'primary' },
                     {
                         id: uuidv4(),
                         name: 'onClick事件',

@@ -59,6 +59,21 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 export default class Customize extends React.Component {
     state = { ...INIT_DATA, selectedNode: {} };
 
+    getNewComponent = (task) => {
+        // 展示的时候，从新渲染组件
+        // 得专门的组件来专门做
+        // 可以名称的对应上，然后来做
+        const _component = _.cloneDeep(task.component);
+        if (task.key === 'button') {
+            _component.props = {
+                ..._component.props,
+                children: task.attrs[0].value,
+                type: task.attrs[1].value
+            };
+        }
+
+        return _component;
+    };
     updateArea = (key, tasks) => {
         const areas = this.state.areas;
         areas[key].tasks = tasks;
@@ -66,15 +81,8 @@ export default class Customize extends React.Component {
     };
 
     /**
-     * 同一区域内排序
+     * 移动时
      */
-    reorder = (list, startIndex, endIndex) => {
-        const result = Array.from(list);
-        const [removed] = result.splice(startIndex, 1);
-        result.splice(endIndex, 0, removed);
-
-        return result;
-    };
     onDragEnd = (result) => {
         const { source, destination } = result;
         // dropped outside the list
@@ -252,11 +260,8 @@ export default class Customize extends React.Component {
                         {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0
                             ? area.tasks.map((task, index) => {
-                                  const _component = _.cloneDeep(task.component);
-                                  _component.props = {
-                                      ..._component.props,
-                                      children: task.attrs[0].value
-                                  };
+                                  const _component = this.getNewComponent(task);
+
                                   return (
                                       <Draggable draggableId={task.id} key={task.id} index={index}>
                                           {(provided, snapshot) => (

@@ -27,7 +27,7 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
                                 key={attr.id}
                                 rules={[{ required: attr.required, message: `${attr.name}不能为空！` }]}
                             >
-                                <Input onChange={(e) => onChange(e.target.value, attr.id)} />
+                                <Input onChange={(e) => onChange(e.target.value, attr.id)} value={attr.value} />
                             </Form.Item>
                         );
                     } else if (attr.type === 'function') {
