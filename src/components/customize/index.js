@@ -12,13 +12,29 @@ import ComponentAttrsConfig from './componentAttrsConfig';
 const { TabPane } = Tabs;
 
 /**
+ * 添加点击事件
+ * @param {} component
+ */
+const addOnClickComponent = (item, newId, that, droppableId) => {
+    const _component = _.cloneDeep(item.component);
+    _component.props = {
+        ..._component.props,
+        // 添加点击事件
+        onClick: (e) => {
+            that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
+            e.preventDefault();
+        }
+    };
+    return _component;
+};
+
+/**
  * 同一区域内排序
  */
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
 };
 
@@ -29,17 +45,9 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
     const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
-    const _component = _.cloneDeep(item.component);
     const newId = uuidv4();
-    _component.props = {
-        ..._component.props,
-        // 添加点击事件
-        onClick: (e) => {
-            that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableDestination.droppableId } });
-            e.preventDefault();
-        }
-    };
-    destClone.splice(droppableDestination.index, 0, { ...item, id: newId, component: _component });
+    const newComponent = addOnClickComponent(item, newId, that, droppableDestination.droppableId);
+    destClone.splice(droppableDestination.index, 0, { ...item, id: newId, component: newComponent });
     return destClone;
 };
 /**
@@ -57,7 +65,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
     return result;
 };
 export default class Customize extends React.Component {
-    state = { ...INIT_DATA, selectedNode: {} };
+    state = { ...INIT_DATA, selectedNode: { node: {} } };
 
     getNewComponent = (task, areaId) => {
         // 展示的时候，从新渲染组件
@@ -65,16 +73,46 @@ export default class Customize extends React.Component {
         // 可以名称的对应上，然后来做
         const _component = _.cloneDeep(task.component);
         if (task.key === 'button' && areaId === 'area-operate') {
-            debugger;
+            // A：按钮区域
             _component.props = {
                 ..._component.props,
                 children: task.attrs[0].value,
                 type: task.attrs[1].value
             };
-        } else {
         }
 
         return _component;
+    };
+
+    getNewComponentOfAreaSearch = (task, areaId) => {
+        const _component = _.cloneDeep(task.component);
+        const formItemAttrs = {};
+        if (areaId === 'area-search') {
+            task &&
+                task.attrs &&
+                task.attrs.forEach((item) => {
+                    if (item.key === 'name' || item.key === 'label') {
+                        formItemAttrs[item.key] = item.value;
+                    } else if (item.key === 'required') {
+                        // rules={[{ required: true, message: '最少2个字符' }]}
+                        formItemAttrs['rules'] = [
+                            {
+                                required: item.value,
+                                message: '不能为空！'
+                            }
+                        ];
+                    } else if (item.key === 'default') {
+                        formItemAttrs['initialValue'] = item.value;
+                    } else {
+                        _component.props = {
+                            ..._component.props,
+                            [item.key]: item.value
+                        };
+                    }
+                });
+        }
+        debugger;
+        return { component: _component, formItemAttrs: formItemAttrs };
     };
     updateArea = (key, tasks) => {
         const areas = this.state.areas;
@@ -204,6 +242,7 @@ export default class Customize extends React.Component {
                             <Form {...layout} ref={this.formRef}>
                                 <Row gutter={24}>
                                     {area.tasks.map((task, index) => {
+                                        const result = this.getNewComponentOfAreaSearch(task, area.id);
                                         return (
                                             <Draggable draggableId={task.id} key={task.id} index={index}>
                                                 {(provided, snapshot) => (
@@ -213,18 +252,14 @@ export default class Customize extends React.Component {
                                                         {...provided.draggableProps}
                                                         style={{
                                                             ...provided.draggableProps.style,
-                                                            top: '0px'
+                                                            top: '0px',
                                                             // border: `1px ${snapshot.isDragging ? 'dashed #000' : 'dashed #fff1f0'}`
+                                                            border:
+                                                                task.id === this.state.selectedNode.node.id ? '1px dashed #ff7875' : '0px'
                                                         }}
                                                         {...provided.dragHandleProps}
                                                     >
-                                                        <Form.Item
-                                                            name={uuidv4()}
-                                                            label='名称自取'
-                                                            rules={[{ required: true, message: '最少2个字符' }]}
-                                                        >
-                                                            {task.component}
-                                                        </Form.Item>
+                                                        <Form.Item {...result.formItemAttrs}>{result.component}</Form.Item>
                                                     </Col>
                                                 )}
                                             </Draggable>

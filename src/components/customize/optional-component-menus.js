@@ -18,7 +18,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
         menus: [
             {
                 id: uuidv4(),
-                key: 'button',
+                key: 'button', // 需要它来确定这是个button组件
                 name: 'Button 按钮',
                 component: <Button />,
                 // 属性
@@ -48,7 +48,18 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
         id: 2,
         key: '2',
         menus: [
-            { id: uuidv4(), name: 'Input 输入框', component: <Input placeholder='请输入' /> },
+            {
+                id: uuidv4(),
+                name: 'Input 输入框',
+                component: <Input />,
+                attrs: [
+                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
+                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
+                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
+                ]
+            },
             {
                 id: uuidv4(),
                 name: 'Checkbox 多选框',
