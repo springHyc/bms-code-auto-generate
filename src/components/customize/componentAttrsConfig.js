@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Checkbox } from 'antd';
+import { Form, Input, Radio, Select } from 'antd';
 
 /**
  * 组件通用配置
@@ -30,6 +30,38 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
                                 <Input onChange={(e) => onChange(e.target.value, attr.id)} value={attr.value} />
                             </Form.Item>
                         );
+                    } else if (attr.type === 'radio') {
+                        return (
+                            <Form.Item
+                                label={attr.name}
+                                key={attr.id}
+                                rules={[{ required: attr.required, message: `${attr.name}不能为空！` }]}
+                            >
+                                <Radio.Group>
+                                    {attr.options.map((option) => (
+                                        <Radio key={option} value={option}>
+                                            {option}
+                                        </Radio>
+                                    ))}
+                                </Radio.Group>
+                            </Form.Item>
+                        );
+                    } else if (attr.type === 'select') {
+                        return (
+                            <Form.Item
+                                label={attr.name}
+                                key={attr.id}
+                                rules={[{ required: attr.required, message: `${attr.name}不能为空！` }]}
+                            >
+                                <Select value={attr.value} onChange={(value) => onChange(value, attr.id)}>
+                                    {attr.options.map((option) => (
+                                        <Select.Option key={option} value={option}>
+                                            {option}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        );
                     } else if (attr.type === 'function') {
                         return (
                             <Form.Item
@@ -37,10 +69,11 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
                                 key={attr.id}
                                 rules={[{ required: attr.required, message: `${attr.name}不能为空！` }]}
                             >
-                                <Input.TextArea rows={3} />
+                                <Input.TextArea value={attr.value} rows={3} onChange={({ target }) => onChange(target.value, attr.id)} />
                             </Form.Item>
                         );
                     }
+                    return null;
                 })}
                 {/* <Form.Item label='field: 字段名' name='fieldName' rules={[{ required: true, message: '请输入姓名！' }]}>
                     <Input />

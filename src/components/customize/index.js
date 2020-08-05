@@ -33,7 +33,7 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
     const newId = uuidv4();
     _component.props = {
         ..._component.props,
-        children: item.attrs[0].value,
+        // 添加点击事件
         onClick: (e) => {
             that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableDestination.droppableId } });
             e.preventDefault();
@@ -59,17 +59,19 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 export default class Customize extends React.Component {
     state = { ...INIT_DATA, selectedNode: {} };
 
-    getNewComponent = (task) => {
+    getNewComponent = (task, areaId) => {
         // 展示的时候，从新渲染组件
         // 得专门的组件来专门做
         // 可以名称的对应上，然后来做
         const _component = _.cloneDeep(task.component);
-        if (task.key === 'button') {
+        if (task.key === 'button' && areaId === 'area-operate') {
+            debugger;
             _component.props = {
                 ..._component.props,
                 children: task.attrs[0].value,
                 type: task.attrs[1].value
             };
+        } else {
         }
 
         return _component;
@@ -249,6 +251,7 @@ export default class Customize extends React.Component {
     }
 
     renderArea(area) {
+        console.log('renderArea', area);
         return (
             <Droppable droppableId={area.id} key={area.id} className={area.className}>
                 {(provided, snapshot) => (
@@ -260,7 +263,7 @@ export default class Customize extends React.Component {
                         {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0
                             ? area.tasks.map((task, index) => {
-                                  const _component = this.getNewComponent(task);
+                                  const _component = this.getNewComponent(task, area.id);
 
                                   return (
                                       <Draggable draggableId={task.id} key={task.id} index={index}>
