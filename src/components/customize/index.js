@@ -17,14 +17,26 @@ const { TabPane } = Tabs;
  */
 const addOnClickComponent = (item, newId, that, droppableId) => {
     const _component = _.cloneDeep(item.component);
-    _component.props = {
-        ..._component.props,
-        // 添加点击事件
-        onClick: (e) => {
-            that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-            e.preventDefault();
-        }
-    };
+    if (item.key === 'datepicker') {
+        _component.props = {
+            ..._component.props,
+            // 添加点击事件
+            onChange: (e) => {
+                that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
+                e.preventDefault();
+            }
+        };
+    } else {
+        _component.props = {
+            ..._component.props,
+            // 添加点击事件
+            onClick: (e) => {
+                that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
+                e.preventDefault();
+            }
+        };
+    }
+
     return _component;
 };
 
@@ -86,7 +98,7 @@ export default class Customize extends React.Component {
 
     getNewComponentOfAreaSearch = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
-        const formItemAttrs = {};
+        const formItemAttrs = { name: task.id };
         if (areaId === 'area-search') {
             task &&
                 task.attrs &&
@@ -101,8 +113,10 @@ export default class Customize extends React.Component {
                                 message: '不能为空！'
                             }
                         ];
-                    } else if (item.key === 'default') {
-                        formItemAttrs['initialValue'] = item.value;
+                    } else if (item.key === 'default' && item.key !== 'datapicker') {
+                        // TODO 默认值的处理再想办法，但是值是能存起来的
+                        // datapicker不行，对于默认值的处理
+                        // formItemAttrs['initialValue'] = item.value; // 只是在设置了默认值时起作用
                     } else {
                         _component.props = {
                             ..._component.props,
@@ -111,7 +125,6 @@ export default class Customize extends React.Component {
                     }
                 });
         }
-        debugger;
         return { component: _component, formItemAttrs: formItemAttrs };
     };
     updateArea = (key, tasks) => {
@@ -286,7 +299,7 @@ export default class Customize extends React.Component {
     }
 
     renderArea(area) {
-        console.log('renderArea', area);
+        // console.log('renderArea', area);
         return (
             <Droppable droppableId={area.id} key={area.id} className={area.className}>
                 {(provided, snapshot) => (
@@ -354,7 +367,6 @@ export default class Customize extends React.Component {
                             updateSelectedNode={(node) => {
                                 const newAreas = this.state.areas;
                                 newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
-                                    debugger;
                                     if (item.id === node.id) {
                                         item = node;
                                     }

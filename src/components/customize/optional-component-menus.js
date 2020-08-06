@@ -50,32 +50,49 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
         menus: [
             {
                 id: uuidv4(),
+                key: 'input',
                 name: 'Input 输入框',
                 component: <Input />,
                 attrs: [
                     { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
                     { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: 'default' },
                     { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
                     { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
                 ]
             },
             {
+                // TODO这个暂时在搜索区域没用过
                 id: uuidv4(),
                 name: 'Checkbox 多选框',
                 component: <span>this is Checkbox</span>
             },
             {
                 id: uuidv4(),
+                key: 'datepicker',
                 name: 'DatePicker 日期选择框',
-                component: <RangePicker />
+                component: <RangePicker onChange={() => {}} />,
+                attrs: [
+                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
+                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    // { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
+                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false }
+                ]
             },
             {
                 id: uuidv4(),
                 name: 'InputNumber 数字输入框',
-                component: <InputNumber placeholder='请填写数字' />
+                component: <InputNumber placeholder='请填写数字' />,
+                attrs: [
+                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
+                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: 'default' },
+                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
+                ]
             },
             {
+                // TODO 搜索区域暂时没有
                 id: uuidv4(),
                 name: 'Radio 单选框',
                 component: (
@@ -104,7 +121,14 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         </Option>
                         <Option value='Yiminghe'>yiminghe</Option>
                     </Select>
-                )
+                ),
+                attrs: [
+                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
+                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: 'default' },
+                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
+                ]
             }
         ]
     },
