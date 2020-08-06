@@ -47,6 +47,7 @@ export default class Layouts extends Component {
     getBreadcrumb = () => {
         let breadcrumbs = [];
         const hashStr = window.location.hash.split('#/')[1];
+        // eslint-disable-next-line array-callback-return
         const targetRoute = MENUS.filter((menu) => {
             if (menu.path.split('/')[1] === hashStr.split('/')[0]) {
                 return menu;
