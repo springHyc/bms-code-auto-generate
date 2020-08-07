@@ -18,10 +18,11 @@ const { TabPane } = Tabs;
 const addOnClickComponent = (item, newId, that, droppableId) => {
     const _component = _.cloneDeep(item.component);
     if (item.key === 'datepicker') {
+        // ? 不好使
         _component.props = {
             ..._component.props,
             // 添加点击事件
-            onChange: (e) => {
+            focus: (e) => {
                 that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
                 e.preventDefault();
             }
