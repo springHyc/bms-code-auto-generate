@@ -78,6 +78,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 };
 export default class Customize extends React.Component {
     state = { ...INIT_DATA, selectedNode: { node: {} } };
+    formRef = React.createRef();
 
     getNewComponent = (task, areaId) => {
         // 展示的时候，从新渲染组件
@@ -98,7 +99,7 @@ export default class Customize extends React.Component {
 
     getNewComponentOfAreaSearch = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
-        const formItemAttrs = { name: task.id };
+        const formItemAttrs = {};
         if (areaId === 'area-search') {
             task &&
                 task.attrs &&
@@ -106,6 +107,7 @@ export default class Customize extends React.Component {
                     if (item.key === 'name' || item.key === 'label') {
                         formItemAttrs[item.key] = item.value;
                     } else if (item.key === 'required') {
+                        // 样例
                         // rules={[{ required: true, message: '最少2个字符' }]}
                         formItemAttrs['rules'] = [
                             {
@@ -113,10 +115,6 @@ export default class Customize extends React.Component {
                                 message: '不能为空！'
                             }
                         ];
-                    } else if (item.key === 'default' && item.key !== 'datapicker') {
-                        // TODO 默认值的处理再想办法，但是值是能存起来的
-                        // datapicker不行，对于默认值的处理
-                        // formItemAttrs['initialValue'] = item.value; // 只是在设置了默认值时起作用
                     } else {
                         _component.props = {
                             ..._component.props,
@@ -169,25 +167,6 @@ export default class Customize extends React.Component {
             }
         }
     };
-
-    // renderSider1() {
-    //     return (
-    //         <Sider className='site-layout-background' width={200}>
-    //             <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['1-1']} style={{ height: '100%' }}>
-    //                 {OPTIONAL_CONPONENT_MENUS_DATA.map((group) => {
-    //                     return (
-    //                         <ItemGroup title={group.title} key={group.key}>
-    //                             <Divider />
-    //                             {group.menus.map((menu) => {
-    //                                 return <Menu.Item key={menu.key}>{menu.name}</Menu.Item>;
-    //                             })}
-    //                         </ItemGroup>
-    //                     );
-    //                 })}
-    //             </Menu>
-    //         </Sider>
-    //     );
-    // }
 
     /**
      * 左侧可选择区域
@@ -272,7 +251,9 @@ export default class Customize extends React.Component {
                                                         }}
                                                         {...provided.dragHandleProps}
                                                     >
-                                                        <Form.Item {...result.formItemAttrs}>{result.component}</Form.Item>
+                                                        <Form.Item {...result.formItemAttrs} name={task.id}>
+                                                            {result.component}
+                                                        </Form.Item>
                                                     </Col>
                                                 )}
                                             </Draggable>
@@ -366,9 +347,18 @@ export default class Customize extends React.Component {
                             node={this.state.selectedNode.node}
                             updateSelectedNode={(node) => {
                                 const newAreas = this.state.areas;
+                                const that = this;
                                 newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
                                     if (item.id === node.id) {
                                         item = node;
+                                        let defalutValue;
+                                        node.attrs.forEach((attr) => {
+                                            if (attr.key === 'default') {
+                                                defalutValue = attr.value;
+                                            }
+                                        });
+                                        debugger;
+                                        that.formRef.current.setFieldsValue({ [node.id]: defalutValue });
                                     }
                                 });
                                 this.setState({ areas: newAreas });

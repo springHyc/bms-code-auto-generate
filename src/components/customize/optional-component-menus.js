@@ -56,7 +56,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 attrs: [
                     { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
                     { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: 'default' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
                     { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
                     { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
                 ]
@@ -75,7 +75,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 attrs: [
                     { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
                     { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    // { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
                     { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false }
                 ]
             },
@@ -86,7 +86,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 attrs: [
                     { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
                     { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: 'default' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
                     { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
                     { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
                 ]
@@ -125,7 +125,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 attrs: [
                     { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
                     { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: 'default' },
+                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
                     { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
                     { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
                 ]

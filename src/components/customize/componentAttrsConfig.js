@@ -6,11 +6,12 @@ import { Form, Input, Radio, Select, Checkbox } from 'antd';
  * @param {*} param0
  */
 export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
+    let formRef = React.createRef();
     const attrs = (node && node.attrs) || [];
+    // 修改Node属性值
     const onChange = (value, id) => {
         attrs.forEach((attr) => {
             if (attr.id === id) {
-                debugger;
                 attr.value = value;
             }
         });
@@ -25,16 +26,11 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
     };
     return (
         <div>
-            <Form>
+            <Form ref={formRef}>
                 {attrs.map((attr) => {
                     if (attr.type === 'string') {
                         return (
-                            <Form.Item
-                                {...formItemProps(attr)}
-                                // label={attr.name}
-                                // key={attr.id}
-                                // rules={[{ required: attr.required, message: `${attr.name}不能为空！` }]}
-                            >
+                            <Form.Item {...formItemProps(attr)}>
                                 <Input onChange={(e) => onChange(e.target.value, attr.id)} value={attr.value} />
                             </Form.Item>
                         );
