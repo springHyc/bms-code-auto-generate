@@ -51,22 +51,14 @@ const MENUS = [
         ]
     },
     {
-        path: '/test1',
-        name: 'react-beautiful-dnd实验',
+        path: '/test',
+        name: '各种实验',
         icon: <BlockOutlined />,
-        component: ReactBeautifulDndTest
-    },
-    {
-        path: '/test2',
-        name: 'use-gesture实验',
-        icon: <BulbOutlined />,
-        component: UsegestureTest
-    },
-    {
-        path: '/test3',
-        name: 'React-Grid-Layout实验', //https://github.com/STRML/react-grid-layout
-        icon: <LayoutOutlined />,
-        component: ReactGridLayoutTest
+        subset: [
+            { path: '/test/react-beautiful-dnd', name: 'react-beautiful-dnd实验', component: ReactBeautifulDndTest },
+            { path: '/test/use-gesture', name: 'use-gesture实验', component: UsegestureTest },
+            { path: '/test/react-grid-layout', name: 'React-Grid-Layout实验', icon: <LayoutOutlined />, component: ReactGridLayoutTest } //https://github.com/STRML/react-grid-layout
+        ]
     },
     { path: '/react-test', name: 'React 新特性实验', icon: <BlockOutlined />, component: ReactNewFeature }
 ];
