@@ -157,55 +157,62 @@ export default class Layouts extends Component {
         return (
             <Layout className='hyc-layout'>
                 {this.renderHeader()}
-
-                <div className='content'>
-                    <Content className='site-layout' style={{ marginTop: 64 }}>
-                        <Breadcrumb style={{ margin: '16px ' }}>
-                            {breadcrumbs.map((item, index) => (
-                                <Breadcrumb.Item key={index}>
-                                    <Link to={item.path}>{item.name}</Link>
-                                </Breadcrumb.Item>
-                            ))}
-                        </Breadcrumb>
-                        <div className='site-layout-background' style={{ minHeight: 'calc(100vh - 188px)' }}>
-                            {MENUS.map((item) => {
-                                if (item.subset && item.subset.length > 0) {
-                                    return item.subset.map((sub) => (
-                                        <Route exact key={sub.path} path={sub.path} render={(props) => <sub.component {...props} />} />
-                                    ));
-                                } else {
-                                    // return (
-                                    //     <Route exact key={item.path} path={item.path} render={(props) => <item.component {...props} />} />
-                                    // );
-                                    return (
-                                        <Route exact key={item.path} path={item.path}>
-                                            {({ match }) => (
-                                                <CSSTransition in={match != null} timeout={300} classNames='page' unmountOnExit>
-                                                    <div className='page'>
-                                                        <item.component />
-                                                    </div>
-                                                </CSSTransition>
-                                            )}
-                                        </Route>
-                                    );
-                                }
-                            })}
-                            <Route
-                                path='/'
-                                render={() => (
-                                    <Redirect
-                                        to={
-                                            window.location.hash.split('#')[1] === '/'
-                                                ? this.state.current[0].path
-                                                : window.location.hash.split('#')[1]
+                <SwitchTransition modes='out-in'>
+                    <CSSTransition
+                        key={key}
+                        addEndListener={(node, done) => {
+                            node.addEventListener('transitionend', done, false);
+                        }}
+                        classNames='fade'
+                    >
+                        <div className='content'>
+                            <Content className='site-layout' style={{ marginTop: 64 }}>
+                                <Breadcrumb style={{ margin: '16px ' }}>
+                                    {breadcrumbs.map((item, index) => (
+                                        <Breadcrumb.Item key={index}>
+                                            <Link to={item.path}>{item.name}</Link>
+                                        </Breadcrumb.Item>
+                                    ))}
+                                </Breadcrumb>
+                                <div className='site-layout-background' style={{ minHeight: 'calc(100vh - 188px)' }}>
+                                    {MENUS.map((item) => {
+                                        if (item.subset && item.subset.length > 0) {
+                                            return item.subset.map((sub) => (
+                                                <Route
+                                                    exact
+                                                    key={sub.path}
+                                                    path={sub.path}
+                                                    render={(props) => <sub.component {...props} />}
+                                                />
+                                            ));
+                                        } else {
+                                            return (
+                                                <Route
+                                                    exact
+                                                    key={item.path}
+                                                    path={item.path}
+                                                    render={(props) => <item.component {...props} />}
+                                                />
+                                            );
                                         }
+                                    })}
+                                    <Route
+                                        path='/'
+                                        render={() => (
+                                            <Redirect
+                                                to={
+                                                    window.location.hash.split('#')[1] === '/'
+                                                        ? this.state.current[0].path
+                                                        : window.location.hash.split('#')[1]
+                                                }
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
+                                </div>
+                            </Content>
                         </div>
-                    </Content>
-                </div>
-
+                    </CSSTransition>
+                </SwitchTransition>
                 <Footer>贺贺 版权所有 | 采用默认主题的后台管理系统页面自动生成工具 | 基于 React+Antd 构建©2020 | 托管于GitHub</Footer>
                 {/* </Layout> */}
             </Layout>

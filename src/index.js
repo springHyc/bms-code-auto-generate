@@ -11,9 +11,10 @@ moment.locale('zh-cn');
 ReactDOM.render(
     <ConfigProvider locale={zhCN}>
         <Router>
-            <Switch>
+            {/* <Switch>
                 <Route path='/' render={(props) => <Layout {...props} />} />
-            </Switch>
+            </Switch> */}
+            <Layout />
         </Router>
     </ConfigProvider>,
     document.getElementById('root')
