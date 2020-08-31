@@ -1,12 +1,12 @@
 import React from 'react';
 import { EditOutlined, SnippetsOutlined, TableOutlined, BlockOutlined, BulbOutlined, LayoutOutlined } from '@ant-design/icons';
-
 import TabDemo from './components/demo/tab';
 import Customize from './components/customize';
 import ReactBeautifulDndTest from './components/test/react-beautiful-dnd-test';
 import UsegestureTest from './components/test/usegestureTest';
 import ReactGridLayoutTest from './components/test/react-grid-layout-test/';
 import ReactNewFeature from './components/test/react-new-feature';
+import Printing from './components/animation-cases/printing';
 
 /**
  * 整个路由走的是hash路由。
@@ -19,6 +19,25 @@ import ReactNewFeature from './components/test/react-new-feature';
  */
 const MENUS = [
     {
+        path: '/customize',
+        name: '自定义生成页面',
+        icon: <EditOutlined />,
+        component: Customize
+    },
+    {
+        path: '/animation',
+        name: '动画',
+        icon: <SnippetsOutlined />,
+        subset: [
+            {
+                path: '/animation/printing',
+                name: '打印机效果',
+                icon: <SnippetsOutlined />,
+                component: Printing
+            }
+        ]
+    },
+    {
         path: '/default',
         name: '生成默认页面',
         icon: <SnippetsOutlined />,
@@ -30,12 +49,6 @@ const MENUS = [
                 component: TabDemo
             }
         ]
-    },
-    {
-        path: '/customize',
-        name: '自定义生成页面',
-        icon: <EditOutlined />,
-        component: Customize
     },
     {
         path: '/test1',
