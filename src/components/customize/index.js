@@ -377,6 +377,9 @@ export default class Customize extends React.Component {
     render() {
         return (
             <div className='hyc-wrapper'>
+                <Button className='create-code' type='primary'>
+                    生成代码
+                </Button>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     {this.renderSider()}
                     <div className='customize-wrapper br-page'>{this.renderAreas()}</div>
