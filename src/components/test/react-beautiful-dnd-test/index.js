@@ -69,7 +69,6 @@ export default class ReactBeautifulDndTest extends Component {
     };
 
     render() {
-        console.log(this.state);
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <div style={{ display: 'flex' }}>

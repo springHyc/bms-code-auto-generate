@@ -1,56 +1,60 @@
-// .fade-enter .site-layout {
+// 2
+// .fade-in-out-page {
+//     position: absolute;
+//     left: 15px;
+//     right: 15px;
+// }
+
+// .fade-in-out-page-enter {
 //     opacity: 0;
+//     /* transform: scale(1.1); */
 //     transform: translateX(-100%);
 // }
-// .fade-enter-active .site-layout {
+
+// .fade-in-out-page-enter-active {
 //     opacity: 1;
-//     transform: translateX(0%);
-// }
-// .fade-exit .site-layout {
-//     opacity: 1;
-//     transform: translateX(0%);
-// }
-// .fade-exit-active .site-layout {
-//     opacity: 0;
+//     /* transform: scale(1); */
 //     transform: translateX(100%);
-// }
-// .fade-enter-active .site-layout,
-// .fade-exit-active .site-layout {
-//     transition: opacity 500ms, transform 500ms;
+//     transition: opacity 1000ms, transform 1000ms;
 // }
 
-// .container {
-//     position: relative;
-//   }
+// .fade-in-out-page-exit {
+//     opacity: 1;
+//     /* transform: scale(1); */
+//     transform: translateX(0%);
+// }
 
-.page {
+// .fade-in-out-page-exit-active {
+//     opacity: 0;
+//     /* transform: scale(0.9); */
+//     transform: translateX(100%);
+//     transition: opacity 1000ms, transform 1000ms;
+// }
+
+.fade-in-out-page {
     position: absolute;
     left: 15px;
     right: 15px;
 }
 
-.page-enter {
+.fade-in-out-page-enter {
     opacity: 0;
-    /* transform: scale(1.1); */
-    transform: translateX(-100%);
+    transform: scale(1.1);
 }
 
-.page-enter-active {
+.fade-in-out-page-enter-active {
     opacity: 1;
-    /* transform: scale(1); */
-    transform: translateX(100%);
-    transition: opacity 500ms, transform 500ms;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
 }
 
-.page-exit {
+.fade-in-out-page-exit {
     opacity: 1;
-    /* transform: scale(1); */
-    transform: translateX(0%);
+    transform: scale(1);
 }
 
-.page-exit-active {
+.fade-in-out-page-exit-active {
     opacity: 0;
-    /* transform: scale(0.9); */
-    transform: translateX(100%);
-    transition: opacity 500ms, transform 500ms;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
 }

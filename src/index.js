@@ -5,7 +5,10 @@ import Layout from './Layout';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+    HashRouter as Router
+    // Route, Switch
+} from 'react-router-dom';
 moment.locale('zh-cn');
 
 ReactDOM.render(

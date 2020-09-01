@@ -40,29 +40,29 @@ const MENUS = [
             }
         ]
     },
-    // {
-    //     path: '/default',
-    //     name: '生成默认页面',
-    //     icon: <SnippetsOutlined />,
-    //     subset: [
-    //         {
-    //             path: '/default/normal-page',
-    //             name: '普通列表页',
-    //             icon: <TableOutlined />,
-    //             component: TabDemo
-    //         }
-    //     ]
-    // },
-    // {
-    //     path: '/test',
-    //     name: '各种实验',
-    //     icon: <BlockOutlined />,
-    //     subset: [
-    //         { path: '/test/react-beautiful-dnd', name: 'react-beautiful-dnd实验', component: ReactBeautifulDndTest },
-    //         { path: '/test/use-gesture', name: 'use-gesture实验', component: UsegestureTest },
-    //         { path: '/test/react-grid-layout', name: 'React-Grid-Layout实验', icon: <LayoutOutlined />, component: ReactGridLayoutTest } //https://github.com/STRML/react-grid-layout
-    //     ]
-    // },
+    {
+        path: '/default',
+        name: '生成默认页面',
+        icon: <SnippetsOutlined />,
+        subset: [
+            {
+                path: '/default/normal-page',
+                name: '普通列表页',
+                icon: <TableOutlined />,
+                component: TabDemo
+            }
+        ]
+    },
+    {
+        path: '/test',
+        name: '各种实验',
+        icon: <BlockOutlined />,
+        subset: [
+            { path: '/test/react-beautiful-dnd', name: 'react-beautiful-dnd实验', component: ReactBeautifulDndTest },
+            { path: '/test/use-gesture', name: 'use-gesture实验', component: UsegestureTest },
+            { path: '/test/react-grid-layout', name: 'React-Grid-Layout实验', icon: <LayoutOutlined />, component: ReactGridLayoutTest } //https://github.com/STRML/react-grid-layout
+        ]
+    },
     { path: '/react-test', key: 5, name: 'React 新特性实验', icon: <BlockOutlined />, component: ReactNewFeature }
 ];
 
