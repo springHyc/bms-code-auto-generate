@@ -26,7 +26,7 @@ export default class Layouts extends Component {
         this.defaultSelectedKeys = window.location.hash.split('#')[1] === '/' ? [MENUS[0].path] : [window.location.hash.split('#')[1]];
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getBreadcrumb();
     }
     rootSubmenuKeys = MENUS.map((menu) => menu.path);
