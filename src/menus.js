@@ -7,6 +7,7 @@ import UsegestureTest from './components/test/usegestureTest';
 import ReactGridLayoutTest from './components/test/react-grid-layout-test/';
 import ReactNewFeature from './components/test/react-new-feature';
 import Printing from './components/animation-cases/printing';
+import ErrorBoundaryDemo from './components/test/errorBoundary';
 
 /**
  * 整个路由走的是hash路由。
@@ -58,6 +59,7 @@ const MENUS = [
         name: '各种实验',
         icon: <BlockOutlined />,
         subset: [
+            { path: '/test/error-boundary', name: 'Error Boundary', component: ErrorBoundaryDemo },
             { path: '/test/react-beautiful-dnd', name: 'react-beautiful-dnd实验', component: ReactBeautifulDndTest },
             { path: '/test/use-gesture', name: 'use-gesture实验', component: UsegestureTest },
             { path: '/test/react-grid-layout', name: 'React-Grid-Layout实验', icon: <LayoutOutlined />, component: ReactGridLayoutTest } //https://github.com/STRML/react-grid-layout
