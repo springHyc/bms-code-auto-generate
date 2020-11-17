@@ -348,18 +348,9 @@ export default class Customize extends React.Component {
                             node={this.state.selectedNode.node}
                             updateSelectedNode={(node) => {
                                 const newAreas = this.state.areas;
-                                const that = this;
                                 newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
                                     if (item.id === node.id) {
                                         item = node;
-                                        let defalutValue;
-                                        node.attrs.forEach((attr) => {
-                                            if (attr.key === 'default') {
-                                                defalutValue = attr.value;
-                                            }
-                                        });
-                                        debugger;
-                                        that.formRef.current.setFieldsValue({ [node.id]: defalutValue });
                                     }
                                 });
                                 this.setState({ areas: newAreas });
