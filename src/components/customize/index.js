@@ -8,6 +8,7 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { Clone, Item, Notice, Kiosk } from './common';
 import ComponentAttrsConfig from './componentAttrsConfig';
+import GenerateService from './generate-service';
 
 const { TabPane } = Tabs;
 
@@ -18,13 +19,12 @@ const { TabPane } = Tabs;
 const addOnClickComponent = (item, newId, that, droppableId) => {
     const _component = _.cloneDeep(item.component);
     if (item.key === 'datepicker') {
-        // ? 不好使
+        // * 不好使 用的这个方法:onOpenChange 有待改进
         _component.props = {
             ..._component.props,
             // 添加点击事件
-            focus: (e) => {
+            onOpenChange: () => {
                 that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-                e.preventDefault();
             }
         };
     } else {
@@ -90,8 +90,8 @@ export default class Customize extends React.Component {
             // A：按钮区域
             _component.props = {
                 ..._component.props,
-                children: task.attrs[0].value,
-                type: task.attrs[1].value
+                children: task.attrs.name && task.attrs.name.value,
+                type: task.attrs.type.value
             };
         }
 
@@ -102,12 +102,12 @@ export default class Customize extends React.Component {
         const _component = _.cloneDeep(task.component);
         const formItemAttrs = {};
         if (areaId === 'area-search') {
-            task &&
-                task.attrs &&
-                task.attrs.forEach((item) => {
-                    if (item.key === 'name' || item.key === 'label') {
-                        formItemAttrs[item.key] = item.value;
-                    } else if (item.key === 'required') {
+            if (task && task.attrs) {
+                for (const key in task.attrs) {
+                    const item = task.attrs[key];
+                    if (key === 'name' || key === 'label') {
+                        formItemAttrs[key] = item.value;
+                    } else if (key === 'required') {
                         // 样例
                         // rules={[{ required: true, message: '最少2个字符' }]}
                         formItemAttrs['rules'] = [
@@ -119,10 +119,11 @@ export default class Customize extends React.Component {
                     } else {
                         _component.props = {
                             ..._component.props,
-                            [item.key]: item.value
+                            [key]: item.value
                         };
                     }
-                });
+                }
+            }
         }
         return { component: _component, formItemAttrs: formItemAttrs };
     };
@@ -167,6 +168,13 @@ export default class Customize extends React.Component {
                 break;
             }
         }
+    };
+
+    /**
+     * 生成代码
+     */
+    generateCode = () => {
+        GenerateService.generateCode(this.state.areas);
     };
 
     /**
@@ -348,6 +356,7 @@ export default class Customize extends React.Component {
                             node={this.state.selectedNode.node}
                             updateSelectedNode={(node) => {
                                 const newAreas = this.state.areas;
+                                debugger;
                                 newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
                                     if (item.id === node.id) {
                                         item = node;
@@ -368,7 +377,7 @@ export default class Customize extends React.Component {
     render() {
         return (
             <div className='hyc-wrapper'>
-                <Button className='create-code' type='primary'>
+                <Button className='create-code' type='primary' onClick={this.generateCode}>
                     生成代码
                 </Button>
                 <DragDropContext onDragEnd={this.onDragEnd}>

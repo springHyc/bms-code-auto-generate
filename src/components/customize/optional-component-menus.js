@@ -22,24 +22,24 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 name: 'Button 按钮',
                 component: <Button />,
                 // 属性
-                attrs: [
-                    { id: uuidv4(), name: '按钮文本', type: 'string', required: true, value: '按钮文本' },
-                    {
+                attrs: {
+                    name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '按钮文本' },
+                    type: {
                         id: uuidv4(),
-                        name: 'type',
+                        text: 'type',
                         type: 'select',
                         required: false,
                         value: 'default',
                         options: ['primary', 'ghost', 'dashed', 'danger', 'link', 'text', 'default']
                     },
-                    {
+                    onClick: {
                         id: uuidv4(),
-                        name: 'onClick事件',
+                        text: 'onClick事件',
                         type: 'function', // todo 生成代码时是：() => {}
                         required: false,
                         value: ''
                     }
-                ]
+                }
             }
         ]
     },
@@ -53,13 +53,13 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'input',
                 name: 'Input 输入框',
                 component: <Input />,
-                attrs: [
-                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
-                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
-                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
-                ]
+                attrs: {
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    placeholder: { id: uuidv4(), key: 'placeholder', text: 'placeholder', type: 'string', required: false, value: '请输入' }
+                }
             },
             {
                 // TODO这个暂时在搜索区域没用过
@@ -71,25 +71,25 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 id: uuidv4(),
                 key: 'datepicker',
                 name: 'DatePicker 日期选择框',
-                component: <RangePicker onChange={() => {}} />,
-                attrs: [
-                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
-                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
-                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false }
-                ]
+                component: <RangePicker />,
+                attrs: {
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false }
+                }
             },
             {
                 id: uuidv4(),
                 name: 'InputNumber 数字输入框',
                 component: <InputNumber placeholder='请填写数字' />,
-                attrs: [
-                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
-                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
-                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
-                ]
+                attrs: {
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    placeholder: { id: uuidv4(), key: 'placeholder', text: 'placeholder', type: 'string', required: false, value: '请输入' }
+                }
             },
             {
                 // TODO 搜索区域暂时没有
@@ -122,13 +122,13 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         <Option value='Yiminghe'>yiminghe</Option>
                     </Select>
                 ),
-                attrs: [
-                    { id: uuidv4(), key: 'name', name: 'name: 字段名', type: 'string', required: true, value: '' },
-                    { id: uuidv4(), key: 'label', name: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    { id: uuidv4(), key: 'default', name: 'default: 默认值', type: 'string', required: false, value: '' },
-                    { id: uuidv4(), key: 'required', name: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    { id: uuidv4(), key: 'placeholder', name: 'placeholder', type: 'string', required: false, value: '请输入' }
-                ]
+                attrs: {
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    placeholder: { id: uuidv4(), key: 'placeholder', text: 'placeholder', type: 'string', required: false, value: '请输入' }
+                }
             }
         ]
     },
@@ -210,6 +210,7 @@ const INIT_DATA = {
             title: '按钮操作区域',
             tasks: []
         },
+        // 搜索区域一般的组件：Date(年月日、年月)、select、input
         'area-search': {
             id: 'area-search',
             className: 'customize-search-wrapper br-select-container',

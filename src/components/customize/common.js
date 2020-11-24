@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+/**
+ * 有用的
+ */
 const List = styled.div`
     border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
     background: #fff;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, Radio, Select, Checkbox } from 'antd';
 
 /**
+ * 右侧区域
  * 组件通用配置
  * @param {*} param0
  */
@@ -10,33 +11,38 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
     const attrs = (node && node.attrs) || [];
     // 修改Node属性值
     const onChange = (value, id) => {
-        attrs.forEach((attr) => {
-            if (attr.id === id) {
-                attr.value = value;
+        for (const key in attrs) {
+            if (attrs.hasOwnProperty(key)) {
+                const attr = attrs[key];
+                if (attr.id === id) {
+                    attr.value = value;
+                }
             }
-        });
+        }
         updateSelectedNode(node);
     };
-    const formItemProps = (attr) => {
+    const formItemProps = (key, attr) => {
         return {
-            label: attr.name,
+            label: attr.text,
             key: attr.id,
-            rules: [{ required: attr.required, message: `${attr.name}不能为空！` }]
+            rules: [{ required: attr.required, message: `${key}不能为空！` }]
         };
     };
+    const keys = Object.keys(attrs);
     return (
         <div>
             <Form ref={formRef}>
-                {attrs.map((attr) => {
+                {keys.map((key) => {
+                    const attr = attrs[key];
                     if (attr.type === 'string') {
                         return (
-                            <Form.Item {...formItemProps(attr)}>
+                            <Form.Item {...formItemProps(key, attr)}>
                                 <Input onChange={(e) => onChange(e.target.value, attr.id)} value={attr.value} />
                             </Form.Item>
                         );
                     } else if (attr.type === 'radio') {
                         return (
-                            <Form.Item {...formItemProps(attr)}>
+                            <Form.Item {...formItemProps(key, attr)}>
                                 <Radio.Group>
                                     {attr.options.map((option) => (
                                         <Radio key={option} value={option}>
@@ -48,7 +54,7 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
                         );
                     } else if (attr.type === 'select') {
                         return (
-                            <Form.Item {...formItemProps(attr)}>
+                            <Form.Item {...formItemProps(key, attr)}>
                                 <Select value={attr.value} onChange={(value) => onChange(value, attr.id)}>
                                     {attr.options.map((option) => (
                                         <Select.Option key={option} value={option}>
@@ -60,13 +66,13 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
                         );
                     } else if (attr.type === 'checkbox') {
                         return (
-                            <Form.Item {...formItemProps(attr)}>
+                            <Form.Item {...formItemProps(key, attr)}>
                                 <Checkbox onChange={({ target }) => onChange(target.checked, attr.id)}>是否必填</Checkbox>
                             </Form.Item>
                         );
                     } else if (attr.type === 'function') {
                         return (
-                            <Form.Item {...formItemProps(attr)}>
+                            <Form.Item {...formItemProps(key, attr)}>
                                 <Input.TextArea value={attr.value} rows={3} onChange={({ target }) => onChange(target.value, attr.id)} />
                             </Form.Item>
                         );

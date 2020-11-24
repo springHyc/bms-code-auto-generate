@@ -3,9 +3,7 @@ import 'moment/locale/zh-cn';
 export default [
     {
         title: '代理公司',
-        dataIndex: 'channelCompanyName',
-        tooLong: true,
-        copy: true
+        dataIndex: 'channelCompanyName'
     },
     {
         title: '应用名称',
