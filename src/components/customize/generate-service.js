@@ -8,7 +8,7 @@ const generateAreaOperate = (sourceData) => {
     const btn = [];
     for (let i = 0; i < sourceData.tasks.length; i++) {
         const task = sourceData.tasks[i];
-        btn.push(<Button type={task.attrs[1].value}>{task.attrs[0].value || task.attrs[0].name}</Button>);
+        btn.push(<Button type={task.attrs.type.value}>{task.attrs.name.value}</Button>);
     }
     if (btn.length > 0) {
         return <div className='br-operate-container'>{btn}</div>;
@@ -82,7 +82,7 @@ const generateAreaSearch = (sourceData) => {
 };
 
 const generateAreaTable = (sourceData) => {
-    return sourceData.tasks[0].component;
+    return sourceData.tasks && sourceData.tasks[0] && sourceData.tasks[0].component;
 };
 
 const generateCode = (sourceData) => {

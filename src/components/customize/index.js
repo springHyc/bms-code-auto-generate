@@ -356,7 +356,6 @@ export default class Customize extends React.Component {
                             node={this.state.selectedNode.node}
                             updateSelectedNode={(node) => {
                                 const newAreas = this.state.areas;
-                                debugger;
                                 newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
                                     if (item.id === node.id) {
                                         item = node;
