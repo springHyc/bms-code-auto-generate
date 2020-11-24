@@ -1,6 +1,6 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { message, Form, Row, Col, Button, Tabs } from 'antd';
+import { message, Form, Row, Col, Button, Tabs, Modal } from 'antd';
 import { INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Clone, Item, Notice, Kiosk } from './common';
 import ComponentAttrsConfig from './componentAttrsConfig';
 import GenerateService from './generate-service';
+import CodeShowModal from './codeShowModal';
 
 const { TabPane } = Tabs;
 
@@ -78,7 +79,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
     return result;
 };
 export default class Customize extends React.Component {
-    state = { ...INIT_DATA, selectedNode: { node: {} } };
+    state = { ...INIT_DATA, selectedNode: { node: {} }, modalVisible: false };
     formRef = React.createRef();
 
     getNewComponent = (task, areaId) => {
@@ -174,7 +175,7 @@ export default class Customize extends React.Component {
      * 生成代码
      */
     generateCode = () => {
-        GenerateService.generateCode(this.state.areas);
+        this.setState({ modalVisible: true });
     };
 
     /**
@@ -384,6 +385,13 @@ export default class Customize extends React.Component {
                     <div className='customize-wrapper br-page'>{this.renderAreas()}</div>
                 </DragDropContext>
                 <div className='edit-wrapper'>{this.renderEditContext()}</div>
+
+                <CodeShowModal
+                    visible={this.state.modalVisible}
+                    onOk={() => this.setState({ modalVisible: false })}
+                    onCancel={() => this.setState({ modalVisible: false })}
+                    areas={this.state.areas}
+                />
             </div>
         );
     }

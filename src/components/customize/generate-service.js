@@ -88,13 +88,16 @@ const generateAreaTable = (sourceData) => {
 const generateCode = (sourceData) => {
     console.log('sourceData=', sourceData);
     let codeStr = (
-        <div className='br-page'>
-            {generateAreaOperate(sourceData['area-operate'])}
-            {generateAreaSearch(sourceData['area-search'])}
-            {generateAreaTable(sourceData['area-table'])}
+        <div id='br-page'>
+            <div className='br-page'>
+                {generateAreaOperate(sourceData['area-operate'])}
+                {generateAreaSearch(sourceData['area-search'])}
+                {generateAreaTable(sourceData['area-table'])}
+            </div>
         </div>
     );
     console.log('生成的代码=', codeStr);
+    return codeStr;
 };
 
 const GenerateService = {
