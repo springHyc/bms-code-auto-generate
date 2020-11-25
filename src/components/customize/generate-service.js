@@ -8,7 +8,7 @@ const generateAreaOperate = (sourceData) => {
     const btn = [];
     for (let i = 0; i < sourceData.tasks.length; i++) {
         const task = sourceData.tasks[i];
-        btn.push(`<Button type=${task.attrs.type.value}>${task.attrs.name.value}</Button>`);
+        btn.push(`<Button type="${task.attrs.type.value}">${task.attrs.name.value}</Button>`);
     }
     if (btn.length > 0) {
         return "<div className='br-operate-container'>" + btn.join('/n') + '</div>';
@@ -25,20 +25,23 @@ const generateAreaSearch = (sourceData) => {
     const items = [];
     for (let i = 0; i < sourceData.tasks.length; i++) {
         const task = sourceData.tasks[i];
-        task.component.placeholder = task.attrs.placeholder && task.attrs.placeholder.value;
+        const placeholder = task.attrs.placeholder && task.attrs.placeholder.value;
+        if (placeholder) {
+            task.componentStr.replaceAll('/>', "placeholder='请输入' />");
+        }
         items.push(
             `<Col span={8}>
                 <Form.Item
-                    label=${task.attrs.label && task.attrs.label.value}
-                    name=${task.attrs.name && task.attrs.name.value}
+                    label="${task.attrs.label && task.attrs.label.value}"
+                    name="${task.attrs.name && task.attrs.name.value}"
                     rules={[
                         {
-                            required: task.attrs.required && task.attrs.required.value,
-                            message: \`${task.attrs.name && task.attrs.name.value}不能为空！\`
+                            required: ${task.attrs.required && task.attrs.required.value},
+                            message: '${task.attrs.label && task.attrs.label.value}不能为空！'
                         }
                     ]}
                 >
-                    {task.component} // tod 变字符串
+                ${task.componentStr}
                 </Form.Item>
             </Col>`
         );
@@ -47,10 +50,10 @@ const generateAreaSearch = (sourceData) => {
         const offset = 2 - (items.length % 3);
         console.log('offset=', offset);
         items.push(
-            `<Col span={8} offset={offset}>
+            `<Col span={8} offset={${offset}}>
                 <div className='br-btn-inline'>
                     <Button onClick={() => {}}> 重置 </Button>
-                    <Button type='primary' onClick={() => { }} > 搜索 </Button>
+                    <Button type='primary' onClick={() => { }}>搜索</Button>
                 </div>
             </Col>`
         );
@@ -66,21 +69,29 @@ const generateAreaSearch = (sourceData) => {
 };
 
 const generateAreaTable = (sourceData) => {
-    debugger;
     if (sourceData.tasks && sourceData.tasks[0] && sourceData.tasks[0].component) {
-        return `{sourceData.tasks[0].component}`;
+        return sourceData.tasks[0].componentStr;
     }
     return '';
 };
 
 const generateCode = (sourceData) => {
     console.log('sourceData=', sourceData);
-    let codeStr = `<div className='br-page'>
-            ${generateAreaOperate(sourceData['area-operate'])}
-            ${generateAreaSearch(sourceData['area-search'])}
-            ${generateAreaTable(sourceData['area-table'])}
-        </div>`;
-    console.log('生成的代码=', codeStr);
+    const extraCodeStrBegin = `
+    import React, { Component } from 'react';
+    import { Button, Form, Row, Col, Input } from 'antd';
+    export default class TabDemo extends Component {
+        render() {
+            return (
+    `;
+    const extraCodeStrEnd = `)\n}\n}\n`;
+    let codeStr = ` <div className='br-page'>
+                        ${generateAreaOperate(sourceData['area-operate'])}
+                        ${generateAreaSearch(sourceData['area-search'])}
+                        ${generateAreaTable(sourceData['area-table'])}
+                    </div>`;
+
+    console.log('生成的代码=\n', `${extraCodeStrBegin}\n${codeStr}\n${extraCodeStrEnd}`);
 };
 
 const GenerateService = {

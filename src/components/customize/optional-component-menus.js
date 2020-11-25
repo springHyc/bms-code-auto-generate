@@ -5,7 +5,6 @@ import columns from './assistFile/columns';
 import Data from './assistFile/mockTableData';
 
 const { RangePicker } = DatePicker;
-const { Option } = Select;
 const { TabPane } = Tabs;
 const pageSizeOptions = ['10', '20', '50', '100'];
 const pageInfo = { pageSize: 10, pageNum: 1 };
@@ -53,6 +52,8 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'input',
                 name: 'Input 输入框',
                 component: <Input />,
+                componentStr: '<Input />',
+                importStr: "import {Input} from 'antd'",
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -72,6 +73,8 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'datepicker',
                 name: 'DatePicker 日期选择框',
                 component: <RangePicker />,
+                componentStr: '<RangePicker />',
+                importStr: "import {DatePicker} from 'antd'", // todo是否需要多引入单个年月日的
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -82,13 +85,22 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 name: 'InputNumber 数字输入框',
-                component: <InputNumber placeholder='请填写数字' />,
+                component: <InputNumber />,
+                componentStr: '<InputNumber />',
+                importStr: "import {InputNumber} from 'antd'",
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    placeholder: { id: uuidv4(), key: 'placeholder', text: 'placeholder', type: 'string', required: false, value: '请输入' }
+                    placeholder: {
+                        id: uuidv4(),
+                        key: 'placeholder',
+                        text: 'placeholder',
+                        type: 'string',
+                        required: false,
+                        value: '请填写数字'
+                    }
                 }
             },
             {
@@ -113,15 +125,26 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 id: uuidv4(),
                 name: 'Select 选择器',
                 component: (
-                    <Select style={{ width: 120 }} placeholder='Select'>
-                        <Option value='jack'>Jack</Option>
-                        <Option value='lucy'>Lucy</Option>
-                        <Option value='disabled' disabled>
+                    <Select placeholder='Select'>
+                        <Select.Option value='jack'>Jack</Select.Option>
+                        <Select.Option value='lucy'>Lucy</Select.Option>
+                        <Select.Option value='disabled' disabled>
                             Disabled
-                        </Option>
-                        <Option value='Yiminghe'>yiminghe</Option>
+                        </Select.Option>
+                        <Select.Option value='Yiminghe'>yiminghe</Select.Option>
                     </Select>
                 ),
+                componentStr: `
+                <Select placeholder='Select'>
+                    <Select.Option value='jack'>Jack</Select.Option>
+                    <Select.Option value='lucy'>Lucy</Select.Option>
+                    <Select.Option value='disabled' disabled>
+                        Disabled
+                    </Select.Option>
+                    <Select.Option value='Yiminghe'>yiminghe</Select.Option>
+                </Select>
+                `,
+                importStr: "import {Select} from 'antd'",
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -185,7 +208,28 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         }}
                         scroll={{ scrollToFirstRowOnChange: true }} // 添加
                     />
-                )
+                ),
+                importStr: "import {Table} from 'antd'",
+                componentStr: `
+                <Table
+                        rowKey={(row) => row.id}
+                        columns={columns}
+                        dataSource={Data.dataList}
+                        locale={{ emptyText: '暂无数据' }}
+                        className='br-table-wrapper'
+                        pagination={{
+                            showSizeChanger: true,
+                            current: pageInfo.pageNum,
+                            total: Number(Data.totalCount),
+                            pageSizeOptions: pageSizeOptions,
+                            showQuickJumper: true,
+                            showTotal(total) {
+                                return \`共 \${total} 条\`;
+                            }
+                        }}
+                        scroll={{ scrollToFirstRowOnChange: true }} // 添加
+                    />
+                `
             }
         ]
     }
