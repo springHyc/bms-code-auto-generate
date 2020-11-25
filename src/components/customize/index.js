@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Clone, Item, Notice, Kiosk } from './common';
 import ComponentAttrsConfig from './componentAttrsConfig';
 import GenerateService from './generate-service';
+import ShowCodeModal from './showCodeModal';
 
 const { TabPane } = Tabs;
 
@@ -78,8 +79,9 @@ const move = (source, destination, droppableSource, droppableDestination) => {
     return result;
 };
 export default class Customize extends React.Component {
-    state = { ...INIT_DATA, selectedNode: { node: {} } };
+    state = { ...INIT_DATA, selectedNode: { node: {} }, showCodeModalVisible: false };
     formRef = React.createRef();
+    source = '';
 
     getNewComponent = (task, areaId) => {
         // 展示的时候，从新渲染组件
@@ -174,7 +176,8 @@ export default class Customize extends React.Component {
      * 生成代码
      */
     generateCode = () => {
-        GenerateService.generateCode(this.state.areas);
+        this.source = GenerateService.generateCode(this.state.areas);
+        this.setState({ showCodeModalVisible: true });
     };
 
     /**
@@ -384,6 +387,12 @@ export default class Customize extends React.Component {
                     <div className='customize-wrapper br-page'>{this.renderAreas()}</div>
                 </DragDropContext>
                 <div className='edit-wrapper'>{this.renderEditContext()}</div>
+
+                <ShowCodeModal
+                    visible={this.state.showCodeModalVisible}
+                    close={() => this.setState({ showCodeModalVisible: false })}
+                    source={this.source}
+                />
             </div>
         );
     }

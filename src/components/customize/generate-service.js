@@ -31,10 +31,7 @@ const generateAreaSearch = (sourceData) => {
         }
         items.push(
             `<Col span={8}>
-                <Form.Item
-                    label="${task.attrs.label && task.attrs.label.value}"
-                    name="${task.attrs.name && task.attrs.name.value}"
-                    rules={[
+                <Form.Item label="${task.attrs.label && task.attrs.label.value}" name="${task.attrs.name && task.attrs.name.value}" rules={[
                         {
                             required: ${task.attrs.required && task.attrs.required.value},
                             message: '${task.attrs.label && task.attrs.label.value}不能为空！'
@@ -83,8 +80,11 @@ const generateCode = (sourceData) => {
     export default class TabDemo extends Component {
         render() {
             return (
+                <div className='br-page'>
+                </div>
+                );
     `;
-    const extraCodeStrEnd = `)\n}\n}\n`;
+    const extraCodeStrEnd = ` </div>)\n}\n}\n`;
     let codeStr = ` <div className='br-page'>
                         ${generateAreaOperate(sourceData['area-operate'])}
                         ${generateAreaSearch(sourceData['area-search'])}
@@ -92,6 +92,7 @@ const generateCode = (sourceData) => {
                     </div>`;
 
     console.log('生成的代码=\n', `${extraCodeStrBegin}\n${codeStr}\n${extraCodeStrEnd}`);
+    return `${extraCodeStrBegin}\n${codeStr}\n${extraCodeStrEnd}`;
 };
 
 const GenerateService = {
