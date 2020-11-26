@@ -20,6 +20,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'button', // 需要它来确定这是个button组件
                 name: 'Button 按钮',
                 component: <Button />,
+                importStr: "import {Button} from 'antd';",
                 // 属性
                 attrs: {
                     name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '按钮文本' },
@@ -53,7 +54,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 name: 'Input 输入框',
                 component: <Input />,
                 componentStr: '<Input />',
-                importStr: "import {Input} from 'antd'",
+                importStr: "import { Input } from 'antd';",
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -72,9 +73,9 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 id: uuidv4(),
                 key: 'datepicker',
                 name: 'DatePicker 日期选择框',
-                component: <RangePicker />,
-                componentStr: '<RangePicker />',
-                importStr: "import {DatePicker} from 'antd'", // todo是否需要多引入单个年月日的
+                component: <DatePicker.RangePicker />,
+                componentStr: '<DatePicker.RangePicker />',
+                importStr: "import {DatePicker} from 'antd';", // todo是否需要多引入单个年月日的
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -87,7 +88,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 name: 'InputNumber 数字输入框',
                 component: <InputNumber />,
                 componentStr: '<InputNumber />',
-                importStr: "import {InputNumber} from 'antd'",
+                importStr: "import {InputNumber} from 'antd';",
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -144,7 +145,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     <Select.Option value='Yiminghe'>yiminghe</Select.Option>
                 </Select>
                 `,
-                importStr: "import {Select} from 'antd'",
+                importStr: "import {Select} from 'antd';",
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -209,7 +210,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         scroll={{ scrollToFirstRowOnChange: true }} // 添加
                     />
                 ),
-                importStr: "import {Table} from 'antd'",
+                importStr: "import {Table} from 'antd';",
                 componentStr: `
                 <Table
                         rowKey={(row) => row.id}

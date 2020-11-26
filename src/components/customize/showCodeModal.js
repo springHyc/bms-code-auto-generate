@@ -11,7 +11,7 @@ export default function ShowCodeModal(props) {
 
     return (
         <Modal title='代码展示' visible={visible} onCancel={close} okText='复制' onOk={copyFn}>
-            <textarea style={{ width: '100%', height: '500px' }}>{source}</textarea>
+            <textarea readOnly style={{ width: '100%', height: '400px' }} value={source} />
         </Modal>
     );
 }

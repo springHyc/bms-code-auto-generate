@@ -1,5 +1,6 @@
-import React from 'react';
-import { Button, Col, Form, Row } from 'antd';
+import StringService from './string-service';
+
+let importCodeStr = "import React, { Component } from 'react';\n";
 /**
  * 生成搜索按钮代码
  * @param {*} sourceData
@@ -9,6 +10,7 @@ const generateAreaOperate = (sourceData) => {
     for (let i = 0; i < sourceData.tasks.length; i++) {
         const task = sourceData.tasks[i];
         btn.push(`<Button type="${task.attrs.type.value}">${task.attrs.name.value}</Button>`);
+        importCodeStr = StringService.addImportCodeStr(importCodeStr, sourceData.tasks[0].importStr || '');
     }
     if (btn.length > 0) {
         return "<div className='br-operate-container'>" + btn.join('/n') + '</div>';
@@ -42,8 +44,10 @@ const generateAreaSearch = (sourceData) => {
                 </Form.Item>
             </Col>`
         );
+        importCodeStr = StringService.addImportCodeStr(importCodeStr, task.importStr || '');
     }
     if (items.length > 0) {
+        importCodeStr = StringService.addImportCodeStr(importCodeStr, "import {Form, Row, Col} from 'antd';");
         const offset = 2 - (items.length % 3);
         console.log('offset=', offset);
         items.push(
@@ -67,6 +71,7 @@ const generateAreaSearch = (sourceData) => {
 
 const generateAreaTable = (sourceData) => {
     if (sourceData.tasks && sourceData.tasks[0] && sourceData.tasks[0].component) {
+        importCodeStr = StringService.addImportCodeStr(importCodeStr, sourceData.tasks[0].importStr || '');
         return sourceData.tasks[0].componentStr;
     }
     return '';
@@ -75,24 +80,22 @@ const generateAreaTable = (sourceData) => {
 const generateCode = (sourceData) => {
     console.log('sourceData=', sourceData);
     const extraCodeStrBegin = `
-    import React, { Component } from 'react';
-    import { Button, Form, Row, Col, Input } from 'antd';
     export default class TabDemo extends Component {
         render() {
             return (
                 <div className='br-page'>
-                </div>
-                );
     `;
-    const extraCodeStrEnd = ` </div>)\n}\n}\n`;
-    let codeStr = ` <div className='br-page'>
-                        ${generateAreaOperate(sourceData['area-operate'])}
-                        ${generateAreaSearch(sourceData['area-search'])}
-                        ${generateAreaTable(sourceData['area-table'])}
-                    </div>`;
+    const extraCodeStrEnd = `                </div>
+    );
+}
+};`;
+    let contentCodeStr = `${generateAreaOperate(sourceData['area-operate'])}
+                ${generateAreaSearch(sourceData['area-search'])}
+                ${generateAreaTable(sourceData['area-table'])}`;
 
-    console.log('生成的代码=\n', `${extraCodeStrBegin}\n${codeStr}\n${extraCodeStrEnd}`);
-    return `${extraCodeStrBegin}\n${codeStr}\n${extraCodeStrEnd}`;
+    const codeStr = `${importCodeStr}${extraCodeStrBegin}\n${contentCodeStr}\n${extraCodeStrEnd}`;
+    console.log('生成的代码=\n', codeStr);
+    return codeStr;
 };
 
 const GenerateService = {
