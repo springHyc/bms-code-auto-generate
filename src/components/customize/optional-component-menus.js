@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import columns from './assistFile/columns';
 import Data from './assistFile/mockTableData';
 
-const { RangePicker } = DatePicker;
 const { TabPane } = Tabs;
 const pageSizeOptions = ['10', '20', '50', '100'];
 const pageInfo = { pageSize: 10, pageNum: 1 };

@@ -6,37 +6,76 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import { Clone, Item, Notice, Kiosk } from './common';
+import { Clone, Item, Notice, Kiosk } from './style-common';
 import ComponentAttrsConfig from './componentAttrsConfig';
 import GenerateService from './generate-service';
 import ShowCodeModal from './showCodeModal';
 
 const { TabPane } = Tabs;
-
+document.oncontextmenu = function () {
+    return false;
+};
 /**
  * 添加点击事件
  * @param {} component
  */
 const addOnClickComponent = (item, newId, that, droppableId) => {
     const _component = _.cloneDeep(item.component);
-    if (item.key === 'datepicker') {
-        // * 不好使 用的这个方法:onOpenChange 有待改进
-        _component.props = {
-            ..._component.props,
-            // 添加点击事件
-            onOpenChange: () => {
-                that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-            }
-        };
-    } else {
+    if (droppableId === 'area-operate') {
         _component.props = {
             ..._component.props,
             // 添加点击事件
             onClick: (e) => {
+                console.log('e.button', e.button);
                 that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
                 e.preventDefault();
+            },
+            onContextMenu: (e) => {
+                console.log('e.button', e.button);
+                console.log('onContextMenu右击事件，弹出删除框');
             }
         };
+    } else {
+        if (item.key === 'datepicker') {
+            // * 不好使 用的这个方法:onOpenChange 有待改进
+            _component.props = {
+                ..._component.props,
+                // 添加点击事件
+                onOpenChange: () => {
+                    that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
+                }
+            };
+        } else {
+            _component.props = {
+                ..._component.props
+                // 添加点击事件
+                // onClick: (e) => {
+                //     console.log('e.button', e.button);
+                //     debugger;
+                //     that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
+                //     e.preventDefault();
+                // }
+
+                // onContextMenu: (e) => {
+                //     console.log('e.button', e.button);
+                //     console.log('onContextMenu右击事件，弹出删除框');
+                // }
+                // onMouseDown: (e) => {
+                //     console.log('e.button', e.button);
+                //     if (e.button === 0) {
+                //         // 单击事件
+                //         that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
+                //         e.preventDefault();
+                //     } else if (e.button === 2) {
+                //         // 右击事件
+                //         e.preventDefault();
+                //         console.log('右击事件，弹出删除框');
+                //     } else {
+                //         return false;
+                //     }
+                // }
+            };
+        }
     }
 
     return _component;
@@ -60,6 +99,7 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
     const newId = uuidv4();
+    console.log('newid=', newId);
     const newComponent = addOnClickComponent(item, newId, that, droppableDestination.droppableId);
     destClone.splice(droppableDestination.index, 0, { ...item, id: newId, component: newComponent });
     return destClone;
@@ -263,7 +303,21 @@ export default class Customize extends React.Component {
                                                         }}
                                                         {...provided.dragHandleProps}
                                                     >
-                                                        <Form.Item {...result.formItemAttrs} name={task.id}>
+                                                        <Form.Item
+                                                            {...result.formItemAttrs}
+                                                            name={task.id}
+                                                            onClick={(e) => {
+                                                                console.log('e.button', e.button);
+                                                                this.setState({
+                                                                    selectedNode: { node: task, area: 'area-search' }
+                                                                });
+                                                                e.preventDefault();
+                                                            }}
+                                                            onContextMenu={(e) => {
+                                                                console.log('e.button', e.button);
+                                                                console.log('onContextMenu右击事件，弹出删除框');
+                                                            }}
+                                                        >
                                                             {result.component}
                                                         </Form.Item>
                                                     </Col>
@@ -360,10 +414,13 @@ export default class Customize extends React.Component {
                             updateSelectedNode={(node) => {
                                 const newAreas = this.state.areas;
                                 newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
+                                    console.log('item=', item.id, 'node=', node.id);
                                     if (item.id === node.id) {
                                         item = node;
                                     }
+                                    item.attrs.label.value = 'test';
                                 });
+                                debugger;
                                 this.setState({ areas: newAreas });
                             }}
                         />
