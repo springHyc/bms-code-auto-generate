@@ -1,6 +1,6 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { message, Form, Row, Col, Button, Tabs } from 'antd';
+import { message, Form, Row, Col, Button, Tabs, Dropdown, Menu } from 'antd';
 import { INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
@@ -26,57 +26,20 @@ const addOnClickComponent = (item, newId, that, droppableId) => {
             ..._component.props,
             // 添加点击事件
             onClick: (e) => {
-                console.log('e.button', e.button);
+                console.log('单击事件');
                 that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-                e.preventDefault();
+                // e.stopPropagation();
             },
             onContextMenu: (e) => {
-                console.log('e.button', e.button);
+                const visible = that.state.visible || {};
+                visible[newId] = Object.prototype.hasOwnProperty.call(visible, newId) ? !visible[newId] : true;
+                that.setState({ visible });
                 console.log('onContextMenu右击事件，弹出删除框');
+                // e.stopPropagation();
             }
         };
-    } else {
-        if (item.key === 'datepicker') {
-            // * 不好使 用的这个方法:onOpenChange 有待改进
-            _component.props = {
-                ..._component.props,
-                // 添加点击事件
-                onOpenChange: () => {
-                    that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-                }
-            };
-        } else {
-            _component.props = {
-                ..._component.props
-                // 添加点击事件
-                // onClick: (e) => {
-                //     console.log('e.button', e.button);
-                //     debugger;
-                //     that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-                //     e.preventDefault();
-                // }
-
-                // onContextMenu: (e) => {
-                //     console.log('e.button', e.button);
-                //     console.log('onContextMenu右击事件，弹出删除框');
-                // }
-                // onMouseDown: (e) => {
-                //     console.log('e.button', e.button);
-                //     if (e.button === 0) {
-                //         // 单击事件
-                //         that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-                //         e.preventDefault();
-                //     } else if (e.button === 2) {
-                //         // 右击事件
-                //         e.preventDefault();
-                //         console.log('右击事件，弹出删除框');
-                //     } else {
-                //         return false;
-                //     }
-                // }
-            };
-        }
     }
+    //搜索区域选中方法都加在Form.Item中;
 
     return _component;
 };
@@ -99,7 +62,6 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
     const newId = uuidv4();
-    console.log('newid=', newId);
     const newComponent = addOnClickComponent(item, newId, that, droppableDestination.droppableId);
     destClone.splice(droppableDestination.index, 0, { ...item, id: newId, component: newComponent });
     return destClone;
@@ -172,6 +134,21 @@ export default class Customize extends React.Component {
     updateArea = (key, tasks) => {
         const areas = this.state.areas;
         areas[key].tasks = tasks;
+        this.setState({ areas: areas });
+    };
+
+    /**
+     * 删除
+     */
+    deleteTask = (key, taskId) => {
+        const areas = this.state.areas;
+        // eslint-disable-next-line array-callback-return
+        areas[key].tasks = areas[key].tasks.filter((item) => {
+            if (item.id !== taskId) {
+                return item;
+            }
+        });
+
         this.setState({ areas: areas });
     };
 
@@ -297,7 +274,6 @@ export default class Customize extends React.Component {
                                                         style={{
                                                             ...provided.draggableProps.style,
                                                             top: '0px',
-                                                            // border: `1px ${snapshot.isDragging ? 'dashed #000' : 'dashed #fff1f0'}`
                                                             border:
                                                                 task.id === this.state.selectedNode.node.id ? '1px dashed #ff7875' : '0px'
                                                         }}
@@ -307,7 +283,6 @@ export default class Customize extends React.Component {
                                                             {...result.formItemAttrs}
                                                             name={task.id}
                                                             onClick={(e) => {
-                                                                console.log('e.button', e.button);
                                                                 this.setState({
                                                                     selectedNode: { node: task, area: 'area-search' }
                                                                 });
@@ -354,6 +329,20 @@ export default class Customize extends React.Component {
                         ref={provided.innerRef}
                         className={area.className}
                         style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
+                        // onClick={(e) => {
+                        //     debugger;
+                        //     // 关闭所有打开的Dropdown
+
+                        //     console.log('外部点击啦');
+                        //     const visible = this.state.visible;
+                        //     if (area.tasks.length > 0 && visible) {
+                        //         area.tasks.forEach((item) => {
+                        //             visible[item.id] = false;
+                        //         });
+                        //         this.setState({ visible });
+                        //     }
+                        //     e.preventDefault();
+                        // }}
                     >
                         {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0
@@ -372,7 +361,26 @@ export default class Customize extends React.Component {
                                                   }}
                                                   {...provided.dragHandleProps}
                                               >
-                                                  {_component}
+                                                  <Dropdown
+                                                      trigger={['contextMenu']}
+                                                      visible={(this.state.visible && this.state.visible[task.id]) || false}
+                                                      overlay={
+                                                          <Menu>
+                                                              <Menu.Item>
+                                                                  <Button
+                                                                      onClick={(e) => {
+                                                                          //   e.stopPropagation();
+                                                                          this.deleteTask(area.id, task.id);
+                                                                      }}
+                                                                  >
+                                                                      删除
+                                                                  </Button>
+                                                              </Menu.Item>
+                                                          </Menu>
+                                                      }
+                                                  >
+                                                      {_component}
+                                                  </Dropdown>
                                               </div>
                                           )}
                                       </Draggable>
@@ -413,14 +421,13 @@ export default class Customize extends React.Component {
                             node={this.state.selectedNode.node}
                             updateSelectedNode={(node) => {
                                 const newAreas = this.state.areas;
-                                newAreas[this.state.selectedNode.area].tasks.forEach((item) => {
-                                    console.log('item=', item.id, 'node=', node.id);
+                                const tasks = newAreas[this.state.selectedNode.area].tasks;
+                                newAreas[this.state.selectedNode.area].tasks = tasks.map((item) => {
                                     if (item.id === node.id) {
                                         item = node;
                                     }
-                                    item.attrs.label.value = 'test';
+                                    return item;
                                 });
-                                debugger;
                                 this.setState({ areas: newAreas });
                             }}
                         />
