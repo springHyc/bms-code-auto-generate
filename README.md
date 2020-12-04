@@ -1,6 +1,6 @@
 # BmsCodeAutoGenerate
 
-## v2.0
+## v2.0(tag)
 
 - 能复制代码，只是简单代码，不能运行
 - 能删除元素
