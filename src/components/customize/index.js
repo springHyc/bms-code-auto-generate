@@ -10,11 +10,12 @@ import { Clone, Item, Notice, Kiosk } from './style-common';
 import ComponentAttrsConfig from './componentAttrsConfig';
 import GenerateService from './generate-service';
 import ShowCodeModal from './showCodeModal';
+import WrapperDelete from './wrapper-delete';
 
 const { TabPane } = Tabs;
-document.oncontextmenu = function () {
-    return false;
-};
+// document.oncontextmenu = function () {
+//     return false;
+// };
 /**
  * 添加点击事件
  * @param {} component
@@ -23,20 +24,20 @@ const addOnClickComponent = (item, newId, that, droppableId) => {
     const _component = _.cloneDeep(item.component);
     if (droppableId === 'area-operate') {
         _component.props = {
-            ..._component.props,
+            ..._component.props
             // 添加点击事件
-            onClick: (e) => {
-                console.log('单击事件');
-                that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-                // e.stopPropagation();
-            },
-            onContextMenu: (e) => {
-                const visible = that.state.visible || {};
-                visible[newId] = Object.prototype.hasOwnProperty.call(visible, newId) ? !visible[newId] : true;
-                that.setState({ visible });
-                console.log('onContextMenu右击事件，弹出删除框');
-                // e.stopPropagation();
-            }
+            // onClick: (e) => {
+            //     console.log('单击事件');
+            //     e.preventDefault();
+            //     that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
+            // }
+            // onContextMenu: (e) => {
+            //     const visible = that.state.visible || {};
+            //     visible[newId] = Object.prototype.hasOwnProperty.call(visible, newId) ? !visible[newId] : true;
+            //     that.setState({ visible });
+            //     console.log('onContextMenu右击事件，弹出删除框');
+            //     e.stopPropagation();
+            // }
         };
     }
     //搜索区域选中方法都加在Form.Item中;
@@ -62,8 +63,12 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
     const newId = uuidv4();
-    const newComponent = addOnClickComponent(item, newId, that, droppableDestination.droppableId);
-    destClone.splice(droppableDestination.index, 0, { ...item, id: newId, component: newComponent });
+    // const newComponent = addOnClickComponent(item, newId, that, droppableDestination.droppableId);
+    destClone.splice(droppableDestination.index, 0, {
+        ...item,
+        id: newId
+        // component: newComponent
+    });
     return destClone;
 };
 /**
@@ -198,6 +203,31 @@ export default class Customize extends React.Component {
     };
 
     /**
+     * 右击弹出删除框
+     */
+    onContextMenu = (e, task) => {
+        document.oncontextmenu = function () {
+            return false;
+        };
+        const visible = this.state.visible || {};
+        visible[task.id] = Object.prototype.hasOwnProperty.call(visible, task.id) ? !visible[task.id] : true;
+        this.setState({ visible });
+        console.log('onContextMenu右击事件，弹出删除框');
+        e.stopPropagation();
+    };
+
+    /**
+     * 单击选中task
+     *
+     * @memberof Customize
+     */
+    selectTask = (e, task, areaId) => {
+        this.setState({
+            selectedNode: { node: task, area: areaId }
+        });
+        e.preventDefault();
+    };
+    /**
      * 左侧可选择区域
      */
     renderSider() {
@@ -282,18 +312,17 @@ export default class Customize extends React.Component {
                                                         <Form.Item
                                                             {...result.formItemAttrs}
                                                             name={task.id}
-                                                            onClick={(e) => {
-                                                                this.setState({
-                                                                    selectedNode: { node: task, area: 'area-search' }
-                                                                });
-                                                                e.preventDefault();
-                                                            }}
-                                                            onContextMenu={(e) => {
-                                                                console.log('e.button', e.button);
-                                                                console.log('onContextMenu右击事件，弹出删除框');
-                                                            }}
+                                                            onClick={(e) => this.selectTask(e, task, area.id)}
+                                                            onContextMenu={(e) => this.onContextMenu(e, task)}
                                                         >
-                                                            {result.component}
+                                                            <WrapperDelete
+                                                                visible={(this.state.visible && this.state.visible[task.id]) || false}
+                                                                deleteTask={(e) => {
+                                                                    this.deleteTask(area.id, task.id);
+                                                                }}
+                                                            >
+                                                                {result.component}
+                                                            </WrapperDelete>
                                                         </Form.Item>
                                                     </Col>
                                                 )}
@@ -321,7 +350,6 @@ export default class Customize extends React.Component {
     }
 
     renderArea(area) {
-        // console.log('renderArea', area);
         return (
             <Droppable droppableId={area.id} key={area.id} className={area.className}>
                 {(provided, snapshot) => (
@@ -329,20 +357,18 @@ export default class Customize extends React.Component {
                         ref={provided.innerRef}
                         className={area.className}
                         style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
-                        // onClick={(e) => {
-                        //     debugger;
-                        //     // 关闭所有打开的Dropdown
-
-                        //     console.log('外部点击啦');
-                        //     const visible = this.state.visible;
-                        //     if (area.tasks.length > 0 && visible) {
-                        //         area.tasks.forEach((item) => {
-                        //             visible[item.id] = false;
-                        //         });
-                        //         this.setState({ visible });
-                        //     }
-                        //     e.preventDefault();
-                        // }}
+                        onClick={(e) => {
+                            // 关闭所有打开的Dropdown
+                            console.log('外部点击啦，关所有打开的删除弹框');
+                            const visible = this.state.visible;
+                            if (area.tasks.length > 0 && visible) {
+                                area.tasks.forEach((item) => {
+                                    visible[item.id] = false;
+                                });
+                                this.setState({ visible });
+                            }
+                            e.preventDefault();
+                        }}
                     >
                         {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0
@@ -360,27 +386,19 @@ export default class Customize extends React.Component {
                                                       border: `1px ${snapshot.isDragging ? 'dashed #000' : 'dashed #fff1f0'}`
                                                   }}
                                                   {...provided.dragHandleProps}
+                                                  // 添加点击事件
+                                                  onClick={(e) => this.selectTask(e, task, area.id)}
+                                                  // 右击事件
+                                                  onContextMenu={(e) => this.onContextMenu(e, task)}
                                               >
-                                                  <Dropdown
-                                                      trigger={['contextMenu']}
+                                                  <WrapperDelete
                                                       visible={(this.state.visible && this.state.visible[task.id]) || false}
-                                                      overlay={
-                                                          <Menu>
-                                                              <Menu.Item>
-                                                                  <Button
-                                                                      onClick={(e) => {
-                                                                          //   e.stopPropagation();
-                                                                          this.deleteTask(area.id, task.id);
-                                                                      }}
-                                                                  >
-                                                                      删除
-                                                                  </Button>
-                                                              </Menu.Item>
-                                                          </Menu>
-                                                      }
+                                                      deleteTask={(e) => {
+                                                          this.deleteTask(area.id, task.id);
+                                                      }}
                                                   >
                                                       {_component}
-                                                  </Dropdown>
+                                                  </WrapperDelete>
                                               </div>
                                           )}
                                       </Draggable>
@@ -415,7 +433,7 @@ export default class Customize extends React.Component {
         return (
             <React.Fragment>
                 <h2>Node</h2>
-                <Tabs defaultActiveKey='1' onChange={() => {}}>
+                <Tabs defaultActiveKey='1'>
                     <TabPane tab='组件属性配置' key='1'>
                         <ComponentAttrsConfig
                             node={this.state.selectedNode.node}
