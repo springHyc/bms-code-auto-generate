@@ -1,5 +1,10 @@
 # BmsCodeAutoGenerate
 
+## v2.0
+
+- 能复制代码，只是简单代码，不能运行
+- 能删除元素
+
 ## 拖拽库的参考
 
 - [react-beautiful-dnd 中文文档](https://github.com/chinanf-boy/react-beautiful-dnd-zh)
