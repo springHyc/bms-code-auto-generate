@@ -9,11 +9,15 @@ const generateAreaOperate = (sourceData) => {
     const btn = [];
     for (let i = 0; i < sourceData.tasks.length; i++) {
         const task = sourceData.tasks[i];
-        btn.push(`<Button type="${task.attrs.type.value}">${task.attrs.name.value}</Button>`);
+        btn.push(`<Button type="${task.attrs.type.value}">
+                            ${task.attrs.name.value}
+                        </Button>`);
         importCodeStr = StringService.addImportCodeStr(importCodeStr, sourceData.tasks[0].importStr || '');
     }
     if (btn.length > 0) {
-        return "<div className='br-operate-container'>" + btn.join('/n') + '</div>';
+        return `                    <div className='br-operate-container'>
+                        ${btn.join('/n')}
+                    </div>`;
     } else {
         return '';
     }
@@ -80,14 +84,14 @@ const generateAreaTable = (sourceData) => {
 const generateCode = (sourceData) => {
     console.log('sourceData=', sourceData);
     const extraCodeStrBegin = `
-    export default class TabDemo extends Component {
-        render() {
-            return (
-                <div className='br-page'>
-    `;
+export default class TabDemo extends Component {
+    render() {
+        return (
+            <div className='br-page'>
+`;
     const extraCodeStrEnd = `                </div>
-    );
-}
+        );
+    }
 };`;
     let contentCodeStr = `${generateAreaOperate(sourceData['area-operate'])}
                 ${generateAreaSearch(sourceData['area-search'])}
