@@ -1,6 +1,6 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { message, Form, Row, Col, Button, Tabs, Dropdown, Menu } from 'antd';
+import { message, Form, Row, Col, Button, Tabs } from 'antd';
 import { INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
@@ -13,37 +13,6 @@ import ShowCodeModal from './showCodeModal';
 import WrapperDelete from './wrapper-delete';
 
 const { TabPane } = Tabs;
-// document.oncontextmenu = function () {
-//     return false;
-// };
-/**
- * 添加点击事件
- * @param {} component
- */
-const addOnClickComponent = (item, newId, that, droppableId) => {
-    const _component = _.cloneDeep(item.component);
-    if (droppableId === 'area-operate') {
-        _component.props = {
-            ..._component.props
-            // 添加点击事件
-            // onClick: (e) => {
-            //     console.log('单击事件');
-            //     e.preventDefault();
-            //     that.setState({ selectedNode: { node: { ...item, id: newId }, area: droppableId } });
-            // }
-            // onContextMenu: (e) => {
-            //     const visible = that.state.visible || {};
-            //     visible[newId] = Object.prototype.hasOwnProperty.call(visible, newId) ? !visible[newId] : true;
-            //     that.setState({ visible });
-            //     console.log('onContextMenu右击事件，弹出删除框');
-            //     e.stopPropagation();
-            // }
-        };
-    }
-    //搜索区域选中方法都加在Form.Item中;
-
-    return _component;
-};
 
 /**
  * 同一区域内排序
