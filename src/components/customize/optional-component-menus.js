@@ -2,10 +2,9 @@ import React from 'react';
 import { Button, Input, DatePicker, InputNumber, Radio, Switch, Select, Table, Tabs } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import columns from './assistFile/columns';
-import Data from './assistFile/mockTableData';
+import data from './assistFile/mockTableData';
 
 const { TabPane } = Tabs;
-const pageSizeOptions = ['10', '20', '50', '100'];
 const pageInfo = { pageSize: 10, pageNum: 1 };
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
@@ -53,7 +52,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 name: 'Input 输入框',
                 component: <Input />,
                 componentStr: '<Input />',
-                importStr: "import { Input } from 'antd';",
+                importStr: "import {Input} from 'antd';",
                 attrs: {
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -135,14 +134,14 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     </Select>
                 ),
                 componentStr: `
-                <Select placeholder='Select'>
-                    <Select.Option value='jack'>Jack</Select.Option>
-                    <Select.Option value='lucy'>Lucy</Select.Option>
-                    <Select.Option value='disabled' disabled>
-                        Disabled
-                    </Select.Option>
-                    <Select.Option value='Yiminghe'>yiminghe</Select.Option>
-                </Select>
+                                    <Select placeholder='Select'>
+                                        <Select.Option value='jack'>Jack</Select.Option>
+                                        <Select.Option value='lucy'>Lucy</Select.Option>
+                                        <Select.Option value='disabled' disabled>
+                                            Disabled
+                                        </Select.Option>
+                                        <Select.Option value='Yiminghe'>yiminghe</Select.Option>
+                                    </Select>
                 `,
                 importStr: "import {Select} from 'antd';",
                 attrs: {
@@ -191,7 +190,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     <Table
                         rowKey={(row) => row.id}
                         columns={columns}
-                        dataSource={Data.dataList}
+                        dataSource={data.dataList}
                         locale={{ emptyText: '暂无数据' }}
                         className='br-table-wrapper'
                         pagination={{
@@ -199,8 +198,8 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                             current: pageInfo.pageNum,
                             // onChange: this.onPageChange,
                             // onShowSizeChange: this.onShowSizeChange,
-                            total: Number(Data.totalCount),
-                            pageSizeOptions: pageSizeOptions,
+                            total: Number(data.totalCount),
+                            pageSizeOptions: ['10', '20', '50', '100', '200'],
                             showQuickJumper: true, // 添加
                             showTotal(total) {
                                 return `共 ${total} 条`; // 统一文字
@@ -212,23 +211,23 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 importStr: "import {Table} from 'antd';",
                 componentStr: `
                 <Table
-                        rowKey={(row) => row.id}
-                        columns={columns}
-                        dataSource={Data.dataList}
-                        locale={{ emptyText: '暂无数据' }}
-                        className='br-table-wrapper'
-                        pagination={{
-                            showSizeChanger: true,
-                            current: pageInfo.pageNum,
-                            total: Number(Data.totalCount),
-                            pageSizeOptions: pageSizeOptions,
-                            showQuickJumper: true,
-                            showTotal(total) {
-                                return \`共 \${total} 条\`;
-                            }
-                        }}
-                        scroll={{ scrollToFirstRowOnChange: true }} // 添加
-                    />
+                    rowKey={(row) => row.id}
+                    columns={columns}
+                    dataSource={data.dataList}
+                    locale={{ emptyText: '暂无数据' }}
+                    className='br-table-wrapper'
+                    pagination={{
+                        showSizeChanger: true,
+                        current: this.pageInfo.pageNum,
+                        total: Number(data.totalCount),
+                        pageSizeOptions: ['10', '20', '50', '100', '200'],
+                        showQuickJumper: true,
+                        showTotal(total) {
+                            return \`共 \${total} 条\`;
+                        }
+                    }}
+                    scroll={{ scrollToFirstRowOnChange: true }} // 添加
+                />
                 `
             }
         ]
