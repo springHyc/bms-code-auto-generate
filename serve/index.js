@@ -51,14 +51,14 @@ function WriteFile(file, content, res) {
         }
     });
 
-    res.send(`成功创建文件，其目录为：${file}/`);
+    return res.send({ code: 0, message: `成功创建文件，其目录为：${file}/` });
 }
 
 app.post('/files/generate', (req, res) => {
     // 创建文件目录
     var codeStr = req.body.code;
     var fileName = req.query.fileName || 'home';
-    WriteFile(`${__dirname}/tmp/${fileName}`, codeStr, res);
+    return WriteFile(`${__dirname}/tmp/${fileName}`, codeStr, res);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
