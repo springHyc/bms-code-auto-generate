@@ -17,7 +17,7 @@ const generateAreaOperate = (sourceData) => {
     }
     if (btn.length > 0) {
         return `                <div className='br-operate-container'>
-                    ${btn.join('/n')}
+                    ${btn.join('\n')}
                 </div>`;
     } else {
         return '';
