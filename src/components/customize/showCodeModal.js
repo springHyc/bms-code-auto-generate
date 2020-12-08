@@ -31,6 +31,7 @@ export default function ShowCodeModal(props) {
             title='代码展示'
             visible={visible}
             className='show-code-modal'
+            onCancel={close}
             footer={[
                 <Button key='back' onClick={close}>
                     返回
@@ -43,7 +44,7 @@ export default function ShowCodeModal(props) {
                 </Button>
             ]}
         >
-            <textarea readOnly style={{ width: '100%', height: '400px' }} value={source} />
+            <textarea readOnly style={{ width: '100%', height: '400px', border: '1px double burlywood' }} value={source} />
         </Modal>
     );
 }
