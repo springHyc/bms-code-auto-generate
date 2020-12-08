@@ -206,7 +206,6 @@ export default class Customize extends React.Component {
         const visible = this.state.visible || {};
         visible[task.id] = Object.prototype.hasOwnProperty.call(visible, task.id) ? !visible[task.id] : true;
         this.setState({ visible });
-        console.log('onContextMenu右击事件，弹出删除框');
         e.stopPropagation();
     };
 
@@ -352,7 +351,6 @@ export default class Customize extends React.Component {
                         style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
                         onClick={(e) => {
                             // 关闭所有打开的Dropdown
-                            console.log('外部点击啦，关所有打开的删除弹框');
                             const visible = this.state.visible;
                             if (area.tasks.length > 0 && visible) {
                                 area.tasks.forEach((item) => {
