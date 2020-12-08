@@ -13,7 +13,8 @@ function getRandomChineseWord() {
     var _randomUniCode = Math.floor(Math.random() * (40870 - 19968) + 19968).toString(16); // 汉字
     // 2F00-2FDF：康熙字典部首
     // var _randomUniCode = Math.floor(Math.random() * (12255 - 12032) + 12032).toString(16);
-    eval('_rsl=' + '"\\u' + _randomUniCode + '"');
+    // eslint-disable-next-line no-eval
+    eval(`_rsl="\\u${_randomUniCode}"`);
     return _rsl;
 }
 
