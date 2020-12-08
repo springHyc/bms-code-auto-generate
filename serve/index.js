@@ -8,10 +8,7 @@ const port = 3001;
 //加入这个配置,就可以在请求对象req中得到req.body,并通过req.body来获取post请求,请求体内容
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
 app.use(bodyParser.json());
-
-// app.use(express.static(__dirname + '/code'));
 
 app.all('*', function (req, res, next) {
     //设置允许跨域的域名，*代表允许任意域名跨域
