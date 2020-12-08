@@ -14,3 +14,4 @@
 - [Packery](https://packery.metafizzy.co/) (with jq)
 - [React-Grid-Layout](https://github.com/STRML/react-grid-layout)
 - [React Use Gesture](https://use-gesture.netlify.app/docs/examples/)
+- [axios-jsonp-pro](https://www.npmjs.com/package/axios-jsonp-pro)
