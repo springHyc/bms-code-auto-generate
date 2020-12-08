@@ -21,7 +21,7 @@ function addImportCodeStr(source, addImportStr) {
                         if (item.indexOf(addImportStrImportSourceKey) !== -1) {
                             const _strs = item.split('{');
                             _strs[1] = keyWord.replaceAll(/[{}]/g, '') + ', ' + _strs[1];
-                            item = _strs.join('{');
+                            item = _strs.join('{ ');
                         }
                         return item;
                     });

@@ -18,7 +18,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'button', // 需要它来确定这是个button组件
                 name: 'Button 按钮',
                 component: <Button />,
-                importStr: "import {Button} from 'antd';",
+                importStr: "import {Button } from 'antd';",
                 // 属性
                 attrs: {
                     name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '按钮文本' },
@@ -228,7 +228,20 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     }}
                     scroll={{ scrollToFirstRowOnChange: true }} // 添加
                 />
-                `
+                `,
+                attrs: {
+                    columns: [
+                        {
+                            title: '代理公司',
+                            dataIndex: 'channelCompanyName'
+                        },
+                        {
+                            title: '应用名称',
+                            dataIndex: 'channelAppName'
+                        }
+                    ],
+                    operate: []
+                }
             }
         ]
     }

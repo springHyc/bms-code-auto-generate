@@ -11,6 +11,8 @@ import ComponentAttrsConfig from './componentAttrsConfig';
 import GenerateService from './generate-service';
 import ShowCodeModal from './showCodeModal';
 import WrapperDelete from './wrapper-delete';
+import TableColumnsConfig from './table-columns-config';
+import Utils from './utils';
 
 const { TabPane } = Tabs;
 
@@ -60,12 +62,19 @@ export default class Customize extends React.Component {
     source = '';
 
     getNewComponent = (task, areaId) => {
-        // 展示的时候，从新渲染组件
-        // 得专门的组件来专门做
-        // 可以名称的对应上，然后来做
+        if (areaId === 'area-operate') {
+            return this.getNewComponentOfAreaOperate(task);
+        } else {
+            return this.getNewComponentOfAreaTable(task);
+        }
+    };
+    /**
+     * A：按钮区域：config的值应用上
+     * 展示的时候，从新渲染组件，得专门的组件来专门做
+     */
+    getNewComponentOfAreaOperate = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
-        if (task.key === 'button' && areaId === 'area-operate') {
-            // A：按钮区域
+        if (task.key === 'button') {
             _component.props = {
                 ..._component.props,
                 children: task.attrs.name && task.attrs.name.value,
@@ -76,6 +85,9 @@ export default class Customize extends React.Component {
         return _component;
     };
 
+    /**
+     * B：搜索区域：config的值应用上
+     */
     getNewComponentOfAreaSearch = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
         const formItemAttrs = {};
@@ -105,6 +117,22 @@ export default class Customize extends React.Component {
         }
         return { component: _component, formItemAttrs: formItemAttrs };
     };
+
+    /**
+     * C：Table区域：config的值应用上
+     */
+    getNewComponentOfAreaTable = (task) => {
+        const _component = _.cloneDeep(task.component);
+        debugger;
+        _component.props = {
+            ..._component.props,
+            columns: Utils.getColumns(task.attrs),
+            dataSource: Utils.randomData(task.attrs.columns)
+            // todo 生成随机的mockData
+        };
+        return _component;
+    };
+
     updateArea = (key, tasks) => {
         const areas = this.state.areas;
         areas[key].tasks = tasks;
@@ -343,7 +371,6 @@ export default class Customize extends React.Component {
                         {area.tasks.length > 0
                             ? area.tasks.map((task, index) => {
                                   const _component = this.getNewComponent(task, area.id);
-
                                   return (
                                       <Draggable draggableId={task.id} key={task.id} index={index}>
                                           {(provided, snapshot) => (
@@ -404,20 +431,38 @@ export default class Customize extends React.Component {
                 <h2>Node</h2>
                 <Tabs defaultActiveKey='1'>
                     <TabPane tab='组件属性配置' key='1'>
-                        <ComponentAttrsConfig
-                            node={this.state.selectedNode.node}
-                            updateSelectedNode={(node) => {
-                                const newAreas = this.state.areas;
-                                const tasks = newAreas[this.state.selectedNode.area].tasks;
-                                newAreas[this.state.selectedNode.area].tasks = tasks.map((item) => {
-                                    if (item.id === node.id) {
-                                        item = node;
-                                    }
-                                    return item;
-                                });
-                                this.setState({ areas: newAreas });
-                            }}
-                        />
+                        {this.state.selectedNode && this.state.selectedNode.area !== 'area-table' && (
+                            <ComponentAttrsConfig
+                                node={this.state.selectedNode.node}
+                                updateSelectedNode={(node) => {
+                                    const newAreas = this.state.areas;
+                                    const tasks = newAreas[this.state.selectedNode.area].tasks;
+                                    newAreas[this.state.selectedNode.area].tasks = tasks.map((item) => {
+                                        if (item.id === node.id) {
+                                            item = node;
+                                        }
+                                        return item;
+                                    });
+                                    this.setState({ areas: newAreas });
+                                }}
+                            />
+                        )}
+                        {this.state.selectedNode && this.state.selectedNode.area === 'area-table' && (
+                            <TableColumnsConfig
+                                node={this.state.selectedNode.node}
+                                updateSelectedNode={(node) => {
+                                    const newAreas = this.state.areas;
+                                    const tasks = newAreas[this.state.selectedNode.area].tasks;
+                                    newAreas[this.state.selectedNode.area].tasks = tasks.map((item) => {
+                                        if (item.id === node.id) {
+                                            item = node;
+                                        }
+                                        return item;
+                                    });
+                                    this.setState({ areas: newAreas });
+                                }}
+                            />
+                        )}
                     </TabPane>
 
                     <TabPane tab='表单配置' key='3'>
