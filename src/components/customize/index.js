@@ -1,20 +1,17 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { message, Form, Row, Col, Button, Tabs } from 'antd';
+import { message, Form, Row, Col, Button } from 'antd';
 import { INIT_DATA } from './optional-component-menus';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { Clone, Item, Notice, Kiosk } from './style-common';
-import ComponentAttrsConfig from './componentAttrsConfig';
 import GenerateService from './generate-service';
 import ShowCodeModal from './showCodeModal';
 import WrapperDelete from './wrapper-delete';
-import TableColumnsConfig from './table-columns-config';
 import Utils from './utils';
-
-const { TabPane } = Tabs;
+import AttrEditContext from './attr-edit-context';
 
 /**
  * 同一区域内排序
@@ -285,7 +282,6 @@ export default class Customize extends React.Component {
                         className={area.className}
                         style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
                     >
-                        {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0 ? (
                             <Form {...layout} ref={this.formRef}>
                                 <Row gutter={24}>
@@ -337,7 +333,7 @@ export default class Customize extends React.Component {
                                 </Row>
                             </Form>
                         ) : (
-                            provided.placeholder && <Notice>Drop items here</Notice>
+                            provided.placeholder && <Notice>{area.title}:Drop items here</Notice>
                         )}
                         {provided.placeholder}
                     </div>
@@ -367,7 +363,6 @@ export default class Customize extends React.Component {
                             e.preventDefault();
                         }}
                     >
-                        {area.tasks.length === 0 && <span className='title'>{area.title}</span>}
                         {area.tasks.length > 0
                             ? area.tasks.map((task, index) => {
                                   const _component = this.getNewComponent(task, area.id);
@@ -400,7 +395,7 @@ export default class Customize extends React.Component {
                                       </Draggable>
                                   );
                               })
-                            : provided.placeholder && <Notice>Drop items here</Notice>}
+                            : provided.placeholder && <Notice>{area.title}:Drop items here</Notice>}
                         {provided.placeholder}
                     </div>
                 )}
@@ -422,56 +417,6 @@ export default class Customize extends React.Component {
         return nodes;
     }
 
-    /**
-     * 可编辑区域
-     */
-    renderEditContext() {
-        return (
-            <React.Fragment>
-                <h2>Node</h2>
-                <Tabs defaultActiveKey='1'>
-                    <TabPane tab='组件属性配置' key='1'>
-                        {this.state.selectedNode && this.state.selectedNode.area !== 'area-table' && (
-                            <ComponentAttrsConfig
-                                node={this.state.selectedNode.node}
-                                updateSelectedNode={(node) => {
-                                    const newAreas = this.state.areas;
-                                    const tasks = newAreas[this.state.selectedNode.area].tasks;
-                                    newAreas[this.state.selectedNode.area].tasks = tasks.map((item) => {
-                                        if (item.id === node.id) {
-                                            item = node;
-                                        }
-                                        return item;
-                                    });
-                                    this.setState({ areas: newAreas });
-                                }}
-                            />
-                        )}
-                        {this.state.selectedNode && this.state.selectedNode.area === 'area-table' && (
-                            <TableColumnsConfig
-                                node={this.state.selectedNode.node}
-                                updateSelectedNode={(node) => {
-                                    const newAreas = this.state.areas;
-                                    const tasks = newAreas[this.state.selectedNode.area].tasks;
-                                    newAreas[this.state.selectedNode.area].tasks = tasks.map((item) => {
-                                        if (item.id === node.id) {
-                                            item = node;
-                                        }
-                                        return item;
-                                    });
-                                    this.setState({ areas: newAreas });
-                                }}
-                            />
-                        )}
-                    </TabPane>
-
-                    <TabPane tab='表单配置' key='3'>
-                        Content of Tab Pane 3
-                    </TabPane>
-                </Tabs>
-            </React.Fragment>
-        );
-    }
     render() {
         return (
             <div className='hyc-wrapper'>
@@ -482,8 +427,11 @@ export default class Customize extends React.Component {
                     {this.renderSider()}
                     <div className='customize-wrapper br-page'>{this.renderAreas()}</div>
                 </DragDropContext>
-                <div className='edit-wrapper'>{this.renderEditContext()}</div>
-
+                <AttrEditContext
+                    selectedNode={this.state.selectedNode}
+                    update={(data) => this.setState({ areas: data })}
+                    areas={this.state.areas}
+                />
                 <ShowCodeModal
                     visible={this.state.showCodeModalVisible}
                     close={() => this.setState({ showCodeModalVisible: false })}

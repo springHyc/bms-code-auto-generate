@@ -17,24 +17,25 @@ body {
         display: flex;
         flex-direction: column;
         padding: 0 16px;
-        .customize-operate-wrapper,
-        .customize-search-wrapper,
-        .customize-table-wrapper {
-            border-radius: 4px;
+        & > div {
+            background-color: #fff;
+            border-radius: 8px;
             .title {
                 // 区域名 ： 按钮操作区域
                 margin-right: auto;
+                padding: 16px;
             }
         }
     }
-    // 编辑区域
-    .edit-wrapper {
-        padding: 16px;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+}
+// 编辑区域
+.edit-wrapper {
+    padding: 16px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
 }
 
 .show-code-modal {
