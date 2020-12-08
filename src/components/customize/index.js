@@ -414,7 +414,7 @@ export default class Customize extends React.Component {
                 nodes.push(this.renderArea(area));
             }
         }
-        return nodes;
+        return <div className='customize-wrapper br-page'>{nodes}</div>;
     }
 
     render() {
@@ -423,15 +423,18 @@ export default class Customize extends React.Component {
                 <Button className='create-code' type='primary' onClick={this.generateCode}>
                     生成代码
                 </Button>
+                {/* 拖拽区域 */}
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     {this.renderSider()}
-                    <div className='customize-wrapper br-page'>{this.renderAreas()}</div>
+                    {this.renderAreas()}
                 </DragDropContext>
+                {/* 编辑Attrs属性 */}
                 <AttrEditContext
                     selectedNode={this.state.selectedNode}
                     update={(data) => this.setState({ areas: data })}
                     areas={this.state.areas}
                 />
+                {/* 展示自动生成的code */}
                 <ShowCodeModal
                     visible={this.state.showCodeModalVisible}
                     close={() => this.setState({ showCodeModalVisible: false })}
