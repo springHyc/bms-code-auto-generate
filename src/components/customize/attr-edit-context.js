@@ -14,23 +14,21 @@ export default function AttrEditContext({ selectedNode, update, areas }) {
     if (selectedNode && selectedNode.area !== 'area-table') {
         C = ComponentAttrsConfig;
     }
+    const updateNode = (node) => {
+        const newAreas = areas;
+        const tasks = newAreas[selectedNode.area].tasks;
+        newAreas[selectedNode.area].tasks = tasks.map((item) => {
+            if (item.id === node.id) {
+                item = node;
+            }
+            return item;
+        });
+        update(newAreas);
+    };
     return (
         <div className='edit-wrapper'>
             <h2>组件属性配置</h2>
-            <C
-                node={selectedNode.node}
-                updateSelectedNode={(node) => {
-                    const newAreas = areas;
-                    const tasks = newAreas[selectedNode.area].tasks;
-                    newAreas[selectedNode.area].tasks = tasks.map((item) => {
-                        if (item.id === node.id) {
-                            item = node;
-                        }
-                        return item;
-                    });
-                    update(newAreas);
-                }}
-            />
+            <C node={selectedNode.node} updateSelectedNode={updateNode} />
         </div>
     );
 }
