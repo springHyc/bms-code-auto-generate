@@ -1,6 +1,7 @@
 import React from 'react';
 import ComponentAttrsConfig from './componentAttrsConfig';
 import TableColumnsConfig from './table-columns-config';
+import './index.less';
 
 /**
  * 可编辑区域，配置区域
