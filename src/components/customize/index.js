@@ -11,7 +11,7 @@ import GenerateService from './generate-service';
 import ShowCodeModal from './showCodeModal';
 import WrapperDelete from './wrapper-delete';
 import Utils from './utils';
-import AttrEditContext from './attr-edit-context';
+import AttrEditContext from './attr-edit-context/';
 
 /**
  * 同一区域内排序
