@@ -54,11 +54,18 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 componentStr: '<Input />',
                 importStr: "import {Input} from 'antd';",
                 attrs: {
-                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    placeholder: { id: uuidv4(), key: 'placeholder', text: 'placeholder', type: 'string', required: false, value: '请输入' }
+                    placeholder: {
+                        id: uuidv4(),
+                        key: 'placeholder',
+                        text: 'placeholder',
+                        type: 'string',
+                        required: false,
+                        value: '请输入'
+                    },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
             {
@@ -75,10 +82,10 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 componentStr: '<DatePicker.RangePicker />',
                 importStr: "import {DatePicker} from 'antd';", // todo是否需要多引入单个年月日的
                 attrs: {
-                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
-                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false }
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
             {
@@ -88,9 +95,8 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 componentStr: '<InputNumber />',
                 importStr: "import {InputNumber} from 'antd';",
                 attrs: {
-                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
                     placeholder: {
                         id: uuidv4(),
@@ -99,7 +105,8 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         type: 'string',
                         required: false,
                         value: '请填写数字'
-                    }
+                    },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
             {
@@ -145,11 +152,18 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 `,
                 importStr: "import {Select} from 'antd';",
                 attrs: {
-                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    placeholder: { id: uuidv4(), key: 'placeholder', text: 'placeholder', type: 'string', required: false, value: '请输入' }
+                    placeholder: {
+                        id: uuidv4(),
+                        key: 'placeholder',
+                        text: 'placeholder',
+                        type: 'string',
+                        required: false,
+                        value: '请输入'
+                    },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             }
         ]
