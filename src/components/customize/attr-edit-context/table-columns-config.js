@@ -62,36 +62,48 @@ export default function TableColumnsConfig({ node, updateSelectedNode }) {
                 )}
             </Form.List>
             <Form.List name='columns'>
-                {(fields, { add, remove }) => (
-                    <>
-                        {fields.map((field) => (
-                            <Space key={field.key} style={{ display: 'flex' }} align='baseline'>
-                                <Form.Item
-                                    {...field}
-                                    name={[field.name, 'title']}
-                                    fieldKey={[field.fieldKey, 'title']}
-                                    rules={[{ required: true, message: '不能为空' }]}
-                                >
-                                    <Input placeholder='title' />
-                                </Form.Item>
-                                <Form.Item
-                                    {...field}
-                                    name={[field.name, 'dataIndex']}
-                                    fieldKey={[field.fieldKey, 'dataIndex']}
-                                    rules={[{ required: true, message: '不能为空' }]}
-                                >
-                                    <Input placeholder='dataIndex' />
-                                </Form.Item>
-                                <MinusCircleOutlined onClick={() => remove(field.name)} />
-                            </Space>
-                        ))}
-                        <Form.Item>
-                            <Button type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>
-                                添加列
-                            </Button>
-                        </Form.Item>
-                    </>
-                )}
+                {(fields, { add, remove, move }) => {
+                    return (
+                        <>
+                            {fields.map((field) => (
+                                <Space key={field.key} style={{ display: 'flex', alignItems: 'center' }} align='baseline'>
+                                    <Space style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <Form.Item
+                                            {...field}
+                                            label='title'
+                                            labelCol={{ span: 10 }}
+                                            name={[field.name, 'title']}
+                                            fieldKey={[field.fieldKey, 'title']}
+                                            rules={[{ required: true, message: '不能为空' }]}
+                                        >
+                                            <Input placeholder='title' />
+                                        </Form.Item>
+                                        <Form.Item
+                                            {...field}
+                                            label='dataIndex'
+                                            labelCol={{ span: 10 }}
+                                            name={[field.name, 'dataIndex']}
+                                            fieldKey={[field.fieldKey, 'dataIndex']}
+                                            rules={[{ required: true, message: '不能为空' }]}
+                                        >
+                                            <Input placeholder='dataIndex' />
+                                        </Form.Item>
+                                    </Space>
+                                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                </Space>
+                            ))}
+                            <Form.Item>
+                                <Button type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>
+                                    添加列
+                                </Button>
+                                {/* move功能先不加，以后想好再加 */}
+                                {/* <Button type='dashed' onClick={() => move(0, 1)} block icon={<PlusOutlined />}>
+                                    Move
+                                </Button> */}
+                            </Form.Item>
+                        </>
+                    );
+                }}
             </Form.List>
             <Form.Item>
                 <Button type='primary' htmlType='submit'>

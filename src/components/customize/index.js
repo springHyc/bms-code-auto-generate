@@ -120,12 +120,10 @@ export default class Customize extends React.Component {
      */
     getNewComponentOfAreaTable = (task) => {
         const _component = _.cloneDeep(task.component);
-        debugger;
         _component.props = {
             ..._component.props,
             columns: Utils.getColumns(task.attrs),
             dataSource: Utils.randomData(task.attrs.columns)
-            // todo 生成随机的mockData
         };
         return _component;
     };

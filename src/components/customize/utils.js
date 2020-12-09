@@ -39,6 +39,7 @@ const randomData = (columns) => {
         keys.forEach((key) => {
             item[key] = getRandomWord();
         });
+        item.id = item.id || i;
 
         mockData.push(item);
     }
