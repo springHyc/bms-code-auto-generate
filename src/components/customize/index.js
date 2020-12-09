@@ -190,7 +190,19 @@ export default class Customize extends React.Component {
      * 生成代码
      */
     generateCode = () => {
-        this.source = GenerateService.generateCode(this.state.areas);
+        const service = new GenerateService(this.state.areas);
+        // ----table的辅助操作----
+        const tableConfigData = (this.state.areas['area-table'].tasks && this.state.areas['area-table'].tasks[0]) || {};
+        if (Object.prototype.hasOwnProperty.call(tableConfigData, 'attrs') && Object.keys(tableConfigData.attrs).length > 0) {
+            // 处理table的辅助操作
+            service.generateAssistTable(tableConfigData.attrs);
+        }
+        // ----table的辅助操作----
+        this.indexCodeStr = service.indexCodeStr;
+        this.columnsCodeStr = service.columnsCodeStr;
+
+        
+        console.log('this.columnsCodeStr=', this.columnsCodeStr);
         this.setState({ showCodeModalVisible: true });
     };
 
@@ -434,7 +446,9 @@ export default class Customize extends React.Component {
                 <ShowCodeModal
                     visible={this.state.showCodeModalVisible}
                     close={() => this.setState({ showCodeModalVisible: false })}
-                    source={this.source}
+                    indexCodeStr={this.indexCodeStr}
+                    columnsCodeStr={this.columnsCodeStr}
+                    tableConfigData={this.state.areas && this.state.areas['area-table']}
                 />
             </div>
         );

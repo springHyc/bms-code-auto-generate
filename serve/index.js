@@ -27,20 +27,31 @@ app.get('/', (req, res) => {
 });
 
 function WriteFile(file, content, res) {
+    const { indexCodeStr, columnsCodeStr } = content;
     fs.open(file, 'r', (err, fd) => {
         if (err) {
             if (err.code === 'ENOENT') {
                 fs.mkdir(file, { recursive: true }, (err) => {
                     if (err) throw err;
                 });
-                fs.writeFile(`${file}/index.js`, content, (err) => {
+                fs.writeFile(`${file}/index.js`, indexCodeStr, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                });
+                fs.writeFile(`${file}/columns.js`, columnsCodeStr, (err) => {
                     if (err) {
                         throw err;
                     }
                 });
             }
         } else {
-            fs.writeFile(`${file}/index.js`, content, (err) => {
+            fs.writeFile(`${file}/index.js`, indexCodeStr, (err) => {
+                if (err) {
+                    throw err;
+                }
+            });
+            fs.writeFile(`${file}/columns.js`, columnsCodeStr, (err) => {
                 if (err) {
                     throw err;
                 }
@@ -53,8 +64,13 @@ function WriteFile(file, content, res) {
 
 app.post('/files/generate', (req, res) => {
     // 创建文件目录
-    var codeStr = req.body.code;
+    var indexCodeStr = req.body.code;
     var fileName = req.query.fileName || 'home';
+    var columnsCodeStr = req.body.columnsCodeStr;
+    const codeStr = {
+        indexCodeStr,
+        columnsCodeStr
+    };
     return WriteFile(`${__dirname}/tmp/${fileName}`, codeStr, res);
 });
 

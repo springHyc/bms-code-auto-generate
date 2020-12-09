@@ -130,16 +130,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 name: 'Select 选择器',
-                component: (
-                    <Select placeholder='Select'>
-                        <Select.Option value='jack'>Jack</Select.Option>
-                        <Select.Option value='lucy'>Lucy</Select.Option>
-                        <Select.Option value='disabled' disabled>
-                            Disabled
-                        </Select.Option>
-                        <Select.Option value='Yiminghe'>yiminghe</Select.Option>
-                    </Select>
-                ),
+                component: <Select placeholder='Select'></Select>,
                 componentStr: `
                                     <Select placeholder='Select'>
                                         <Select.Option value='jack'>Jack</Select.Option>
@@ -163,6 +154,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         required: false,
                         value: '请输入'
                     },
+                    options: [{ key: 'apple', value: '苹果' }],
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             }

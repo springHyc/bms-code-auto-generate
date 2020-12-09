@@ -5,16 +5,17 @@ import './index.less';
 import axios from 'axios-jsonp-pro';
 
 export default function ShowCodeModal(props) {
-    const { visible, source, close } = props;
+    const { visible, indexCodeStr, close, columnsCodeStr } = props;
     const copyFn = () => {
-        copy(source);
+        copy(indexCodeStr);
         message.success('复制成功！');
     };
 
     const generateCode = () => {
         axios
             .post('http://127.0.0.1:3001/files/generate', {
-                code: source
+                code: indexCodeStr,
+                columnsCodeStr
             })
             .then((res) => {
                 if (res.data.code === 0) {
@@ -44,7 +45,7 @@ export default function ShowCodeModal(props) {
                 </Button>
             ]}
         >
-            <textarea readOnly style={{ width: '100%', height: '400px', border: '1px double burlywood' }} value={source} />
+            <textarea readOnly style={{ width: '100%', height: '400px', border: '1px double burlywood' }} value={indexCodeStr} />
         </Modal>
     );
 }
