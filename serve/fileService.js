@@ -45,12 +45,12 @@ function WriteFile(file, content, res) {
     });
     return res.send({ code: 0, message: `成功创建文件，其目录为：${file}/` });
 }
-function downFile(res) {
-    res.download(`${__dirname}/example.zip`, 'code.zip', (err) => {
+function downFile(res, moduleName) {
+    res.download(`${__dirname}/${moduleName}.zip`, `${moduleName}.zip`, (err) => {
         if (err) {
             res.status(400).end();
         } else {
-            fs.unlink(`${__dirname}/example.zip`, function (err) {
+            fs.unlink(`${__dirname}/${moduleName}.zip`, function (err) {
                 if (err) {
                     throw err;
                 }
@@ -61,8 +61,8 @@ function downFile(res) {
     });
 }
 
-function zip(res) {
-    const output = fs.createWriteStream(__dirname + '/example.zip');
+function zip(res, moduleName) {
+    const output = fs.createWriteStream(__dirname + `/${moduleName}.zip`);
     const archive = archiver('zip', {
         zlib: { level: 9 } // Sets the compression level.
     });
@@ -72,7 +72,7 @@ function zip(res) {
     output.on('close', function () {
         console.log(archive.pointer() + ' total bytes');
         console.log('打zip包完成');
-        downFile(res);
+        downFile(res, moduleName);
     });
 }
 

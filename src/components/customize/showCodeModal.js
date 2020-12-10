@@ -1,4 +1,4 @@
-import { Button, message, Modal } from 'antd';
+import { Button, Col, Input, message, Modal, Popover, Row } from 'antd';
 import React, { useState } from 'react';
 import copy from 'copy-to-clipboard';
 import './index.less';
@@ -8,21 +8,31 @@ import API from './api';
 export default function ShowCodeModal(props) {
     const { visible, indexCodeStr, close, columnsCodeStr } = props;
     const [down, setDown] = useState(false);
+    const [popoverVisible, setPopoverVisible] = useState(false);
+    const [moduleName, setModuleName] = useState();
     const copyFn = () => {
         copy(indexCodeStr);
         message.success('复制成功！');
     };
 
     const downFile = () => {
-        window.open(`${API.URL}down`);
+        window.open(`${API.URL}down?moduleName=${moduleName}`);
     };
 
     const generateCode = () => {
         axios
-            .post(`${API.URL}generate-files`, {
-                code: indexCodeStr,
-                columnsCodeStr
-            })
+            .post(
+                `${API.URL}generate-files`,
+                {
+                    code: indexCodeStr,
+                    columnsCodeStr
+                },
+                {
+                    params: {
+                        moduleName
+                    }
+                }
+            )
             .then((res) => {
                 if (res.data.code === 0) {
                     message.success(res.data.message);
@@ -47,9 +57,27 @@ export default function ShowCodeModal(props) {
                 <Button key='down' disabled={!down} onClick={downFile}>
                     下载
                 </Button>,
-                <Button key='code' onClick={generateCode}>
-                    生成文件
-                </Button>,
+                <Popover
+                    content={
+                        <Row justify='center' align='middle'>
+                            <Col>模块名:</Col>
+                            <Col>
+                                <Input onChange={(e) => setModuleName(e.target.value)} />
+                            </Col>
+                            <Button type='primary' onClick={generateCode}>
+                                确定
+                            </Button>
+                        </Row>
+                    }
+                    trigger='click'
+                    placement='bottomLeft'
+                    visible={popoverVisible}
+                    onVisibleChange={(visible) => setPopoverVisible(visible)}
+                >
+                    <Button key='code' onClick={() => setPopoverVisible(true)}>
+                        生成文件
+                    </Button>
+                </Popover>,
                 <Button key='submit' type='primary' onClick={copyFn}>
                     复制
                 </Button>

@@ -67,7 +67,6 @@ export default class GenerateService {
         if (items.length > 0) {
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, "import {Form,Row,Col} from 'antd';");
             const offset = (2 - (items.length % 3)) * 8;
-            console.log('offset=', offset);
             items.push(
                 `
                             <Col span={8} offset={${offset}}>
@@ -119,7 +118,6 @@ export default class GenerateService {
      * @param {} sourceData
      */
     generateIndexCode = (sourceData) => {
-        console.log('sourceData=', sourceData);
         const begin1 = `
 export default class TabDemo extends Component {`;
 

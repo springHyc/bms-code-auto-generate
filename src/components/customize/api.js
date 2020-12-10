@@ -1,5 +1,4 @@
-let URL = 'http://localhost:3001/';
-
+let URL = 'http://localhost:3002/';
 
 export default {
     URL

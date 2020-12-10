@@ -1,10 +1,11 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 
-const FileService = require('./src/fileService');
+const FileService = require('./fileService');
 
 const app = express();
-const port = 3001;
+const port = 3002;
+let moduleName = 'home';
 
 //加入这个配置,就可以在请求对象req中得到req.body,并通过req.body来获取post请求,请求体内容
 // parse application/x-www-form-urlencoded
@@ -32,20 +33,21 @@ app.get('/', (req, res) => {
 app.post('/generate-files', (req, res) => {
     // 创建文件目录
     var indexCodeStr = req.body.code;
-    var fileName = req.query.fileName || 'home';
+    var _moduleName = req.query.moduleName || moduleName; // *要生成的模块的name
     var columnsCodeStr = req.body.columnsCodeStr;
     const codeStr = {
         indexCodeStr,
         columnsCodeStr
     };
-    return FileService.WriteFile(`${__dirname}/tmp/${fileName}`, codeStr, res);
+    return FileService.WriteFile(`${__dirname}/tmp/${_moduleName}`, codeStr, res);
 });
 
 /*
  * 下载打包好的文件
  */
 app.get('/down', (req, res) => {
-    FileService.zip(res);
+    const name = req.query.moduleName || moduleName;
+    return FileService.zip(res, name);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
