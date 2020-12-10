@@ -233,8 +233,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         }
                     }}
                     scroll={{ scrollToFirstRowOnChange: true }} // 添加
-                />
-                `,
+                />`,
                 attrs: {
                     columns: [
                         {

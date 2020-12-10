@@ -47,7 +47,7 @@ export default class GenerateService {
             items.push(
                 `\n
                             <Col span={8}>
-                                <Form.Item 
+                                <Form.Item
                                     label='${task.attrs.label && task.attrs.label.value}'
                                     name='${task.attrs.name && task.attrs.name.value}'
                                     rules={[
@@ -120,8 +120,7 @@ export default class GenerateService {
         const begin1 = `
 export default class TabDemo extends Component {`;
 
-        const render1 = `
-    render() {`;
+        const render1 = `    render() {`;
 
         const render3 = `
         return (
@@ -131,10 +130,10 @@ export default class TabDemo extends Component {`;
         );
     }
 }`;
-        const contentCodeStr = `${this.generateAreaOperate(sourceData['area-operate'])}
-                    ${this.generateAreaSearch(sourceData['area-search'])}
-                    ${this.generateAreaTable(sourceData['area-table'])}`;
-        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.getColumnsFnCodeStr}${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
+        const contentCodeStr = `${this.generateAreaOperate(sourceData['area-operate'])}${this.generateAreaSearch(
+            sourceData['area-search']
+        )}${this.generateAreaTable(sourceData['area-table'])}`;
+        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.getColumnsFnCodeStr}\n${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
     };
 
     generateAssistTable = (tableConfigData) => {
@@ -179,8 +178,7 @@ export default class TabDemo extends Component {`;
                             onClick={() => {}}
                         >
                             ${btn.name}
-                        </Button>
-                        `);
+                        </Button>`);
         });
         this.getColumnsFnCodeStr = `
     getColumns = () =>
