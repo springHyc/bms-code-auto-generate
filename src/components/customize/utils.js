@@ -46,6 +46,12 @@ const randomData = (columns) => {
     return mockData;
 };
 
+/**
+ * Table 获取columns
+ *
+ * @param {*} attrs
+ * @returns
+ */
 function getColumns(attrs) {
     const columns = _.cloneDeep(attrs.columns);
 
