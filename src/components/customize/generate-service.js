@@ -133,7 +133,7 @@ export default class TabDemo extends Component {`;
         const contentCodeStr = `${this.generateAreaOperate(sourceData['area-operate'])}${this.generateAreaSearch(
             sourceData['area-search']
         )}${this.generateAreaTable(sourceData['area-table'])}`;
-        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.getColumnsFnCodeStr}\n${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
+        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.getColumnsFnCodeStr}${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
     };
 
     generateAssistTable = (tableConfigData) => {
@@ -187,7 +187,7 @@ export default class TabDemo extends Component {`;
                 title: '操作',
                 dataIndex: 'operate',
                 render: (value, record) => (
-                    <div className='br-operate-wrapper'>${btns}
+                    <div className='br-operate-wrapper'>${btns.join('')}
                     </div>
                 )
             }
