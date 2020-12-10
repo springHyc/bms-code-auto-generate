@@ -219,7 +219,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 <Table
                     rowKey={(row) => row.id}
                     columns={columns}
-                    dataSource={data.dataList}
+                    dataSource={data && data.dataList}
                     locale={{ emptyText: '暂无数据' }}
                     className='br-table-wrapper'
                     pagination={{

@@ -8,6 +8,7 @@ export default class GenerateService {
         this.columnsCodeStr = '';
         this.renderConstCodeStr = '';
         this.getColumnsFnCodeStr = '';
+        this.assistCodeStr = ''; // 放在class中的其他代码
         this.generateIndexCode(areas);
     }
 
@@ -105,7 +106,9 @@ export default class GenerateService {
             }
             // 还要辅助处理 const {data} = this.props.Name;
             this.renderConstCodeStr = `
-        const {data} = this.props.Name;`;
+        const data = this.props.Name;`;
+            this.assistCodeStr = `
+            pageInfo = { pageSize: 10, pageNum: 1 };`;
             return tableComponentStr;
         }
         return '';
@@ -133,7 +136,7 @@ export default class TabDemo extends Component {`;
         const contentCodeStr = `${this.generateAreaOperate(sourceData['area-operate'])}${this.generateAreaSearch(
             sourceData['area-search']
         )}${this.generateAreaTable(sourceData['area-table'])}`;
-        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.getColumnsFnCodeStr}${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
+        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.assistCodeStr}${this.getColumnsFnCodeStr}${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
     };
 
     generateAssistTable = (tableConfigData) => {

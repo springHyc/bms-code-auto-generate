@@ -12,3 +12,4 @@ docs/readme.html
 yarn.lock
 package-lock.json
 /serve/tmp/
+*.zip
