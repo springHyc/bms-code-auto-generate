@@ -1,4 +1,5 @@
 import StringService from './string-service';
+import _ from 'lodash';
 
 export default class GenerateService {
     constructor(areas) {
@@ -6,6 +7,7 @@ export default class GenerateService {
         this.indexCodeStr = '';
         this.columnsCodeStr = '';
         this.renderConstCodeStr = '';
+        this.getColumnsFnCodeStr = '';
         this.generateIndexCode(areas);
     }
 
@@ -18,15 +20,14 @@ export default class GenerateService {
         for (let i = 0; i < sourceData.tasks.length; i++) {
             const task = sourceData.tasks[i];
             btn.push(`
-                        <Button type='${task.attrs.type.value}'>
-                            ${task.attrs.name.value}
-                        </Button>`);
+                    <Button type='${task.attrs.type.value}'>
+                        ${task.attrs.name.value}
+                    </Button>`);
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, sourceData.tasks[0].importStr || '');
         }
         if (btn.length > 0) {
-            return `                <div className='br-operate-container'>
-                        ${btn.join('\n')}
-                    </div>`;
+            return `                <div className='br-operate-container'>${btn.join('\n')}
+                </div>`;
         } else {
             return '';
         }
@@ -45,20 +46,20 @@ export default class GenerateService {
             }
             items.push(
                 `\n
-                                <Col span={8}>
-                                    <Form.Item 
-                                        label='${task.attrs.label && task.attrs.label.value}'
-                                        name='${task.attrs.name && task.attrs.name.value}'
-                                        rules={[
-                                            {
-                                                required: ${task.attrs.required && task.attrs.required.value},
-                                                message: '${task.attrs.label && task.attrs.label.value}不能为空！'
-                                            }
-                                        ]}
-                                    >
-                                        ${task.componentStr}
-                                    </Form.Item>
-                                </Col>`
+                            <Col span={8}>
+                                <Form.Item 
+                                    label='${task.attrs.label && task.attrs.label.value}'
+                                    name='${task.attrs.name && task.attrs.name.value}'
+                                    rules={[
+                                        {
+                                            required: ${task.attrs.required && task.attrs.required.value},
+                                            message: '${task.attrs.label && task.attrs.label.value}不能为空！'
+                                        }
+                                    ]}
+                                >
+                                    ${task.componentStr}
+                                </Form.Item>
+                            </Col>`
             );
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, task.importStr || '');
         }
@@ -68,20 +69,20 @@ export default class GenerateService {
             console.log('offset=', offset);
             items.push(
                 `
-                                <Col span={8} offset={${offset}}>
-                                    <div className='br-btn-inline'>
-                                        <Button onClick={() => {}}> 重置 </Button>
-                                        <Button type='primary' onClick={() => { }}>搜索</Button>
-                                    </div>
-                                </Col>`
+                            <Col span={8} offset={${offset}}>
+                                <div className='br-btn-inline'>
+                                    <Button onClick={() => {}}> 重置 </Button>
+                                    <Button type='primary' onClick={() => { }}>搜索</Button>
+                                </div>
+                            </Col>`
             );
             return `
-                    <div className='br-select-container'>
-                        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-                            <Row gutter={{ xs: 8, sm: 16, md: 24 }}>${items.join('\n')}
-                            </Row>
-                        </Form>
-                    </div>`;
+                <div className='br-select-container'>
+                    <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+                        <Row gutter={{ xs: 8, sm: 16, md: 24 }}>${items.join('\n')}
+                        </Row>
+                    </Form>
+                </div>`;
         } else {
             return '';
         }
@@ -92,14 +93,20 @@ export default class GenerateService {
      * @param {*} sourceData
      */
     generateAreaTable = (sourceData) => {
+        let tableComponentStr = '';
         if (sourceData.tasks && sourceData.tasks[0] && sourceData.tasks[0].component) {
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, sourceData.tasks[0].importStr || '');
+            tableComponentStr = _.cloneDeep(sourceData.tasks[0].componentStr);
             if (Object.prototype.hasOwnProperty.call(sourceData.tasks[0], 'attrs') && Object.keys(sourceData.tasks[0].attrs).length > 0) {
-                this.generateAssistTable(sourceData.tasks[0].attrs);
+                const isEdit = this.generateAssistTable(sourceData.tasks[0].attrs);
+                if (isEdit) {
+                    tableComponentStr = tableComponentStr.replace('columns={columns}', 'columns={this.getColumns()}');
+                }
             }
             // 还要辅助处理 const {data} = this.props.Name;
-            this.renderConstCodeStr = '\n       const {data} = this.props.Name;\n';
-            return sourceData.tasks[0].componentStr;
+            this.renderConstCodeStr = `
+        const {data} = this.props.Name;`;
+            return tableComponentStr;
         }
         return '';
     };
@@ -110,13 +117,16 @@ export default class GenerateService {
      */
     generateIndexCode = (sourceData) => {
         console.log('sourceData=', sourceData);
-        const extraCodeStrBegin = `
-export default class TabDemo extends Component {
+        const begin1 = `
+export default class TabDemo extends Component {`;
+
+        const render1 = `
     render() {`;
-        const middle = `
+
+        const render3 = `
         return (
             <div className='br-page'>`;
-        const extraCodeStrEnd = `
+        const end = `
             </div>
         );
     }
@@ -124,15 +134,24 @@ export default class TabDemo extends Component {
         const contentCodeStr = `${this.generateAreaOperate(sourceData['area-operate'])}
                     ${this.generateAreaSearch(sourceData['area-search'])}
                     ${this.generateAreaTable(sourceData['area-table'])}`;
-        this.indexCodeStr = `${this.importCodeStr}${extraCodeStrBegin}${this.renderConstCodeStr}${middle}\n${contentCodeStr}${extraCodeStrEnd}`;
+        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.getColumnsFnCodeStr}${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
     };
 
     generateAssistTable = (tableConfigData) => {
+        let isEdit = false;
         const { columns, operate } = tableConfigData;
-        if (columns.length > 0) {
-            // 单独生成columns.js文件
+        if (columns && columns.length > 0) {
+            // * 单独生成columns.js文件
             this.generateColumnsCodeStr(columns);
         }
+        if (operate && operate.length > 0) {
+            // * 当存在操作列时
+            this.generateGetColumnsFnCodeStr(operate);
+            const importStatement = "import {Button} from 'antd';";
+            this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, importStatement);
+            isEdit = true;
+        }
+        return isEdit;
     };
 
     generateColumnsCodeStr = (columnsConfigData) => {
@@ -149,5 +168,32 @@ export default class TabDemo extends Component {
         this.columnsCodeStr = `${begin}${items.join(',')}${end}`;
         var importStatement = "import columns from './columns';";
         this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, importStatement, true);
+    };
+
+    generateGetColumnsFnCodeStr = (operate) => {
+        const btns = [];
+        operate.forEach((btn) => {
+            btns.push(`
+                        <Button
+                            type='link'
+                            onClick={() => {}}
+                        >
+                            ${btn.name}
+                        </Button>
+                        `);
+        });
+        this.getColumnsFnCodeStr = `
+    getColumns = () =>
+        columns.concat([
+            {
+                title: '操作',
+                dataIndex: 'operate',
+                render: (value, record) => (
+                    <div className='br-operate-wrapper'>${btns}
+                    </div>
+                )
+            }
+        ]);
+    `;
     };
 }

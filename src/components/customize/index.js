@@ -201,8 +201,8 @@ export default class Customize extends React.Component {
         this.indexCodeStr = service.indexCodeStr;
         this.columnsCodeStr = service.columnsCodeStr;
 
-        
-        console.log('this.columnsCodeStr=', this.columnsCodeStr);
+        // 有操作列的Table
+        // console.log('this.columnsCodeStr=', this.columnsCodeStr);
         this.setState({ showCodeModalVisible: true });
     };
 
