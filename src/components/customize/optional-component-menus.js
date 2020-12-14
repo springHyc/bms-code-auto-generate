@@ -90,6 +90,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             },
             {
                 id: uuidv4(),
+                key: 'input',
                 name: 'InputNumber 数字输入框',
                 component: <InputNumber />,
                 componentStr: '<InputNumber />',
@@ -130,16 +131,10 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 name: 'Select 选择器',
-                component: <Select placeholder='Select'></Select>,
+                key: 'select',
+                component: <Select></Select>,
                 componentStr: `
-                                    <Select placeholder='Select'>
-                                        <Select.Option value='jack'>Jack</Select.Option>
-                                        <Select.Option value='lucy'>Lucy</Select.Option>
-                                        <Select.Option value='disabled' disabled>
-                                            Disabled
-                                        </Select.Option>
-                                        <Select.Option value='Yiminghe'>yiminghe</Select.Option>
-                                    </Select>
+                                    <Select></Select>
                 `,
                 importStr: "import {Select} from 'antd';",
                 attrs: {

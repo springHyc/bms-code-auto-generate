@@ -43,7 +43,21 @@ export default class GenerateService {
             const task = sourceData.tasks[i];
             const placeholder = task.attrs.placeholder && task.attrs.placeholder.value;
             if (placeholder) {
-                task.componentStr.replaceAll('/>', "placeholder='请输入' />");
+                task.componentStr = task.componentStr.replace('>', ` placeholder='${placeholder}' >`);
+            }
+            if (task.key === 'select') {
+                // * 是select的话，单独处理componentStr
+
+                const options = [];
+                task.attrs.options.value.forEach((item) => {
+                    options.push(`<Select.Option value='${item.key}'>${item.value}</Select.Option>`);
+                });
+                task.componentStr = task.componentStr.replace(
+                    '>',
+                    `>
+                                        ${options.join('\n')}
+                                    `
+                );
             }
             items.push(
                 `\n
@@ -65,7 +79,7 @@ export default class GenerateService {
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, task.importStr || '');
         }
         if (items.length > 0) {
-            this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, "import {Form,Row,Col} from 'antd';");
+            this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, "import {Form,Row,Col,Button} from 'antd';");
             const offset = (2 - (items.length % 3)) * 8;
             items.push(
                 `
@@ -134,7 +148,7 @@ export default class TabDemo extends Component {`;
         const contentCodeStr = `${this.generateAreaOperate(sourceData['area-operate'])}${this.generateAreaSearch(
             sourceData['area-search']
         )}${this.generateAreaTable(sourceData['area-table'])}`;
-        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.assistCodeStr}${this.getColumnsFnCodeStr}${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
+        this.indexCodeStr = `${this.importCodeStr}${begin1}${this.assistCodeStr}${this.getColumnsFnCodeStr}\n${render1}${this.renderConstCodeStr}${render3}\n${contentCodeStr}${end}`;
     };
 
     generateAssistTable = (tableConfigData) => {
