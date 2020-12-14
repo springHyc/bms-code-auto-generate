@@ -152,10 +152,10 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         text: 'placeholder',
                         type: 'string',
                         required: false,
-                        value: '请输入'
+                        value: '请下拉选择'
                     },
-                    options: [{ key: 'apple', value: '苹果' }],
-                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    options: { id: uuidv4(), type: 'option', key: 'option', required: false, value: [] }
                 }
             }
         ]
