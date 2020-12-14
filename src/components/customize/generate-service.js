@@ -42,8 +42,9 @@ export default class GenerateService {
         for (let i = 0; i < sourceData.tasks.length; i++) {
             const task = sourceData.tasks[i];
             const placeholder = task.attrs.placeholder && task.attrs.placeholder.value;
+            let componentStr = _.cloneDeep(task.componentStr);
             if (placeholder) {
-                task.componentStr = task.componentStr.replace('>', ` placeholder='${placeholder}' >`);
+                componentStr = componentStr.replace('>', ` placeholder='${placeholder}' >`);
             }
             if (task.key === 'select') {
                 // * 是select的话，单独处理componentStr
@@ -52,7 +53,7 @@ export default class GenerateService {
                 task.attrs.options.value.forEach((item) => {
                     options.push(`<Select.Option value='${item.key}'>${item.value}</Select.Option>`);
                 });
-                task.componentStr = task.componentStr.replace(
+                componentStr = componentStr.replace(
                     '>',
                     `>
                                         ${options.join('\n')}
@@ -60,7 +61,7 @@ export default class GenerateService {
                 );
             }
             items.push(
-                `\n
+                `
                             <Col span={8}>
                                 <Form.Item
                                     label='${task.attrs.label && task.attrs.label.value}'
@@ -72,7 +73,7 @@ export default class GenerateService {
                                         }
                                     ]}
                                 >
-                                    ${task.componentStr}
+                                    ${componentStr}
                                 </Form.Item>
                             </Col>`
             );
@@ -93,7 +94,7 @@ export default class GenerateService {
             return `
                 <div className='br-select-container'>
                     <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-                        <Row gutter={{ xs: 8, sm: 16, md: 24 }}>${items.join('\n')}
+                        <Row gutter={{ xs: 8, sm: 16, md: 24 }}>${items.join('')}
                         </Row>
                     </Form>
                 </div>`;
@@ -121,7 +122,7 @@ export default class GenerateService {
             this.renderConstCodeStr = `
         const data = this.props.Name;`;
             this.assistCodeStr = `
-            pageInfo = { pageSize: 10, pageNum: 1 };`;
+    pageInfo = { pageSize: 10, pageNum: 1 };`;
             return tableComponentStr;
         }
         return '';

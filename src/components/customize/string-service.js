@@ -24,7 +24,7 @@ function addImportCodeStr(source, addImportStr, type) {
                         sourceArr = sourceArr.map((item) => {
                             if (item.indexOf(addImportStrImportSourceKey) !== -1) {
                                 const _strs = item.split('{');
-                                _strs[1] = keyWord.replaceAll(/[{}]/g, '') + ', ' + _strs[1];
+                                _strs[1] = keyWord.replaceAll(/[{}]/g, '') + ',' + _strs[1];
                                 item = _strs.join('{ ');
                             }
                             return item;

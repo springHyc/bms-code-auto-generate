@@ -18,7 +18,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'button', // 需要它来确定这是个button组件
                 name: 'Button 按钮',
                 component: <Button />,
-                importStr: "import {Button } from 'antd';",
+                importStr: "import { Button } from 'antd';",
                 // 属性
                 attrs: {
                     name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '按钮文本' },
@@ -51,7 +51,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'input',
                 name: 'Input 输入框',
                 component: <Input />,
-                componentStr: '<Input />',
+                componentStr: '<Input></Input>',
                 importStr: "import {Input} from 'antd';",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -68,18 +68,18 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
-            {
-                // TODO这个暂时在搜索区域没用过
-                id: uuidv4(),
-                name: 'Checkbox 多选框',
-                component: <span>this is Checkbox</span>
-            },
+            // {
+            //     // TODO这个暂时在搜索区域没用过
+            //     id: uuidv4(),
+            //     name: 'Checkbox 多选框',
+            //     component: <span>this is Checkbox</span>
+            // },
             {
                 id: uuidv4(),
                 key: 'datepicker',
                 name: 'DatePicker 日期选择框',
                 component: <DatePicker.RangePicker />,
-                componentStr: '<DatePicker.RangePicker />',
+                componentStr: '<DatePicker.RangePicker></DatePicker.RangePicker>',
                 importStr: "import {DatePicker} from 'antd';", // todo是否需要多引入单个年月日的
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -93,7 +93,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'input',
                 name: 'InputNumber 数字输入框',
                 component: <InputNumber />,
-                componentStr: '<InputNumber />',
+                componentStr: '<InputNumber></InputNumber>',
                 importStr: "import {InputNumber} from 'antd';",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -110,32 +110,31 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
-            {
-                // TODO 搜索区域暂时没有
-                id: uuidv4(),
-                name: 'Radio 单选框',
-                component: (
-                    <Radio.Group placeholder='单选'>
-                        <Radio value={1}>A</Radio>
-                        <Radio value={2}>B</Radio>
-                        <Radio value={3}>C</Radio>
-                        <Radio value={4}>D</Radio>
-                    </Radio.Group>
-                )
-            },
-            {
-                id: uuidv4(),
-                name: 'Switch 开关',
-                component: <Switch defaultChecked />
-            },
+            // TODO 搜索区域暂时没有
+            // {
+            //
+            //     id: uuidv4(),
+            //     name: 'Radio 单选框',
+            //     component: (
+            //         <Radio.Group placeholder='单选'>
+            //             <Radio value={1}>A</Radio>
+            //             <Radio value={2}>B</Radio>
+            //             <Radio value={3}>C</Radio>
+            //             <Radio value={4}>D</Radio>
+            //         </Radio.Group>
+            //     )
+            // },
+            // {
+            //     id: uuidv4(),
+            //     name: 'Switch 开关',
+            //     component: <Switch defaultChecked />
+            // },
             {
                 id: uuidv4(),
                 name: 'Select 选择器',
                 key: 'select',
                 component: <Select></Select>,
-                componentStr: `
-                                    <Select></Select>
-                `,
+                componentStr: `<Select></Select>`,
                 importStr: "import {Select} from 'antd';",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
