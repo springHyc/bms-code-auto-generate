@@ -50,12 +50,13 @@ function downFile(res, moduleName) {
         if (err) {
             res.status(400).end();
         } else {
-            fs.unlink(`${__dirname}/${moduleName}.zip`, function (err) {
-                if (err) {
-                    throw err;
-                }
-                console.log('文件下载成功后删除文件成功！', '\n===========\n');
-            });
+            // fs.unlink(`${__dirname}/${moduleName}.zip`, function (err) {
+            //     if (err) {
+            //         throw err;
+            //     }
+            //     console.log('文件下载成功后删除文件成功！', '\n===========\n');
+            // });
+            console.log('文件下载成功后成功！', '\n===========\n');
             res.end();
         }
     });
