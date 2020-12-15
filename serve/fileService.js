@@ -66,7 +66,7 @@ function zip(res, moduleName) {
     const archive = archiver('zip', {
         zlib: { level: 9 } // Sets the compression level.
     });
-    archive.directory(__dirname + '/tmp/home/', false);
+    archive.directory(__dirname + `/tmp/${moduleName}/`, false);
     archive.pipe(output);
     archive.finalize();
     output.on('close', function () {
