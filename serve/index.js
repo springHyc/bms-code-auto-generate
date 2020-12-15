@@ -23,14 +23,14 @@ app.all('*', function (req, res, next) {
 /*
  * 测试接口
  */
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
     res.send("<span style='font-size: 18px;'}>欢迎使用拖拽自动生成代码工具的后台生成文件目录系统</span>");
 });
 
 /*
  * 生成目录
  */
-app.post('/generate-files', (req, res) => {
+app.post('/api/generate-files', (req, res) => {
     // 创建文件目录
     var indexCodeStr = req.body.code;
     var _moduleName = req.query.moduleName || moduleName; // *要生成的模块的name
@@ -45,7 +45,7 @@ app.post('/generate-files', (req, res) => {
 /*
  * 下载打包好的文件
  */
-app.get('/down', (req, res) => {
+app.get('/api/down', (req, res) => {
     const name = req.query.moduleName || moduleName;
     return FileService.zip(res, name);
 });
