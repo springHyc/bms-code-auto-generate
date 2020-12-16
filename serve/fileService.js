@@ -3,46 +3,25 @@ const archiver = require('archiver');
 
 function WriteFile(file, content, res) {
     const { indexCodeStr, columnsCodeStr } = content;
-    fs.rmdir(file, { recursive: true }, (err) => {
+    const err = fs.rmdirSync(`${__dirname}/tmp`, { recursive: true });
+    if (err) {
+        throw err;
+    }
+    console.log('生成文件前，先清理文件！');
+    fs.mkdirSync(file, { recursive: true });
+    fs.writeFile(`${file}/index.js`, indexCodeStr, (err) => {
         if (err) {
             throw err;
         }
-        console.log('生成文件前，先清理文件！');
-        fs.open(file, 'r', (err, fd) => {
+    });
+    if (columnsCodeStr) {
+        fs.writeFile(`${file}/columns.js`, columnsCodeStr, (err) => {
             if (err) {
-                if (err.code === 'ENOENT') {
-                    fs.mkdir(file, { recursive: true }, (err) => {
-                        if (err) throw err;
-                    });
-                    fs.writeFile(`${file}/index.js`, indexCodeStr, (err) => {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                    if (columnsCodeStr) {
-                        fs.writeFile(`${file}/columns.js`, columnsCodeStr, (err) => {
-                            if (err) {
-                                throw err;
-                            }
-                        });
-                    }
-                }
-            } else {
-                fs.writeFile(`${file}/index.js`, indexCodeStr, (err) => {
-                    if (err) {
-                        throw err;
-                    }
-                });
-                if (columnsCodeStr) {
-                    fs.writeFile(`${file}/columns.js`, columnsCodeStr, (err) => {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                }
+                throw err;
             }
         });
-    });
+    }
+    console.log(`成功创建文件，其目录为：${file}/`);
     return res.send({ code: 0, message: `成功创建文件，其目录为：${file}/` });
 }
 function downFile(res, moduleName) {
@@ -50,14 +29,12 @@ function downFile(res, moduleName) {
         if (err) {
             res.status(400).end();
         } else {
-            // fs.unlink(`${__dirname}/${moduleName}.zip`, function (err) {
-            //     if (err) {
-            //         throw err;
-            //     }
-            //     console.log('文件下载成功后删除文件成功！', '\n===========\n');
-            // });
-            console.log('文件下载成功后成功！', '\n===========\n');
-            res.end();
+            fs.unlink(`${__dirname}/${moduleName}.zip`, function (err) {
+                if (err) {
+                    throw err;
+                }
+                console.log('文件下载成功后删除文件成功！', '\n===========\n');
+            });
         }
     });
 }
