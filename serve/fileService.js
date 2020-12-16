@@ -29,6 +29,7 @@ function downFile(res, moduleName) {
         if (err) {
             res.status(400).end();
         } else {
+            res.end();
             fs.unlink(`${__dirname}/${moduleName}.zip`, function (err) {
                 if (err) {
                     throw err;
