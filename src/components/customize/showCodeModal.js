@@ -36,6 +36,7 @@ export default function ShowCodeModal(props) {
             .then((res) => {
                 if (res.data.code === 0) {
                     message.success(res.data.message);
+                    setPopoverVisible(false);
                     setDown(true);
                 }
             })
