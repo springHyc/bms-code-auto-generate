@@ -1,5 +1,23 @@
 # BmsCodeAutoGenerate
 
+## 如何将本地的公钥放到服务器上，避免登录服务器输入密码
+
+```shell
+# 登录服务器
+ssh root@47.105.170.226
+# 找到authorized_keys文件，然后将本机的id_rsa.pub中的公钥拷贝进去
+## 本机操作，找到id_rsa.pub中的公钥
+cd ~/.ssh & cat id_rsa.pub
+
+# 服务器操作
+## 打开authorized_keys文件
+cd .ssh & vim authorized_keys
+
+# 将id_rsa.pub内容拷贝进去
+## 退出服务器
+logout
+```
+
 ## 远程部署命令
 
 ```shell
