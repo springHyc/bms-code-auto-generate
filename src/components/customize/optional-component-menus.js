@@ -159,30 +159,30 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
         id: 3,
         key: '3',
         menus: [
-            {
-                id: uuidv4(),
-                name: 'Tabs 标签页',
-                component: (
-                    <Tabs
-                        type='card'
-                        animated={true}
-                        className='br-tabs'
-                        onChange={() => {
-                            // * 将值存储到redux中，这样当从某个tab进入详情后，退回，还能退回这个tab标签
-                        }}
-                    >
-                        <TabPane tab='标签展示1' key='1'>
-                            {/* <span>标签展示1</span> */}
-                        </TabPane>
-                        <TabPane tab='标签展示2' key='2'>
-                            <span>标签展示2</span>
-                        </TabPane>
-                        <TabPane tab='标签展示3' key='3'>
-                            <span>标签展示3</span>
-                        </TabPane>
-                    </Tabs>
-                )
-            },
+            // {
+            //     id: uuidv4(),
+            //     name: 'Tabs 标签页',
+            //     component: (
+            //         <Tabs
+            //             type='card'
+            //             animated={true}
+            //             className='br-tabs'
+            //             onChange={() => {
+            //                 // * 将值存储到redux中，这样当从某个tab进入详情后，退回，还能退回这个tab标签
+            //             }}
+            //         >
+            //             <TabPane tab='标签展示1' key='1'>
+            //                 {/* <span>标签展示1</span> */}
+            //             </TabPane>
+            //             <TabPane tab='标签展示2' key='2'>
+            //                 <span>标签展示2</span>
+            //             </TabPane>
+            //             <TabPane tab='标签展示3' key='3'>
+            //                 <span>标签展示3</span>
+            //             </TabPane>
+            //         </Tabs>
+            //     )
+            // },
             {
                 id: uuidv4(),
                 name: 'Table 表格',

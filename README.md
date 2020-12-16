@@ -1,5 +1,22 @@
 # BmsCodeAutoGenerate
 
+## 一键部署
+
+```shell
+# 输入密码这一步是怎么搞定的？
+ssh root@47.105.170.226
+cd /srv/bms-code-auto-generate
+git pull origin master
+# 只需要一遍即可
+pm2 start index.js --watch
+
+npm run build
+scp -r build root@ssh root@47.105.170.226:/srv
+rm -rf front/
+mv build front
+
+```
+
 ## 如何将本地的公钥放到服务器上，避免登录服务器输入密码
 
 ```shell
@@ -29,6 +46,12 @@ nohup node index.js &
 # 关闭后端服务
 ps aux | grep node
 kill -9 pid
+
+# 启动后端服务，pm2版本
+## 全局安装pm2
+npm install -g pm2
+## 改用pm2来启动程序--watch表示，监控程序运行状态，一旦：服务异常：自动重启;服务发生变化：自动重启
+pm2 start index.js --watch
 
 # 拷贝前端
 # 在本地项目执行命令
