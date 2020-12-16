@@ -120,12 +120,17 @@ export default class Customize extends React.Component {
      */
     getNewComponentOfAreaTable = (task) => {
         const _component = _.cloneDeep(task.component);
-        _component.props = {
-            ..._component.props,
-            columns: Utils.getColumns(task.attrs),
-            dataSource: Utils.randomData(task.attrs.columns)
-        };
-        return _component;
+        // * 容错处理
+        if (task.key !== 'table') {
+            return _component;
+        } else {
+            _component.props = {
+                ..._component.props,
+                columns: Utils.getColumns(task.attrs),
+                dataSource: Utils.randomData(task.attrs.columns)
+            };
+            return _component;
+        }
     };
 
     updateArea = (key, tasks) => {

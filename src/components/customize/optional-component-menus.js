@@ -186,6 +186,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 name: 'Table 表格',
+                key: 'table',
                 component: (
                     <Table
                         rowKey={(row) => row.id}
