@@ -294,7 +294,7 @@ export default class Customize extends React.Component {
                     <div
                         ref={provided.innerRef}
                         className={area.className}
-                        style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
+                        style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}`, paddingBottom: '8px' }}
                     >
                         {area.tasks.length > 0 ? (
                             <Form {...layout} ref={this.formRef}>
@@ -347,7 +347,7 @@ export default class Customize extends React.Component {
                                 </Row>
                             </Form>
                         ) : (
-                            provided.placeholder && <Notice>{area.title}:Drop items here</Notice>
+                            provided.placeholder && <Notice style={{ transform: 'translateY(0)' }}>{area.title}:Drop items here</Notice>
                         )}
                         {provided.placeholder}
                     </div>
@@ -408,7 +408,11 @@ export default class Customize extends React.Component {
                                       </Draggable>
                                   );
                               })
-                            : provided.placeholder && <Notice>{area.title}:Drop items here</Notice>}
+                            : provided.placeholder && (
+                                  <Notice style={(area.id === 'area-table' && { marginTop: '130px' }) || {}}>
+                                      {area.title}:Drop items here
+                                  </Notice>
+                              )}
                         {provided.placeholder}
                     </div>
                 )}
