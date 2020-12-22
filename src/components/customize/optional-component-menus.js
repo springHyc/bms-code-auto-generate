@@ -264,20 +264,23 @@ const INIT_DATA = {
             id: 'area-operate',
             className: 'customize-operate-wrapper br-operate-container ',
             title: '按钮操作区域',
-            tasks: []
+            tasks: [],
+            canExistKeys: ['button']
         },
         // 搜索区域一般的组件：Date(年月日、年月)、select、input
         'area-search': {
             id: 'area-search',
             className: 'customize-search-wrapper br-select-container',
             title: '搜索区域',
-            tasks: []
+            tasks: [],
+            canExistKeys: ['input', 'datepicker', 'select']
         },
         'area-table': {
             id: 'area-table',
             className: 'customize-table-wrapper',
             title: 'Table区域',
-            tasks: []
+            tasks: [],
+            canExistKeys: ['table']
         }
     }
 };

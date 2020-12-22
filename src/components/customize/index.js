@@ -27,15 +27,18 @@ const reorder = (list, startIndex, endIndex) => {
  * 从左侧栏复制到右侧可移动区域
  */
 const copy = (source, destination, droppableSource, droppableDestination, that) => {
+    debugger;
     const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
+    if (!that.state.areas[droppableDestination.droppableId].canExistKeys.includes(item.key)) {
+        message.error('目标区域不对，请从新选择！');
+        return;
+    }
     const newId = uuidv4();
-    // const newComponent = addOnClickComponent(item, newId, that, droppableDestination.droppableId);
     destClone.splice(droppableDestination.index, 0, {
         ...item,
         id: newId
-        // component: newComponent
     });
     return destClone;
 };
@@ -173,6 +176,9 @@ export default class Customize extends React.Component {
             }
             case 'areas-menus': {
                 const destClone = copy(this.state.menus, this.state[destination.droppableId] || [], source, destination, this);
+                if (!destClone) {
+                    return;
+                }
                 const areas = this.state.areas;
                 this.updateArea(destination.droppableId, areas[destination.droppableId].tasks.concat(destClone));
                 break;
