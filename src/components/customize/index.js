@@ -240,6 +240,21 @@ export default class Customize extends React.Component {
         });
         e.preventDefault();
     };
+
+    /**
+     * 关闭右击的弹框
+     */
+    closeContextMenu = (e, area) => {
+        // 关闭所有打开的Dropdown
+        const visible = this.state.visible;
+        if (area.tasks.length > 0 && visible) {
+            area.tasks.forEach((item) => {
+                visible[item.id] = false;
+            });
+            this.setState({ visible });
+        }
+        e.preventDefault();
+    };
     /**
      * 左侧可选择区域
      */
@@ -300,6 +315,7 @@ export default class Customize extends React.Component {
                         ref={provided.innerRef}
                         className={area.className}
                         style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}`, paddingBottom: '8px' }}
+                        onClick={(e) => this.closeContextMenu(e, area)}
                     >
                         {area.tasks.length > 0 ? (
                             <Form {...layout} ref={this.formRef}>
@@ -369,17 +385,7 @@ export default class Customize extends React.Component {
                         ref={provided.innerRef}
                         className={area.className}
                         style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}` }}
-                        onClick={(e) => {
-                            // 关闭所有打开的Dropdown
-                            const visible = this.state.visible;
-                            if (area.tasks.length > 0 && visible) {
-                                area.tasks.forEach((item) => {
-                                    visible[item.id] = false;
-                                });
-                                this.setState({ visible });
-                            }
-                            e.preventDefault();
-                        }}
+                        onClick={(e) => this.closeContextMenu(e, area)}
                     >
                         {area.tasks.length > 0
                             ? area.tasks.map((task, index) => {
