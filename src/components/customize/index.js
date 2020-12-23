@@ -27,7 +27,6 @@ const reorder = (list, startIndex, endIndex) => {
  * 从左侧栏复制到右侧可移动区域
  */
 const copy = (source, destination, droppableSource, droppableDestination, that) => {
-    debugger;
     const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
