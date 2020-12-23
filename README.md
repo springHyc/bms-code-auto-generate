@@ -1,5 +1,11 @@
 # BmsCodeAutoGenerate
 
+## TODO
+
+- 自动生成 Form 表单
+- 存储草稿功能
+- 多人系统，考虑并发
+
 ## 一键部署
 
 ```shell
