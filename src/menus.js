@@ -1,7 +1,8 @@
 import React from 'react';
-import { EditOutlined, SnippetsOutlined, TableOutlined } from '@ant-design/icons';
-import TabDemo from './components/demo/tab';
+import { EditOutlined, FormOutlined, SnippetsOutlined, TableOutlined } from '@ant-design/icons';
+// import TabDemo from './components/demo/tab';
 import Customize from './components/customize';
+import CustomizeForm from './components/customize-form';
 
 /**
  * 整个路由走的是hash路由。
@@ -16,23 +17,30 @@ const MENUS = [
     {
         path: '/customize',
         key: 1,
-        name: '自定义生成页面',
+        name: '拖拽生成Table页面',
         icon: <EditOutlined />,
         component: Customize
     },
     {
-        path: '/default',
-        name: '生成默认页面',
-        icon: <SnippetsOutlined />,
-        subset: [
-            {
-                path: '/default/normal-page',
-                name: '普通列表页',
-                icon: <TableOutlined />,
-                component: TabDemo
-            }
-        ]
+        path: '/form',
+        key: 2,
+        name: '拖拽生成Form表单',
+        icon: <FormOutlined />,
+        component: CustomizeForm
     }
+    // {
+    //     path: '/default',
+    //     name: '生成默认页面',
+    //     icon: <SnippetsOutlined />,
+    //     subset: [
+    //         {
+    //             path: '/default/normal-page',
+    //             name: '普通列表页',
+    //             icon: <TableOutlined />,
+    //             component: TabDemo
+    //         }
+    //     ]
+    // }
 ];
 
 export default MENUS;
