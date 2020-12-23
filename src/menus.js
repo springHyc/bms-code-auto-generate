@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditOutlined, FormOutlined, SnippetsOutlined, TableOutlined } from '@ant-design/icons';
+import { EditOutlined, FormOutlined } from '@ant-design/icons';
 // import TabDemo from './components/demo/tab';
 import Customize from './components/customize';
 import CustomizeForm from './components/customize-form';

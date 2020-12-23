@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Input, DatePicker, InputNumber, Radio, Switch, Select, Table, Tabs } from 'antd';
+import { Button, Input, DatePicker, InputNumber, Select, Table } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import columns from './assistFile/columns';
 import data from './assistFile/mockTableData';
 
-const { TabPane } = Tabs;
 const pageInfo = { pageSize: 10, pageNum: 1 };
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
