@@ -61,6 +61,10 @@ logout
 # 登录远程服务器
 ssh root@47.105.170.226
 
+# 更新代码
+cd /srv/bms-code-auto-generate
+git pull origin master
+
 # 远程启动后端
 nohup node index.js &
 # 关闭后端服务
