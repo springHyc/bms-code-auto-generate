@@ -44,10 +44,14 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
 /**
  * Moves an item from one list to another list.
  */
-const move = (source, destination, droppableSource, droppableDestination) => {
+const move = (source, destination, droppableSource, droppableDestination, that) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
+    if (!that.state.areas[droppableDestination.droppableId].canExistKeys.includes(removed.key)) {
+        message.error('目标区域不对，请从新选择！');
+        return;
+    }
     destClone.splice(droppableDestination.index, 0, removed);
     const result = {};
     result[droppableSource.droppableId] = sourceClone;
@@ -187,8 +191,12 @@ export default class Customize extends React.Component {
                     this.state.areas[source.droppableId].tasks,
                     this.state.areas[destination.droppableId].tasks,
                     source,
-                    destination
+                    destination,
+                    this
                 );
+                if (!results) {
+                    return;
+                }
                 this.updateArea(destination.droppableId, results[destination.droppableId]);
                 this.updateArea(source.droppableId, results[source.droppableId]);
                 break;
