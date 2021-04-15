@@ -1,6 +1,6 @@
 {
     "name": "bms-code-auto-generate",
-    "version": "0.1.0",
+    "version": "0.2.0-alpha0.1",
     "private": true,
     "dependencies": {
         "@ant-design/colors": "^4.0.1",
