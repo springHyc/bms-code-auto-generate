@@ -169,8 +169,8 @@ export default class CustomizeForm extends Component {
      */
     getNewComponentOfAreaSearch = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
+        debugger;
         const formItemAttrs = {};
-        // if (areaId === 'area-search') {
         if (task && task.attrs) {
             for (const key in task.attrs) {
                 const item = task.attrs[key];
@@ -193,7 +193,7 @@ export default class CustomizeForm extends Component {
                 }
             }
         }
-        // }
+        debugger;
         return { component: _component, formItemAttrs: formItemAttrs };
     };
     getNewComponent = (task, areaId) => {
@@ -215,7 +215,6 @@ export default class CustomizeForm extends Component {
             wrapperCol: { span: 16 }
         };
         const valueOfSpan = 24 / this.state.numberOfColumns || 2;
-        // const offsetNum = area.tasks.length % 3 === 0 ? 16 : area.tasks.length % 3 === 1 ? 8 : 0;
         return (
             <Droppable droppableId={area.id} key={area.id} className={area.className}>
                 {(provided, snapshot) => (

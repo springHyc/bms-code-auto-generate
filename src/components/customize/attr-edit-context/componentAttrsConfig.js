@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Radio, Select, Checkbox, Space, Button } from 'antd';
+import { Form, Input, Radio, Select, Checkbox, Space, Button, InputNumber } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 /**
@@ -45,7 +45,13 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
             <Form ref={formRef} onFinish={onFinish}>
                 {keys.map((key) => {
                     const attr = attrs[key];
-                    if (attr.type === 'string') {
+                    if (attr.type === 'number') {
+                        return (
+                            <Form.Item {...formItemProps(key, attr)}>
+                                <InputNumber onChange={(value) => onChange(value, attr.id)} value={attr.value} />
+                            </Form.Item>
+                        );
+                    } else if (attr.type === 'string') {
                         return (
                             <Form.Item {...formItemProps(key, attr)}>
                                 <Input onChange={(e) => onChange(e.target.value, attr.id)} value={attr.value} />

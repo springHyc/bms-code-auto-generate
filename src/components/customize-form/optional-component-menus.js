@@ -63,14 +63,58 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
+            {
+                id: uuidv4(),
+                key: 'input.textarea',
+                name: 'TextArea 输入框',
+                component: <Input.TextArea rows={4}></Input.TextArea>,
+                componentStr: '<Input.TextArea rows={4}></Input.TextArea>',
+                importStr: "import {Input} from 'antd';",
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    placeholder: {
+                        id: uuidv4(),
+                        key: 'placeholder',
+                        text: 'placeholder',
+                        type: 'string',
+                        required: false,
+                        value: '请输入'
+                    },
+                    rows: {
+                        id: uuidv4(),
+                        key: 'rows',
+                        text: 'rows',
+                        type: 'number',
+                        required: false,
+                        value: 4 // 默认值
+                    },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
+                }
+            },
 
             {
                 id: uuidv4(),
                 key: 'datepicker',
-                name: 'DatePicker 日期选择框',
+                name: 'DatePicker.RangePicker 日期选择框',
                 component: <DatePicker.RangePicker />,
                 componentStr: '<DatePicker.RangePicker></DatePicker.RangePicker>',
-                importStr: "import {DatePicker} from 'antd';", // todo是否需要多引入单个年月日的
+                importStr: "import {DatePicker} from 'antd';",
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
+                }
+            },
+            {
+                id: uuidv4(),
+                key: 'datepicker',
+                name: 'DatePicker日期选择框',
+                component: <DatePicker />,
+                componentStr: '<DatePicker></DatePicker>',
+                importStr: "import {DatePicker} from 'antd';",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
@@ -123,6 +167,36 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             },
             {
                 id: uuidv4(),
+                name: 'Checkbox.Group 多选框',
+                key: 'checkbox',
+                component: (
+                    <Checkbox.Group>
+                        <Checkbox value='A'>A</Checkbox>
+                        <Checkbox value='B'>B</Checkbox>
+                        <Checkbox value='C'>C</Checkbox>
+                        <Checkbox value='D'>D</Checkbox>
+                    </Checkbox.Group>
+                ),
+                componentStr: `<Checkbox></Checkbox>`,
+                importStr: "import {Checkbox} from 'antd';",
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    placeholder: {
+                        id: uuidv4(),
+                        key: 'placeholder',
+                        text: 'placeholder',
+                        type: 'string',
+                        required: false,
+                        value: '请下拉选择'
+                    },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    options: { id: uuidv4(), type: 'option', key: 'option', required: false, value: [] }
+                }
+            },
+            {
+                id: uuidv4(),
                 name: 'Radio 单选框',
                 component: (
                     <Radio.Group placeholder='单选'>
@@ -143,14 +217,6 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    // placeholder: {
-                    //     id: uuidv4(),
-                    //     key: 'placeholder',
-                    //     text: 'placeholder',
-                    //     type: 'string',
-                    //     required: false,
-                    //     value: '请选择'
-                    // },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
@@ -164,14 +230,6 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    // placeholder: {
-                    //     id: uuidv4(),
-                    //     key: 'placeholder',
-                    //     text: 'placeholder',
-                    //     type: 'string',
-                    //     required: false,
-                    //     value: '请选择'
-                    // },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
