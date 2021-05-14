@@ -1,39 +1,8 @@
 import React from 'react';
-import { Button, Input, DatePicker, InputNumber, Select, Row, Col, Radio, Checkbox, Switch } from 'antd';
+import { Button, Input, DatePicker, InputNumber, Select, Radio, Checkbox, Switch } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
-    {
-        title: 'Grid栅格',
-        id: 0,
-        key: '0',
-        menus: [
-            {
-                id: uuidv4(),
-                key: 'grid',
-                name: 'Grid栅格(两列)',
-                component: (
-                    <Row>
-                        <Col span={12}>col-12</Col>
-                        <Col span={12}>col-12</Col>
-                    </Row>
-                ),
-                importStr: "import { Row, Col } from 'antd';",
-                // 属性
-                attrs: {
-                    // name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '按钮文本' },
-                    // type: {
-                    //     id: uuidv4(),
-                    //     text: 'type',
-                    //     type: 'select',
-                    //     required: false,
-                    //     value: 'default',
-                    //     options: ['primary', 'ghost', 'dashed', 'danger', 'link', 'text', 'default']
-                    // }
-                }
-            }
-        ]
-    },
     {
         title: '通用',
         id: 1,
@@ -174,14 +143,14 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    placeholder: {
-                        id: uuidv4(),
-                        key: 'placeholder',
-                        text: 'placeholder',
-                        type: 'string',
-                        required: false,
-                        value: '请选择'
-                    },
+                    // placeholder: {
+                    //     id: uuidv4(),
+                    //     key: 'placeholder',
+                    //     text: 'placeholder',
+                    //     type: 'string',
+                    //     required: false,
+                    //     value: '请选择'
+                    // },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
@@ -195,14 +164,14 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    placeholder: {
-                        id: uuidv4(),
-                        key: 'placeholder',
-                        text: 'placeholder',
-                        type: 'string',
-                        required: false,
-                        value: '请选择'
-                    },
+                    // placeholder: {
+                    //     id: uuidv4(),
+                    //     key: 'placeholder',
+                    //     text: 'placeholder',
+                    //     type: 'string',
+                    //     required: false,
+                    //     value: '请选择'
+                    // },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
