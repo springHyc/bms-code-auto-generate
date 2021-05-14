@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, message, Row, Typography, Form } from 'antd';
+import { Button, Col, message, Row, Form } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Clone, Item, Notice, Kiosk } from './style-common';
@@ -8,6 +8,7 @@ import './index.less';
 import _ from 'lodash';
 import WrapperDelete from '../customize/wrapper-delete';
 import { v4 as uuidv4 } from 'uuid';
+import AttrEditContext from '../customize/attr-edit-context/';
 
 /**
  * 同一区域内排序
@@ -56,7 +57,12 @@ const move = (source, destination, droppableSource, droppableDestination, that) 
     return result;
 };
 export default class CustomizeForm extends Component {
-    state = { ...INIT_DATA, selectedNode: { node: {} }, showCodeModalVisible: false };
+    state = {
+        ...INIT_DATA,
+        selectedNode: { node: {} },
+        showCodeModalVisible: false,
+        numberOfColumns: 2 // 默认列数为两列
+    };
 
     /**
      * 右击弹出删除框
@@ -194,6 +200,10 @@ export default class CustomizeForm extends Component {
         const _component = _.cloneDeep(task.component);
         return _component;
     };
+
+    changeNumberOfColumns = (numberOfColumns) => {
+        this.setState({ numberOfColumns });
+    };
     /**
      * Form表单
      * 需要将其包裹在`Form`中
@@ -204,6 +214,7 @@ export default class CustomizeForm extends Component {
             labelCol: { span: 8 },
             wrapperCol: { span: 16 }
         };
+        const valueOfSpan = 24 / this.state.numberOfColumns || 2;
         // const offsetNum = area.tasks.length % 3 === 0 ? 16 : area.tasks.length % 3 === 1 ? 8 : 0;
         return (
             <Droppable droppableId={area.id} key={area.id} className={area.className}>
@@ -223,7 +234,7 @@ export default class CustomizeForm extends Component {
                                             <Draggable draggableId={task.id} key={task.id} index={index}>
                                                 {(provided, snapshot) => (
                                                     <Col
-                                                        span={8}
+                                                        span={valueOfSpan}
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
                                                         style={{
@@ -319,8 +330,8 @@ export default class CustomizeForm extends Component {
         return (
             <div className='customize-form-wrapper'>
                 <div className='create-code'>
-                    <Button>两列布局</Button>
-                    <Button>三列布局</Button>
+                    <Button onClick={() => this.changeNumberOfColumns(1)}>单列布局</Button>
+                    <Button onClick={() => this.changeNumberOfColumns(2)}>两列布局</Button>
                     <Button type='primary' onClick={this.generateCode}>
                         生成代码
                     </Button>
@@ -331,6 +342,13 @@ export default class CustomizeForm extends Component {
                     {this.renderSider()}
                     {this.renderAreas()}
                 </DragDropContext>
+
+                {/* 编辑Attrs属性 */}
+                <AttrEditContext
+                    selectedNode={this.state.selectedNode}
+                    update={(data) => this.setState({ areas: data })}
+                    areas={this.state.areas}
+                />
             </div>
         );
     }
