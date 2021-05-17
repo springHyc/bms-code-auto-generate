@@ -169,7 +169,6 @@ export default class CustomizeForm extends Component {
      */
     getNewComponentOfAreaSearch = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
-        debugger;
         const formItemAttrs = {};
         if (task && task.attrs) {
             for (const key in task.attrs) {
@@ -193,7 +192,6 @@ export default class CustomizeForm extends Component {
                 }
             }
         }
-        debugger;
         return { component: _component, formItemAttrs: formItemAttrs };
     };
     getNewComponent = (task, areaId) => {

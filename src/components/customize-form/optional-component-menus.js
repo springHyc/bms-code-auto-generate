@@ -200,10 +200,18 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 name: 'Radio 单选框',
                 component: (
                     <Radio.Group placeholder='单选'>
-                        <Radio value={1}>A</Radio>
-                        <Radio value={2}>B</Radio>
-                        <Radio value={3}>C</Radio>
-                        <Radio value={4}>D</Radio>
+                        <Radio value={1} key={1}>
+                            A
+                        </Radio>
+                        <Radio value={2} key={2}>
+                            B
+                        </Radio>
+                        <Radio value={3} key={3}>
+                            C
+                        </Radio>
+                        <Radio value={4} key={4}>
+                            D
+                        </Radio>
                     </Radio.Group>
                 ),
                 componentStr: `<Radio.Group placeholder='单选'>

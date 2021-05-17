@@ -166,7 +166,7 @@ export default class Layouts extends Component {
             <Layout className='hyc-layout'>
                 {this.renderHeader()}
 
-                <Content className='site-layout' style={{ marginTop: 64 }}>
+                <Content className='site-layout hyc-content'>
                     <Breadcrumb style={{ margin: '16px ' }}>
                         {this.state.currentBreadcrumb.map((item, index) => (
                             <Breadcrumb.Item key={index}>
@@ -174,7 +174,7 @@ export default class Layouts extends Component {
                             </Breadcrumb.Item>
                         ))}
                     </Breadcrumb>
-                    <div className='site-layout-background' style={{ minHeight: 'calc(100vh - 188px)' }}>
+                    <div className='site-layout-background' style={{ minHeight: 'calc(100vh - 118px)', flex: '1 0 auto' }}>
                         {MENUS.map((item) => {
                             if (item.subset && item.subset.length > 0) {
                                 return item.subset.map((sub) => (
