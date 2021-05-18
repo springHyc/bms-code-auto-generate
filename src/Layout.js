@@ -174,7 +174,7 @@ export default class Layouts extends Component {
                             </Breadcrumb.Item>
                         ))}
                     </Breadcrumb>
-                    <div className='site-layout-background' style={{ minHeight: 'calc(100vh - 118px)', flex: '1 0 auto' }}>
+                    <div className='site-layout-background' style={{ minHeight: 'calc(100vh - 188px)', flex: '1 0 auto' }}>
                         {MENUS.map((item) => {
                             if (item.subset && item.subset.length > 0) {
                                 return item.subset.map((sub) => (
