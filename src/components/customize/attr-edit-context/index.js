@@ -11,10 +11,7 @@ import './index.less';
  * @returns
  */
 export default function AttrEditContext({ selectedNode, update, areas }) {
-    let C = TableColumnsConfig;
-    if (selectedNode && selectedNode.area !== 'area-table') {
-        C = ComponentAttrsConfig;
-    }
+    let C = selectedNode?.area !== 'area-table' ? ComponentAttrsConfig : TableColumnsConfig;
     const updateNode = (node) => {
         const newAreas = areas;
         const tasks = newAreas[selectedNode.area].tasks;

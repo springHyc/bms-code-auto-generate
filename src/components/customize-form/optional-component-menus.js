@@ -146,37 +146,9 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             },
             {
                 id: uuidv4(),
-                name: 'Checkbox 多选框',
-                component: <Checkbox>Checkbox</Checkbox>,
-                componentStr: '<Checkbox>Checkbox</Checkbox>',
-                importStr: "import {Checkbox} from 'antd';",
-                attrs: {
-                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
-                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
-                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    placeholder: {
-                        id: uuidv4(),
-                        key: 'placeholder',
-                        text: 'placeholder',
-                        type: 'string',
-                        required: false,
-                        value: '请选择'
-                    },
-                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
-                }
-            },
-            {
-                id: uuidv4(),
                 name: 'Checkbox.Group 多选框',
                 key: 'checkbox',
-                component: (
-                    <Checkbox.Group>
-                        <Checkbox value='A'>A</Checkbox>
-                        <Checkbox value='B'>B</Checkbox>
-                        <Checkbox value='C'>C</Checkbox>
-                        <Checkbox value='D'>D</Checkbox>
-                    </Checkbox.Group>
-                ),
+                component: <Checkbox.Group></Checkbox.Group>,
                 componentStr: `<Checkbox></Checkbox>`,
                 importStr: "import {Checkbox} from 'antd';",
                 attrs: {
@@ -192,7 +164,21 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         value: '请下拉选择'
                     },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
-                    options: { id: uuidv4(), type: 'option', key: 'option', required: false, value: [] }
+                    // options: { id: uuidv4(), type: 'option', key: 'option', required: false, value: [] }
+                    children: {
+                        id: uuidv4(),
+                        type: 'checkbox-children',
+                        key: 'option',
+                        required: false,
+                        value: [
+                            <>
+                                <Checkbox value='A'>A</Checkbox>
+                                <Checkbox value='B'>B</Checkbox>
+                                <Checkbox value='C'>C</Checkbox>
+                                <Checkbox value='D'>D</Checkbox>
+                            </>
+                        ]
+                    }
                 }
             },
             {

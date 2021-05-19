@@ -33,11 +33,23 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
 
     const onFinish = (values) => {
         const [key, id] = Object.keys(values)[0].split('/');
-        const options = [];
-        values[`${key}/${id}`].forEach((item) => {
-            options.push(item);
-        });
-        onChange(options, id);
+        if (key === 'checkbox-children') {
+            const _children = [];
+            values[`${key}/${id}`].forEach((item) => {
+                _children.push(
+                    <Checkbox value={item.key} key={item.key}>
+                        {item.value}
+                    </Checkbox>
+                );
+            });
+            onChange(_children, id);
+        } else {
+            const options = [];
+            values[`${key}/${id}`].forEach((item) => {
+                options.push(item);
+            });
+            onChange(options, id);
+        }
     };
     const keys = Object.keys(attrs);
     return (
@@ -93,10 +105,10 @@ export default function ComponentAttrsConfig({ node, updateSelectedNode }) {
                                 <Input.TextArea value={attr.value} rows={3} onChange={({ target }) => onChange(target.value, attr.id)} />
                             </Form.Item>
                         );
-                    } else if (attr.type === 'option') {
+                    } else if (attr.type === 'option' || attr.type === 'checkbox-children') {
                         // 添加options
                         return (
-                            <Form.List name={`options/${attr.id}`} {...formItemProps(key, attr)}>
+                            <Form.List name={`${attr.type}/${attr.id}`} {...formItemProps(key, attr)}>
                                 {(fields, { add, remove }) => {
                                     return (
                                         <>
