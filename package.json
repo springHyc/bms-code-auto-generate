@@ -2,6 +2,11 @@
     "name": "bms-code-auto-generate",
     "version": "0.2.0-alpha0.1",
     "private": true,
+    "scripts": {
+        "dev": "node scripts/start.js",
+        "build": "node scripts/build.js",
+        "test": "node scripts/test.js"
+    },
     "dependencies": {
         "@ant-design/colors": "^4.0.1",
         "@ant-design/icons": "^4.2.1",
@@ -73,11 +78,6 @@
         "webpack-dev-server": "^3.11.0",
         "webpack-manifest-plugin": "2.2.0",
         "workbox-webpack-plugin": "4.3.1"
-    },
-    "scripts": {
-        "start": "node scripts/start.js",
-        "build": "node scripts/build.js",
-        "test": "node scripts/test.js"
     },
     "eslintConfig": {
         "extends": "react-app"
