@@ -170,7 +170,13 @@ export default class CustomizeForm extends Component {
     getNewComponentOfAreaSearch = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
         const formItemAttrs = {};
-        if (task && task.attrs) {
+        if (task.key === 'button') {
+            _component.props = {
+                ..._component.props,
+                children: task.attrs.name && task.attrs.name.value,
+                type: task.attrs.type.value
+            };
+        } else if (task && task.attrs) {
             for (const key in task.attrs) {
                 const item = task.attrs[key];
                 if (key === 'name' || key === 'label') {

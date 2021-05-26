@@ -13,7 +13,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 id: uuidv4(),
                 key: 'button', // 需要它来确定这是个button组件
                 name: 'Button 按钮',
-                component: <Button>保存</Button>,
+                component: <Button>Button</Button>,
                 importStr: "import { Button } from 'antd';",
                 // 属性
                 attrs: {
