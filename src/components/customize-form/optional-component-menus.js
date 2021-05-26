@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Input, DatePicker, InputNumber, Select, Radio, Checkbox, Switch } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
+import { BrCheckboxAll, BrUploadFile, BrUploadImage } from '@bairong/bmsui';
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
     {
@@ -93,7 +94,6 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
-
             {
                 id: uuidv4(),
                 key: 'datepicker',
@@ -146,7 +146,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             },
             {
                 id: uuidv4(),
-                name: 'Checkbox.Group 多选框',
+                name: 'Checkbox.Group',
                 key: 'checkbox',
                 component: <Checkbox.Group></Checkbox.Group>,
                 componentStr: `<Checkbox></Checkbox>`,
@@ -164,21 +164,41 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         value: '请下拉选择'
                     },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
-                    // options: { id: uuidv4(), type: 'option', key: 'option', required: false, value: [] }
                     children: {
                         id: uuidv4(),
                         type: 'checkbox-children',
                         key: 'option',
                         required: false,
                         value: [
-                            <>
-                                <Checkbox value='A'>A</Checkbox>
-                                <Checkbox value='B'>B</Checkbox>
-                                <Checkbox value='C'>C</Checkbox>
-                                <Checkbox value='D'>D</Checkbox>
-                            </>
+                            <Checkbox value='A'>A</Checkbox>,
+                            <Checkbox value='B'>B</Checkbox>,
+                            <Checkbox value='C'>C</Checkbox>,
+                            <Checkbox value='D'>D</Checkbox>
                         ]
                     }
+                }
+            },
+            {
+                id: uuidv4(),
+                name: 'Checkbox.Group+全选',
+                key: 'checkbox',
+                component: (
+                    <BrCheckboxAll
+                        data={[
+                            { id: 1, name: 'A' },
+                            { id: 2, name: 'B' },
+                            { id: 3, name: 'C' },
+                            { id: 4, name: 'E' }
+                        ]}
+                    ></BrCheckboxAll>
+                ),
+                componentStr: `<Checkbox></Checkbox>`,
+                importStr: "import {BrCheckboxAll} from '@bairong/bmsui'; ",
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             },
             {
@@ -248,6 +268,34 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
                     options: { id: uuidv4(), type: 'option', key: 'option', required: false, value: [] }
+                }
+            },
+            {
+                id: uuidv4(),
+                name: '上传文件',
+                key: 'upload',
+                component: <BrUploadFile></BrUploadFile>,
+                componentStr: `<BrUploadFile></BrUploadFile>`,
+                importStr: "import {BrUploadFile} from '@bairong/bmsui'; ",
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
+                }
+            },
+            {
+                id: uuidv4(),
+                name: '上传图片',
+                key: 'upload',
+                component: <BrUploadImage></BrUploadImage>,
+                componentStr: `<BrUploadImage></BrUploadImage>`,
+                importStr: "import {BrUploadImage} from '@bairong/bmsui'; ",
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
             }
         ]
