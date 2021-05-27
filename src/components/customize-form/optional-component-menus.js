@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, DatePicker, InputNumber, Select, Radio, Checkbox, Switch } from 'antd';
+import { Button, Input, DatePicker, InputNumber, Select, Radio, Checkbox, Switch, Rate } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { BrCheckboxAll, BrUploadFile, BrUploadImage } from '@bairong/bmsui';
 
@@ -13,17 +13,17 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 id: uuidv4(),
                 key: 'button', // 需要它来确定这是个button组件
                 name: 'Button 按钮',
-                component: <Button>Button</Button>,
+                component: <Button></Button>,
                 importStr: "import { Button } from 'antd';",
                 // 属性
                 attrs: {
-                    name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '按钮文本' },
+                    name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '保存' },
                     type: {
                         id: uuidv4(),
                         text: 'type',
                         type: 'select',
                         required: false,
-                        value: 'default',
+                        value: 'primary',
                         options: ['primary', 'ghost', 'dashed', 'danger', 'link', 'text', 'default']
                     },
                     onClick: {
@@ -42,6 +42,29 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
         id: 2,
         key: '2',
         menus: [
+            {
+                id: uuidv4(),
+                key: 'text-show',
+                name: '纯文字展示',
+                component: <span className='ant-form-text'>China</span>,
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: 'Plain Text' },
+                    children: { id: uuidv4(), text: '展示文案', type: 'string', required: true, value: 'China' }
+                }
+            },
+            {
+                id: uuidv4(),
+                key: 'rate',
+                name: '评分',
+                component: <Rate value={3} />,
+                componentStr: '<Rate ></Rate>',
+                attrs: {
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
+                    required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: 3 }
+                }
+            },
             {
                 id: uuidv4(),
                 key: 'input',
