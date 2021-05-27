@@ -176,6 +176,10 @@ export default class CustomizeForm extends Component {
                 children: task.attrs.name && task.attrs.name.value,
                 type: task.attrs.type.value
             };
+            formItemAttrs['wrapperCol'] = {
+                offset: 8,
+                span: 16
+            };
         } else if (task && task.attrs) {
             for (const key in task.attrs) {
                 const item = task.attrs[key];
@@ -237,7 +241,7 @@ export default class CustomizeForm extends Component {
                                             <Draggable draggableId={task.id} key={task.id} index={index}>
                                                 {(provided, snapshot) => (
                                                     <Col
-                                                        span={valueOfSpan}
+                                                        span={task.key === 'button' ? 24 : valueOfSpan}
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
                                                         style={{
