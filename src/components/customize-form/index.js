@@ -27,10 +27,6 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
     const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
-    // if (!that.state.areas[droppableDestination.droppableId].canExistKeys.includes(item.key)) {
-    //     message.error('目标区域不对，请从新选择！');
-    //     return;
-    // }
     const newId = uuidv4();
     destClone.splice(droppableDestination.index, 0, {
         ...item,
@@ -45,10 +41,6 @@ const move = (source, destination, droppableSource, droppableDestination, that) 
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
-    // if (!that.state.areas[droppableDestination.droppableId].canExistKeys.includes(removed.key)) {
-    //     message.error('目标区域不对，请从新选择！');
-    //     return;
-    // }
     destClone.splice(droppableDestination.index, 0, removed);
     const result = {};
     result[droppableSource.droppableId] = sourceClone;
@@ -165,9 +157,9 @@ export default class CustomizeForm extends Component {
         }
     };
     /**
-     * B：搜索区域：config的值应用上
+     * Form表单区域获取新的组件
      */
-    getNewComponentOfAreaSearch = (task, areaId) => {
+    getNewComponent = (task, areaId) => {
         const _component = _.cloneDeep(task.component);
         const formItemAttrs = {};
         if (task.key === 'button') {
@@ -176,37 +168,22 @@ export default class CustomizeForm extends Component {
                 children: task.attrs.name && task.attrs.name.value,
                 type: task.attrs.type.value
             };
-            formItemAttrs['wrapperCol'] = {
-                offset: 8,
-                span: 16
-            };
+            formItemAttrs['wrapperCol'] = { offset: 8, span: 16 };
         } else if (task && task.attrs) {
             for (const key in task.attrs) {
                 const item = task.attrs[key];
                 if (key === 'name' || key === 'label') {
                     formItemAttrs[key] = item.value;
                 } else if (key === 'required') {
-                    // 样例
-                    // rules={[{ required: true, message: '最少2个字符' }]}
-                    formItemAttrs['rules'] = [
-                        {
-                            required: item.value,
-                            message: '不能为空！'
-                        }
-                    ];
+                    // * 样例
+                    // * rules={[{ required: true, message: '最少2个字符' }]}
+                    formItemAttrs['rules'] = [{ required: item.value, message: '不能为空！' }];
                 } else {
-                    _component.props = {
-                        ..._component.props,
-                        [key]: item.value
-                    };
+                    _component.props = { ..._component.props, [key]: item.value };
                 }
             }
         }
         return { component: _component, formItemAttrs: formItemAttrs };
-    };
-    getNewComponent = (task, areaId) => {
-        const _component = _.cloneDeep(task.component);
-        return _component;
     };
 
     changeNumberOfColumns = (numberOfColumns) => {
@@ -239,7 +216,7 @@ export default class CustomizeForm extends Component {
                             <Form {...layout} ref={this.formRef}>
                                 <Row gutter={24}>
                                     {area.tasks.map((task, index) => {
-                                        const result = this.getNewComponentOfAreaSearch(task, area.id);
+                                        const result = this.getNewComponent(task, area.id);
                                         return (
                                             <Draggable draggableId={task.id} key={task.id} index={index}>
                                                 {(provided, snapshot) => (
