@@ -23,11 +23,12 @@ const reorder = (list, startIndex, endIndex) => {
 /**
  * 从左侧栏复制到右侧可移动区域
  */
-const copy = (source, destination, droppableSource, droppableDestination, that) => {
+const copy = (source, destination, droppableSource, droppableDestination) => {
     const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
     const newId = uuidv4();
+    console.log('droppableDestination.index=', droppableDestination.index);
     destClone.splice(droppableDestination.index, 0, {
         ...item,
         id: newId
@@ -37,7 +38,7 @@ const copy = (source, destination, droppableSource, droppableDestination, that) 
 /**
  * Moves an item from one list to another list.
  */
-const move = (source, destination, droppableSource, droppableDestination, that) => {
+const move = (source, destination, droppableSource, droppableDestination) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
@@ -131,12 +132,11 @@ export default class CustomizeForm extends Component {
                 break;
             }
             case 'areas-menus': {
-                const destClone = copy(this.state.menus, this.state[destination.droppableId] || [], source, destination, this);
+                const destClone = copy(this.state.menus, this.state.areas[destination.droppableId].tasks || [], source, destination);
                 if (!destClone) {
                     return;
                 }
-                const areas = this.state.areas;
-                this.updateArea(destination.droppableId, areas[destination.droppableId].tasks.concat(destClone));
+                this.updateArea(destination.droppableId, destClone);
                 break;
             }
             default: {
@@ -144,8 +144,7 @@ export default class CustomizeForm extends Component {
                     this.state.areas[source.droppableId].tasks,
                     this.state.areas[destination.droppableId].tasks,
                     source,
-                    destination,
-                    this
+                    destination
                 );
                 if (!results) {
                     return;
@@ -201,7 +200,7 @@ export default class CustomizeForm extends Component {
         };
         const valueOfSpan = 24 / this.state.numberOfColumns || 2;
         return (
-            <Droppable droppableId={area.id} key={area.id} className={area.className}>
+            <Droppable droppableId={area.id} key={area.id} className={area.className} direction='vertical'>
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}
@@ -226,7 +225,6 @@ export default class CustomizeForm extends Component {
                                                         {...provided.draggableProps}
                                                         style={{
                                                             ...provided.draggableProps.style,
-                                                            top: '0px',
                                                             border:
                                                                 task.id === this.state.selectedNode.node.id ? '1px dashed #ff7875' : '0px'
                                                         }}

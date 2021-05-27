@@ -178,12 +178,11 @@ export default class Customize extends React.Component {
                 break;
             }
             case 'areas-menus': {
-                const destClone = copy(this.state.menus, this.state[destination.droppableId] || [], source, destination, this);
+                const destClone = copy(this.state.menus, this.state.areas[destination.droppableId].tasks || [], source, destination, this);
                 if (!destClone) {
                     return;
                 }
-                const areas = this.state.areas;
-                this.updateArea(destination.droppableId, areas[destination.droppableId].tasks.concat(destClone));
+                this.updateArea(destination.droppableId, destClone);
                 break;
             }
             default: {
@@ -317,7 +316,7 @@ export default class Customize extends React.Component {
         };
         const offsetNum = area.tasks.length % 3 === 0 ? 16 : area.tasks.length % 3 === 1 ? 8 : 0;
         return (
-            <Droppable droppableId={area.id} key={area.id} className={area.className}>
+            <Droppable droppableId={area.id} key={area.id} className={area.className} direction='vertical'>
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}
@@ -339,7 +338,7 @@ export default class Customize extends React.Component {
                                                         {...provided.draggableProps}
                                                         style={{
                                                             ...provided.draggableProps.style,
-                                                            top: '0px',
+                                                            // top: '0px',
                                                             border:
                                                                 task.id === this.state.selectedNode.node.id ? '1px dashed #ff7875' : '0px'
                                                         }}
@@ -387,7 +386,7 @@ export default class Customize extends React.Component {
 
     renderArea(area) {
         return (
-            <Droppable droppableId={area.id} key={area.id} className={area.className}>
+            <Droppable droppableId={area.id} key={area.id} className={area.className} direction='horizontal'>
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}
