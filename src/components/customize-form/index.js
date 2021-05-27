@@ -229,7 +229,10 @@ export default class CustomizeForm extends Component {
                     <div
                         ref={provided.innerRef}
                         className={area.className}
-                        style={{ border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}`, paddingBottom: '8px' }}
+                        style={{
+                            border: `1px ${snapshot.isDraggingOver ? 'dashed #000' : 'dashed #ddd'}`,
+                            pading: '8px 0 8px 0'
+                        }}
                         onClick={(e) => this.closeContextMenu(e, area)}
                     >
                         {area.tasks.length > 0 ? (
@@ -275,7 +278,11 @@ export default class CustomizeForm extends Component {
                                 </Row>
                             </Form>
                         ) : (
-                            provided.placeholder && <Notice style={{ transform: 'translateY(0)' }}>{area.title}:Drop items here</Notice>
+                            provided.placeholder && (
+                                <Notice style={{ transform: 'translateY(0)', fontSize: '28px', marginTop: '30%' }}>
+                                    {area.title}:Drop items here
+                                </Notice>
+                            )
                         )}
                         {provided.placeholder}
                     </div>

@@ -48,7 +48,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 name: '纯文字展示',
                 component: <span className='ant-form-text'>China</span>,
                 attrs: {
-                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: 'Plain Text' },
+                    label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '纯文本' },
                     children: { id: uuidv4(), text: '展示文案', type: 'string', required: true, value: 'China' }
                 }
             },
@@ -90,7 +90,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 key: 'input.textarea',
-                name: 'TextArea 输入框',
+                name: 'TextArea',
                 component: <Input.TextArea rows={4}></Input.TextArea>,
                 componentStr: '<Input.TextArea rows={4}></Input.TextArea>',
                 importStr: "import {Input} from 'antd';",
@@ -120,7 +120,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 key: 'datepicker',
-                name: 'DatePicker.RangePicker 日期选择框',
+                name: 'DatePicker.RangePicker',
                 component: <DatePicker.RangePicker />,
                 componentStr: '<DatePicker.RangePicker></DatePicker.RangePicker>',
                 importStr: "import {DatePicker} from 'antd';",
@@ -134,7 +134,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 key: 'datepicker',
-                name: 'DatePicker日期选择框',
+                name: 'DatePicker',
                 component: <DatePicker />,
                 componentStr: '<DatePicker></DatePicker>',
                 importStr: "import {DatePicker} from 'antd';",
@@ -148,7 +148,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 key: 'input',
-                name: 'InputNumber 数字输入框',
+                name: 'InputNumber',
                 component: <InputNumber />,
                 componentStr: '<InputNumber></InputNumber>',
                 importStr: "import {InputNumber} from 'antd';",
@@ -341,7 +341,7 @@ const INIT_DATA = {
         'area-form': {
             id: 'area-form',
             className: 'customize-area-form-wrapper',
-            title: 'form表单区域',
+            title: 'Form表单区域',
             tasks: []
             // canExistKeys: ['button']
         }
