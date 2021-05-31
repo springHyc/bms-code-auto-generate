@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Col, message, Row, Form } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Clone, Item, Notice, Kiosk } from './style-common';
+import { Item, Notice, Kiosk } from './style-common';
 import { INIT_DATA } from './optional-component-menus';
 import './index.less';
 import _ from 'lodash';
@@ -131,7 +131,6 @@ export default class CustomizeForm extends Component {
                 break;
             }
             case 'areas-menus': {
-                console.log('====copy====');
                 const destClone = copy(this.state.menus, this.state.areas[destination.droppableId].tasks || [], source, destination);
                 if (!destClone) {
                     return;
@@ -282,7 +281,7 @@ export default class CustomizeForm extends Component {
         return (
             <Droppable droppableId='areas-menus' isDropDisabled={true}>
                 {(provided, snapshot) => (
-                    <Sider className='site-layout-background' width={200}>
+                    <Sider width={200}>
                         <Kiosk
                             ref={provided.innerRef}
                             isDraggingOver={snapshot.isDraggingOver}
