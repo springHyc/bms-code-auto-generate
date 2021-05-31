@@ -6,7 +6,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './index.less';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import { Clone, Item, Notice, Kiosk } from './style-common';
+import { Item, Notice, Kiosk } from './style-common';
 import GenerateService from './generate-service';
 import ShowCodeModal from './showCodeModal';
 import WrapperDelete from './wrapper-delete';
@@ -270,7 +270,7 @@ export default class Customize extends React.Component {
         return (
             <Droppable droppableId='areas-menus' isDropDisabled={true}>
                 {(provided, snapshot) => (
-                    <Sider className='site-layout-background' width={200}>
+                    <Sider width={200}>
                         <Kiosk
                             ref={provided.innerRef}
                             isDraggingOver={snapshot.isDraggingOver}
@@ -338,7 +338,6 @@ export default class Customize extends React.Component {
                                                         {...provided.draggableProps}
                                                         style={{
                                                             ...provided.draggableProps.style,
-                                                            // top: '0px',
                                                             border:
                                                                 task.id === this.state.selectedNode.node.id ? '1px dashed #ff7875' : '0px'
                                                         }}
@@ -352,9 +351,7 @@ export default class Customize extends React.Component {
                                                         >
                                                             <WrapperDelete
                                                                 visible={(this.state.visible && this.state.visible[task.id]) || false}
-                                                                deleteTask={(e) => {
-                                                                    this.deleteTask(area.id, task.id);
-                                                                }}
+                                                                deleteTask={(e) => this.deleteTask(area.id, task.id)}
                                                             >
                                                                 {result.component}
                                                             </WrapperDelete>

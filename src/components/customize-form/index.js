@@ -237,9 +237,7 @@ export default class CustomizeForm extends Component {
                                                         >
                                                             <WrapperDelete
                                                                 visible={(this.state.visible && this.state.visible[task.id]) || false}
-                                                                deleteTask={(e) => {
-                                                                    this.deleteTask(area.id, task.id);
-                                                                }}
+                                                                deleteTask={(e) => this.deleteTask(area.id, task.id)}
                                                             >
                                                                 {result.component}
                                                             </WrapperDelete>
