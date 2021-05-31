@@ -316,7 +316,7 @@ export default class Customize extends React.Component {
         };
         const offsetNum = area.tasks.length % 3 === 0 ? 16 : area.tasks.length % 3 === 1 ? 8 : 0;
         return (
-            <Droppable droppableId={area.id} key={area.id} className={area.className} direction='vertical'>
+            <Droppable droppableId={area.id} key={area.id} className={area.className} direction='horizontal'>
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}
@@ -336,11 +336,25 @@ export default class Customize extends React.Component {
                                                         span={8}
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
-                                                        style={{
-                                                            ...provided.draggableProps.style,
-                                                            border:
-                                                                task.id === this.state.selectedNode.node.id ? '1px dashed #ff7875' : '0px'
-                                                        }}
+                                                        style={
+                                                            !snapshot.isDragging
+                                                                ? {
+                                                                      ...provided.draggableProps.style,
+                                                                      top: '0px',
+                                                                      border:
+                                                                          task.id === this.state.selectedNode.node.id
+                                                                              ? '1px dashed #ff7875'
+                                                                              : 'none'
+                                                                  }
+                                                                : {
+                                                                      ...provided.draggableProps.style,
+                                                                      border: '1px dashed #000',
+                                                                      position: 'relative',
+                                                                      top: '0px',
+                                                                      left: '0px',
+                                                                      right: '0px'
+                                                                  }
+                                                        }
                                                         {...provided.dragHandleProps}
                                                     >
                                                         <Form.Item
