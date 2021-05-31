@@ -24,11 +24,10 @@ const reorder = (list, startIndex, endIndex) => {
  * 从左侧栏复制到右侧可移动区域
  */
 const copy = (source, destination, droppableSource, droppableDestination) => {
-    const sourceClone = Array.from(source); // 这个地方的顺序有问题，还是要是一个列表没问题
+    const sourceClone = Array.from(source); // *这个地方的顺序有问题，还是要是一个列表没问题
     const destClone = Array.from(destination);
     const item = _.cloneDeep(sourceClone[droppableSource.index]);
     const newId = uuidv4();
-    console.log('droppableDestination.index=', droppableDestination.index);
     destClone.splice(droppableDestination.index, 0, {
         ...item,
         id: newId
@@ -132,6 +131,7 @@ export default class CustomizeForm extends Component {
                 break;
             }
             case 'areas-menus': {
+                console.log('====copy====');
                 const destClone = copy(this.state.menus, this.state.areas[destination.droppableId].tasks || [], source, destination);
                 if (!destClone) {
                     return;
@@ -302,7 +302,7 @@ export default class CustomizeForm extends Component {
                                                 >
                                                     {menu.name}
                                                 </Item>
-                                                {snapshot.isDragging && <Clone>{menu.name}</Clone>}
+                                                {snapshot.isDragging && <Item>{menu.name}</Item>}
                                             </React.Fragment>
                                         )}
                                     </Draggable>

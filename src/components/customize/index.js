@@ -290,7 +290,7 @@ export default class Customize extends React.Component {
                                                 >
                                                     {menu.name}
                                                 </Item>
-                                                {snapshot.isDragging && <Clone>{menu.name}</Clone>}
+                                                {snapshot.isDragging && <Item>{menu.name}</Item>}
                                             </React.Fragment>
                                         )}
                                     </Draggable>

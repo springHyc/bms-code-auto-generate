@@ -46,7 +46,7 @@ const Item = styled.div`
 `;
 const Clone = styled(Item)`
     + div {
-        display: none !important;
+        // display: none !important;
     }
 `;
 
