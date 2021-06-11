@@ -9,6 +9,7 @@ import _ from 'lodash';
 import WrapperDelete from '../customize/wrapper-delete';
 import { v4 as uuidv4 } from 'uuid';
 import AttrEditContext from '../customize/attr-edit-context/';
+import GenerateService from './generate-service';
 
 /**
  * 同一区域内排序
@@ -186,6 +187,17 @@ export default class CustomizeForm extends Component {
 
     changeNumberOfColumns = (numberOfColumns) => {
         this.setState({ numberOfColumns });
+    };
+
+    /**
+     * 生成代码，生成Form表单
+     */
+    generateCode = () => {
+        const service = new GenerateService(this.state.areas, this.state.numberOfColumns);
+
+        this.indexCodeStr = service.indexCodeStr;
+        console.log(this.indexCodeStr);
+        this.setState({ showCodeModalVisible: true });
     };
     /**
      * Form表单

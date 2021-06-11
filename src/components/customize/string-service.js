@@ -7,11 +7,13 @@
  */
 function addImportCodeStr(source, addImportStr, type) {
     let result = source;
-    if (type) {
+    if (!addImportStr) {
+    } else if (type) {
         result = `${result}${addImportStr}\n`;
     } else {
         const addImportStrKeyWords = addImportStr.match(/{\s*\w*(,\s*\w*)*\s*}/)[0]; // 要引入的组件
-        const addImportStrImportSourceKey = addImportStr.match(/'\s*\w*\s*'/)[0]; // 从哪个包引入
+        // const addImportStrImportSourceKey = addImportStr.match(/'\s*\w*\s*'/)[0]; // 从哪个包引入
+        const addImportStrImportSourceKey = addImportStr.match(/'\s*[@\w\\/]*\s*'/)[0]; // 从哪个包引入
 
         if (source.indexOf(addImportStrImportSourceKey) !== -1) {
             // 一次性添加多个引入的组件

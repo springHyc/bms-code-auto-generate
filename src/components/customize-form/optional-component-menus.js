@@ -14,6 +14,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'button', // 需要它来确定这是个button组件
                 name: 'Button 按钮',
                 component: <Button></Button>,
+                componentStr: '<Button>保存</Button>',
                 importStr: "import { Button } from 'antd';",
                 // 属性
                 attrs: {
@@ -47,8 +48,10 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'text-show',
                 name: '纯文字展示',
                 component: <span className='ant-form-text'>China</span>,
+                componentStr: "<span className='ant-form-text'>China</span>",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '纯文本' },
+                    name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     children: { id: uuidv4(), text: '展示文案', type: 'string', required: true, value: 'China' }
                 }
             },
@@ -57,7 +60,8 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 key: 'rate',
                 name: '评分',
                 component: <Rate value={3} />,
-                componentStr: '<Rate ></Rate>',
+                componentStr: '<Rate value={3}></Rate>',
+                importStr: "import { Rate } from 'antd';",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
@@ -172,20 +176,12 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 name: 'Checkbox.Group',
                 key: 'checkbox',
                 component: <Checkbox.Group></Checkbox.Group>,
-                componentStr: `<Checkbox></Checkbox>`,
+                componentStr: `<Checkbox.Group></Checkbox.Group>`,
                 importStr: "import {Checkbox} from 'antd';",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    placeholder: {
-                        id: uuidv4(),
-                        key: 'placeholder',
-                        text: 'placeholder',
-                        type: 'string',
-                        required: false,
-                        value: '请下拉选择'
-                    },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
                     children: {
                         id: uuidv4(),
@@ -193,10 +189,18 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         key: 'option',
                         required: false,
                         value: [
-                            <Checkbox value='A'>A</Checkbox>,
-                            <Checkbox value='B'>B</Checkbox>,
-                            <Checkbox value='C'>C</Checkbox>,
-                            <Checkbox value='D'>D</Checkbox>
+                            <Checkbox value='A' key='A'>
+                                A
+                            </Checkbox>,
+                            <Checkbox value='B' key='B'>
+                                B
+                            </Checkbox>,
+                            <Checkbox value='C' key='C'>
+                                C
+                            </Checkbox>,
+                            <Checkbox value='D' key='D'>
+                                D
+                            </Checkbox>
                         ]
                     }
                 }
@@ -215,7 +219,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         ]}
                     ></BrCheckboxAll>
                 ),
-                componentStr: `<Checkbox></Checkbox>`,
+                componentStr: `<BrCheckboxAll data={[{id: 1, name: 'A'},{ id: 2, name: 'B' },{id: 3, name: 'C'},{id: 4, name: 'E'}]}></BrCheckboxAll>`,
                 importStr: "import {BrCheckboxAll} from '@bairong/bmsui'; ",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -343,30 +347,7 @@ const INIT_DATA = {
             className: 'customize-area-form-wrapper',
             title: 'Form表单区域',
             tasks: []
-            // canExistKeys: ['button']
         }
-        // 'area-operate': {
-        //     id: 'area-operate',
-        //     className: 'customize-operate-wrapper br-operate-container ',
-        //     title: '按钮操作区域',
-        //     tasks: [],
-        //     canExistKeys: ['button']
-        // },
-        // // 搜索区域一般的组件：Date(年月日、年月)、select、input
-        // 'area-search': {
-        //     id: 'area-search',
-        //     className: 'customize-search-wrapper br-select-container',
-        //     title: '搜索区域',
-        //     tasks: [],
-        //     canExistKeys: ['input', 'datepicker', 'select']
-        // },
-        // 'area-table': {
-        //     id: 'area-table',
-        //     className: 'customize-table-wrapper',
-        //     title: 'Table区域',
-        //     tasks: [],
-        //     canExistKeys: ['table']
-        // }
     }
 };
 
