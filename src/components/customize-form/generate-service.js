@@ -106,7 +106,8 @@ export default class GenerateService {
                 if (task.key === 'button') {
                     componentStr = componentStr
                         .replace(/>.*</g, `>${task.attrs.name.value}<`)
-                        .replace(/>/, ` type='${task.attrs.type.value}'>`);
+                        .replace(/>/, ` type='${task.attrs.type.value}'>`)
+                        .replace(/>/, ` style={{marginRight: '16px'}} >`);
                 }
                 bts.push(componentStr);
             });
