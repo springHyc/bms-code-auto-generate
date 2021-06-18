@@ -58,41 +58,41 @@ export default class GenerateService {
                 // 如果是按钮的话
                 items.push(
                     `
-                                <Col span={${valueOfSpan}}>
-                                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                        ${componentStr}
-                                    </Form.Item>
-                                </Col>`
+                    <Col span={${valueOfSpan}}>
+                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                            ${componentStr}
+                        </Form.Item>
+                    </Col>`
                 );
             } else if (task.attrs?.required?.value) {
                 items.push(
                     `
-                                <Col span={${valueOfSpan}}>
-                                    <Form.Item
-                                        label='${task.attrs.label && task.attrs.label.value}'
-                                        name='${task.attrs.name && task.attrs.name.value}'
-                                        rules={[
-                                            {
-                                                required: ${(task.attrs.required && task.attrs.required.value) || false},
-                                                message: '${task.attrs.label && task.attrs.label.value}不能为空！'
-                                            }
-                                        ]}
-                                    >
-                                        ${componentStr}
-                                    </Form.Item>
-                                </Col>`
+                    <Col span={${valueOfSpan}}>
+                        <Form.Item
+                            label='${task.attrs.label && task.attrs.label.value}'
+                            name='${task.attrs.name && task.attrs.name.value}'
+                            rules={[
+                                {
+                                    required: ${(task.attrs.required && task.attrs.required.value) || false},
+                                    message: '${task.attrs.label && task.attrs.label.value}不能为空！'
+                                }
+                            ]}
+                        >
+                            ${componentStr}
+                        </Form.Item>
+                    </Col>`
                 );
             } else {
                 items.push(
                     `
-                                <Col span={${valueOfSpan}}>
-                                    <Form.Item
-                                        label='${task.attrs.label && task.attrs.label.value}'
-                                        name='${task.attrs.name && task.attrs.name.value}'
-                                    >
-                                        ${componentStr}
-                                    </Form.Item>
-                                </Col>`
+                    <Col span={${valueOfSpan}}>
+                        <Form.Item
+                            label='${task.attrs.label && task.attrs.label.value}'
+                            name='${task.attrs.name && task.attrs.name.value}'
+                        >
+                            ${componentStr}
+                        </Form.Item>
+                    </Col>`
                 );
             }
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, task.importStr || '');
@@ -114,19 +114,17 @@ export default class GenerateService {
             // 如果是按钮的话
             items.push(
                 `
-                                <Col span={${valueOfSpan}}>
-                                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                        ${bts.join('')}
-                                    </Form.Item>
-                                </Col>`
+                    <Col span={${valueOfSpan}}>
+                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                            ${bts.join('')}
+                        </Form.Item>
+                    </Col>`
             );
         }
         if (items.length > 0) {
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, "import {Form,Row,Col} from 'antd';");
-            return `
-                    <Row gutter={{ xs: 8, sm: 16, md: 24 }}>${items.join('')}
-                    </Row>
-                   `;
+            return `                <Row gutter={{ xs: 8, sm: 16, md: 24 }}>${items.join('')}
+                </Row>`;
         } else {
             return '';
         }
@@ -139,7 +137,7 @@ export default class GenerateService {
     generateIndexCode = (sourceData, numberOfColumns) => {
         const begin1 = `
 export default class FormDemo extends Component {
-    formRef = React.createRef(); `;
+    formRef = React.createRef();`;
 
         const render1 = `    render() {`;
 

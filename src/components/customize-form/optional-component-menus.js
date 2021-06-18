@@ -23,10 +23,8 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                         </Button>
                     </>
                 ),
-                componentStr: `
-                                <Button style={{ marginRight: '16px' }}>取消</Button>
-                                <Button type='primary'>保存</Button>
-                            `,
+                componentStr: `<Button style={{ marginRight: '16px' }}>取消</Button>
+                        <Button type='primary'>保存</Button>`,
                 importStr: "import { Button } from 'antd';"
                 // 属性 屏蔽掉这些属性，不可编辑
                 // attrs: {
