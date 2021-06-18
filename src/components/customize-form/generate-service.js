@@ -103,12 +103,12 @@ export default class GenerateService {
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, btnTasks[0].importStr);
             btnTasks.forEach((task) => {
                 let componentStr = _.cloneDeep(task.componentStr);
-                if (task.key === 'button') {
-                    componentStr = componentStr
-                        .replace(/>.*</g, `>${task.attrs.name.value}<`)
-                        .replace(/>/, ` type='${task.attrs.type.value}'>`)
-                        .replace(/>/, ` style={{marginRight: '16px'}} >`);
-                }
+                // if (task.key === 'button') {
+                //     componentStr = componentStr
+                //         .replace(/>.*</g, `>${task.attrs.name.value}<`)
+                //         .replace(/>/, ` type='${task.attrs.type.value}'>`)
+                //         .replace(/>/, ` style={{marginRight: '16px'}} >`);
+                // }
                 bts.push(componentStr);
             });
             // 如果是按钮的话

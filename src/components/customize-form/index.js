@@ -162,11 +162,11 @@ export default class CustomizeForm extends Component {
         const _component = _.cloneDeep(task.component);
         const formItemAttrs = {};
         if (task.key === 'button') {
-            _component.props = {
-                ..._component.props,
-                children: task.attrs.name && task.attrs.name.value,
-                type: task.attrs.type.value
-            };
+            // _component.props = {
+            //     ..._component.props,
+            //     children: task.attrs.name && task.attrs.name.value,
+            //     type: task.attrs.type.value
+            // };
             formItemAttrs['wrapperCol'] = { offset: 8, span: 16 };
         } else if (task && task.attrs) {
             for (const key in task.attrs) {
@@ -210,6 +210,7 @@ export default class CustomizeForm extends Component {
             wrapperCol: { span: 16 }
         };
         const valueOfSpan = 24 / this.state.numberOfColumns || 2;
+        console.log('==================');
         return (
             <Droppable droppableId={area.id} key={area.id} className={area.className} direction='vertical'>
                 {(provided, snapshot) => (
@@ -227,6 +228,7 @@ export default class CustomizeForm extends Component {
                                 <Row gutter={24}>
                                     {area.tasks.map((task, index) => {
                                         const result = this.getNewComponent(task, area.id);
+                                        console.log('key=', task.id);
                                         return (
                                             <Draggable draggableId={task.id} key={task.id} index={index}>
                                                 {(provided, snapshot) => (
