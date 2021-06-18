@@ -11,5 +11,5 @@ docs/_book/
 docs/readme.html
 yarn.lock
 package-lock.json
-/serve/tmp/
+/service/tmp/
 *.zip
