@@ -7,9 +7,9 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "serve",
+            "name": "service",
             "skipFiles": ["<node_internals>/**"],
-            "program": "${workspaceFolder}/serve/index.js"
+            "program": "${workspaceFolder}/service/index.js"
         }
     ]
 }
