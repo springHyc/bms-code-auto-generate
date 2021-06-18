@@ -5,8 +5,7 @@ import './index.less';
 import axios from 'axios-jsonp-pro';
 import API from './api';
 
-export default function ShowCodeModal(props) {
-    const { visible, indexCodeStr, close, columnsCodeStr } = props;
+export default function ShowCodeModal({ visible, indexCodeStr, close, columnsCodeStr = null }) {
     const [down, setDown] = useState(false);
     const [popoverVisible, setPopoverVisible] = useState(false);
     const [moduleName, setModuleName] = useState();
@@ -16,13 +15,13 @@ export default function ShowCodeModal(props) {
     };
 
     const downFile = () => {
-        window.open(`${API.URL}down?moduleName=${moduleName}`);
+        window.open(`${API.URL}table/down?moduleName=${moduleName}`);
     };
 
     const generateCode = () => {
         axios
             .post(
-                `${API.URL}generate-files`,
+                `${API.URL}table/generate-files`,
                 {
                     code: indexCodeStr,
                     columnsCodeStr

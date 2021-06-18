@@ -28,9 +28,9 @@ app.get('/api/', (req, res) => {
 });
 
 /*
- * 生成目录
+ * table生成目录
  */
-app.post('/api/generate-files', (req, res) => {
+app.post('/api/table/generate-files', (req, res) => {
     // 创建文件目录
     var indexCodeStr = req.body.code;
     var _moduleName = req.query.moduleName || moduleName; // *要生成的模块的name
@@ -43,9 +43,9 @@ app.post('/api/generate-files', (req, res) => {
 });
 
 /*
- * 下载打包好的文件
+ * table下载打包好的文件
  */
-app.get('/api/down', (req, res) => {
+app.get('/api/table/down', (req, res) => {
     const name = req.query.moduleName || moduleName;
     return FileService.zip(res, name);
 });
