@@ -30,11 +30,6 @@ export default class GenerateService {
             if (placeholder) {
                 componentStr = componentStr.replace('>', ` placeholder='${placeholder}'>`);
             }
-            if (task.key === 'button') {
-                componentStr = componentStr
-                    .replace(/>.*</g, `>${task.attrs.name.value}<`)
-                    .replace(/>/, ` type='${task.attrs.type.value}'>`);
-            }
             if (task.key === 'text-show' && children) {
                 componentStr = componentStr.replace(/>\w*<\//, `>${children}</`);
             } else if (task.key === 'select') {
@@ -52,18 +47,6 @@ export default class GenerateService {
                 );
             } else if (task.key === 'checkbox' && children) {
                 // 单独多选的处理
-                debugger;
-            }
-            if (task.key === 'button') {
-                // 如果是按钮的话
-                items.push(
-                    `
-                    <Col span={${valueOfSpan}}>
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            ${componentStr}
-                        </Form.Item>
-                    </Col>`
-                );
             } else if (task.attrs?.required?.value) {
                 items.push(
                     `
@@ -114,7 +97,7 @@ export default class GenerateService {
             // 如果是按钮的话
             items.push(
                 `
-                    <Col span={${valueOfSpan}}>
+                    <Col span={24}>
                         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                             ${bts.join('')}
                         </Form.Item>
