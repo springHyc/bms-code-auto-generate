@@ -1,9 +1,9 @@
 const fs = require('fs');
 const archiver = require('archiver');
 
-function WriteFile(file, content, res) {
+function WriteFile(file, content, res, mark = 'table') {
     const { indexCodeStr, columnsCodeStr } = content;
-    const err = fs.rmdirSync(`${__dirname}/tmp`, { recursive: true });
+    const err = fs.rmdirSync(`${__dirname}/tmp/${mark}`, { recursive: true });
     if (err) {
         throw err;
     }
@@ -21,10 +21,10 @@ function WriteFile(file, content, res) {
             }
         });
     }
-    console.log(`成功创建文件，其目录为：${file}/`);
-    return res.send({ code: 0, message: `成功创建文件，其目录为：${file}/` });
+    console.log(`成功创建文件，其目录为：${file}`);
+    return res.send({ code: 0, message: `成功创建文件，其目录为：${file}` });
 }
-function downFile(res, moduleName) {
+function downFile(res, moduleName, mark) {
     res.download(`${__dirname}/${moduleName}.zip`, `${moduleName}.zip`, (err) => {
         if (err) {
             res.status(400).end();
@@ -40,18 +40,25 @@ function downFile(res, moduleName) {
     });
 }
 
-function zip(res, moduleName) {
+/**
+ * 压缩后的文件，直接暂存在/service/目录下，下载完成后直接删除
+ *
+ * @param {*} res
+ * @param {*} moduleName
+ * @param {string} [mark='table']
+ */
+function zip(res, moduleName, mark = 'table') {
     const output = fs.createWriteStream(__dirname + `/${moduleName}.zip`);
     const archive = archiver('zip', {
         zlib: { level: 9 } // Sets the compression level.
     });
-    archive.directory(__dirname + `/tmp/${moduleName}/`, false);
+    archive.directory(__dirname + `/tmp/${mark}/${moduleName}/`, false);
     archive.pipe(output);
     archive.finalize();
     output.on('close', function () {
         console.log(archive.pointer() + ' total bytes');
         console.log('打zip包完成');
-        downFile(res, moduleName);
+        downFile(res, moduleName, mark);
     });
 }
 

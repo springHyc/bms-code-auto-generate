@@ -10,6 +10,7 @@ import WrapperDelete from '../customize/wrapper-delete';
 import { v4 as uuidv4 } from 'uuid';
 import AttrEditContext from '../customize/attr-edit-context/';
 import GenerateService from './generate-service';
+import ShowCodeModal from '../customize/showCodeModal';
 
 /**
  * 同一区域内排序
@@ -210,7 +211,6 @@ export default class CustomizeForm extends Component {
             wrapperCol: { span: 16 }
         };
         const valueOfSpan = 24 / this.state.numberOfColumns || 2;
-        console.log('==================');
         return (
             <Droppable droppableId={area.id} key={area.id} className={area.className} direction='vertical'>
                 {(provided, snapshot) => (
@@ -228,7 +228,6 @@ export default class CustomizeForm extends Component {
                                 <Row gutter={24}>
                                     {area.tasks.map((task, index) => {
                                         const result = this.getNewComponent(task, area.id);
-                                        console.log('key=', task.id);
                                         return (
                                             <Draggable draggableId={task.id} key={task.id} index={index}>
                                                 {(provided, snapshot) => (
@@ -348,6 +347,14 @@ export default class CustomizeForm extends Component {
                     selectedNode={this.state.selectedNode}
                     update={(data) => this.setState({ areas: data })}
                     areas={this.state.areas}
+                />
+                {/* 展示自动生成的code */}
+                <ShowCodeModal
+                    visible={this.state.showCodeModalVisible}
+                    close={() => this.setState({ showCodeModalVisible: false })}
+                    indexCodeStr={this.indexCodeStr}
+                    columnsCodeStr={this.columnsCodeStr}
+                    mark='form'
                 />
             </div>
         );

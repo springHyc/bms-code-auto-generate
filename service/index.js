@@ -39,7 +39,7 @@ app.post('/api/table/generate-files', (req, res) => {
         indexCodeStr,
         columnsCodeStr
     };
-    return FileService.WriteFile(`${__dirname}/tmp/${_moduleName}`, codeStr, res);
+    return FileService.WriteFile(`${__dirname}/tmp/table/${_moduleName}`, codeStr, res);
 });
 
 /*
@@ -48,6 +48,21 @@ app.post('/api/table/generate-files', (req, res) => {
 app.get('/api/table/down', (req, res) => {
     const name = req.query.moduleName || moduleName;
     return FileService.zip(res, name);
+});
+
+/*
+ * form生成目录
+ */
+app.post('/api/form/generate-files', (req, res) => {
+    // 创建文件目录
+    var indexCodeStr = req.body.code;
+    var _moduleName = req.query.moduleName || moduleName; // *要生成的模块的name
+    return FileService.WriteFile(`${__dirname}/tmp/form/${_moduleName}`, { indexCodeStr }, res, 'form');
+});
+
+app.get('/api/form/down', (req, res) => {
+    const name = req.query.moduleName || moduleName;
+    return FileService.zip(res, name, 'form');
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
