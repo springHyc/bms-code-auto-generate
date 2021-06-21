@@ -313,8 +313,20 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 id: uuidv4(),
                 name: '上传文件',
                 key: 'upload',
-                component: <BrUploadFile></BrUploadFile>,
-                componentStr: `<BrUploadFile></BrUploadFile>`,
+                component: (
+                    <BrUploadFile
+                        saveFileBase64={() => {
+                            return (data) => {
+                                console.log('上传文件完成');
+                            };
+                        }}
+                    ></BrUploadFile>
+                ),
+                componentStr: `<BrUploadFile saveFileBase64={() => {
+                                return (data) => {
+                                    console.log('上传文件完成');
+                                };
+                            }}></BrUploadFile>`,
                 importStr: "import {BrUploadFile} from '@bairong/bmsui'; ",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
@@ -327,8 +339,20 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 id: uuidv4(),
                 name: '上传图片',
                 key: 'upload',
-                component: <BrUploadImage></BrUploadImage>,
-                componentStr: `<BrUploadImage></BrUploadImage>`,
+                component: (
+                    <BrUploadImage
+                        saveImageBase64={() => {
+                            return (data) => {
+                                console.log('上传文件完成');
+                            };
+                        }}
+                    ></BrUploadImage>
+                ),
+                componentStr: `<BrUploadImage saveImageBase64={() => {
+                                return (data) => {
+                                    console.log('上传文件完成');
+                                };
+                            }}></BrUploadImage>`,
                 importStr: "import {BrUploadImage} from '@bairong/bmsui'; ",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
