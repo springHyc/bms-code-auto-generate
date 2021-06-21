@@ -24,7 +24,14 @@ function WriteFile(file, content, res, mark = 'table') {
     console.log(`成功创建文件，其目录为：${file}`);
     return res.send({ code: 0, message: `成功创建文件，其目录为：${file}` });
 }
-function downFile(res, moduleName, mark) {
+/**
+ * 下载压缩后的zip文件。
+ * 直接从/service/目录下目录下进行下载，下载完成后将文件删除。
+ *
+ * @param {*} res
+ * @param {*} moduleName
+ */
+function downFile(res, moduleName) {
     res.download(`${__dirname}/${moduleName}.zip`, `${moduleName}.zip`, (err) => {
         if (err) {
             res.status(400).end();
@@ -50,7 +57,7 @@ function downFile(res, moduleName, mark) {
 function zip(res, moduleName, mark = 'table') {
     const output = fs.createWriteStream(__dirname + `/${moduleName}.zip`);
     const archive = archiver('zip', {
-        zlib: { level: 9 } // Sets the compression level.
+        zlib: { level: 9 }
     });
     archive.directory(__dirname + `/tmp/${mark}/${moduleName}/`, false);
     archive.pipe(output);
