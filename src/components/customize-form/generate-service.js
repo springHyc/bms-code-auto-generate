@@ -61,7 +61,7 @@ export default class GenerateService {
             }
             const itemAttrs = {
                 label: `'${task.attrs?.label?.value}'`,
-                name: `'${task.attrs?.name?.value}'`
+                name: `'${task.attrs?.name?.value || task.key}'`
             };
             // * 这是公共的方式，大家都需要有的
             if (task.attrs?.required?.value) {
