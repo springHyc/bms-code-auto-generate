@@ -59,39 +59,39 @@ export default class GenerateService {
                                 `
                 );
             }
-
+            const itemAttrs = {
+                label: `'${task.attrs?.label?.value}'`,
+                name: `'${task.attrs?.name?.value}'`
+            };
             // * 这是公共的方式，大家都需要有的
             if (task.attrs?.required?.value) {
-                items.push(
-                    `
-                    <Col span={${valueOfSpan}}>
-                        <Form.Item
-                            label='${task.attrs.label && task.attrs.label.value}'
-                            name='${task.attrs.name && task.attrs.name.value}'
-                            rules={[
+                itemAttrs.rules = `{[
                                 {
                                     required: ${(task.attrs.required && task.attrs.required.value) || false},
                                     message: '${task.attrs.label && task.attrs.label.value}不能为空！'
                                 }
-                            ]}
-                        >
-                            ${componentStr}
-                        </Form.Item>
-                    </Col>`
-                );
-            } else {
-                items.push(
-                    `
+                            ]}`;
+            }
+            if (task.attrs?.valuepropname?.value) {
+                itemAttrs.valuePropName = `'${task.attrs?.valuepropname?.value}'`;
+            }
+            const itemAttrsStr = [];
+            for (const key in itemAttrs) {
+                if (Object.hasOwnProperty.call(itemAttrs, key)) {
+                    const element = itemAttrs[key];
+                    itemAttrsStr.push(`${key}=${element}`);
+                }
+            }
+            items.push(
+                `
                     <Col span={${valueOfSpan}}>
                         <Form.Item
-                            label='${task.attrs.label && task.attrs.label.value}'
-                            name='${task.attrs.name && task.attrs.name.value}'
+                            ${itemAttrsStr.join('\n                            ')}
                         >
                             ${componentStr}
                         </Form.Item>
                     </Col>`
-                );
-            }
+            );
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, task.importStr || '');
         }
 

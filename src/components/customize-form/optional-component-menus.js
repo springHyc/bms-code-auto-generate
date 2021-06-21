@@ -274,14 +274,16 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
             {
                 id: uuidv4(),
                 name: 'Switch 开关',
-                component: <Switch defaultChecked />,
-                componentStr: '<Switch defaultChecked />',
+                key: 'switch',
+                component: <Switch />,
+                componentStr: '<Switch />',
                 importStr: "import {Switch} from 'antd';",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
-                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
+                    default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' },
+                    valuepropname: { id: uuidv4(), value: 'checked' }
                 }
             },
             {
