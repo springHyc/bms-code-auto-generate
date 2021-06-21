@@ -47,7 +47,21 @@ export default class GenerateService {
                 );
             } else if (task.key === 'checkbox' && children) {
                 // 单独多选的处理
-            } else if (task.attrs?.required?.value) {
+                const options = [];
+                task.attrs.children.value.forEach((item) => {
+                    options.push(`<Checkbox value='${item.key}'>${item.props.value}</Checkbox>`);
+                });
+
+                componentStr = componentStr.replace(
+                    '>',
+                    `>
+                                ${options.join('\n                                  ')}
+                                `
+                );
+            }
+
+            // * 这是公共的方式，大家都需要有的
+            if (task.attrs?.required?.value) {
                 items.push(
                     `
                     <Col span={${valueOfSpan}}>
