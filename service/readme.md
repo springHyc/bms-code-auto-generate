@@ -11,6 +11,8 @@
 - nodemon --inspect  index.js
 # 有热更新的
 -  nodemon index.js
+## 当nodemon运行时，想要手动重启，键入 rs 回车即可。
+
 # 无热更新的
 -  node index.js
 ```
