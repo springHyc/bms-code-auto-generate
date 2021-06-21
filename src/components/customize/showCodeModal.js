@@ -58,6 +58,7 @@ export default function ShowCodeModal({ visible, indexCodeStr, close, columnsCod
                     下载
                 </Button>,
                 <Popover
+                    key='module'
                     content={
                         <Row justify='center' align='middle'>
                             <Col>模块名:</Col>
