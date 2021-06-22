@@ -5,50 +5,6 @@ import { BrCheckboxAll, BrUploadFile, BrUploadImage } from '@bairong/bmsui';
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
     {
-        title: '通用',
-        id: 1,
-        key: '1',
-        menus: [
-            {
-                id: uuidv4(),
-                key: 'button', // 需要它来确定这是个button组件
-                name: 'Button 按钮',
-                component: (
-                    <>
-                        <Button style={{ marginRight: '16px' }} key='1'>
-                            取消
-                        </Button>
-                        <Button type='primary' key='2'>
-                            保存
-                        </Button>
-                    </>
-                ),
-                componentStr: `<Button style={{ marginRight: '16px' }}>取消</Button>
-                        <Button type='primary'>保存</Button>`,
-                importStr: "import { Button } from 'antd';"
-                // 属性 屏蔽掉这些属性，不可编辑
-                // attrs: {
-                //     name: { id: uuidv4(), text: '按钮文本', type: 'string', required: true, value: '保存' },
-                //     type: {
-                //         id: uuidv4(),
-                //         text: 'type',
-                //         type: 'select',
-                //         required: false,
-                //         value: 'primary',
-                //         options: ['primary', 'ghost', 'dashed', 'danger', 'link', 'text', 'default']
-                //     },
-                //     onClick: {
-                //         id: uuidv4(),
-                //         text: 'onClick事件',
-                //         type: 'function',
-                //         required: false,
-                //         value: ''
-                //     }
-                // }
-            }
-        ]
-    },
-    {
         title: '数据录入',
         id: 2,
         key: '2',
@@ -360,6 +316,31 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     required: { id: uuidv4(), key: 'required', text: 'required: 校检', type: 'checkbox', required: false, value: false },
                     default: { id: uuidv4(), key: 'default', text: 'default: 默认值', type: 'string', required: false, value: '' }
                 }
+            }
+        ]
+    },
+    {
+        title: '通用',
+        id: 1,
+        key: '1',
+        menus: [
+            {
+                id: uuidv4(),
+                key: 'button', // 需要它来确定这是个button组件
+                name: 'Button 按钮',
+                component: (
+                    <>
+                        <Button style={{ marginRight: '16px' }} key='1'>
+                            取消
+                        </Button>
+                        <Button type='primary' key='2'>
+                            保存
+                        </Button>
+                    </>
+                ),
+                componentStr: `<Button style={{ marginRight: '16px' }}>取消</Button>
+                        <Button type='primary'>保存</Button>`,
+                importStr: "import { Button } from 'antd';"
             }
         ]
     }
