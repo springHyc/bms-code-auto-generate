@@ -19,12 +19,10 @@ export default class GenerateService {
     generateAreaForm = (sourceData, numberOfColumns) => {
         const valueOfSpan = 24 / numberOfColumns;
         const items = [];
-        const btnTasks = sourceData.tasks.filter((task) => task.key === 'button');
-        const noBtnTasks = sourceData.tasks.filter((task) => task.key !== 'button');
 
-        for (let i = 0; i < noBtnTasks.length; i++) {
+        for (let i = 0; i < sourceData.tasks.length; i++) {
             const task = sourceData.tasks[i];
-            const placeholder = task.attrs.placeholder && task.attrs.placeholder.value;
+            const placeholder = task.attrs?.placeholder?.value;
             const children = task.attrs?.children?.value;
             let componentStr = _.cloneDeep(task.componentStr);
             if (placeholder) {
@@ -34,7 +32,6 @@ export default class GenerateService {
                 componentStr = componentStr.replace(/>\w*<\//, `>${children}</`);
             } else if (task.key === 'select') {
                 // * 是select的话，单独处理componentStr
-
                 const options = [];
                 task.attrs.options.value.forEach((item) => {
                     options.push(`<Select.Option value='${item.key}'>${item.value}</Select.Option>`);
@@ -58,12 +55,22 @@ export default class GenerateService {
                                 ${options.join('\n                                  ')}
                                 `
                 );
+            } else if (task.key === 'button') {
+                this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, task.importStr);
+                this.assistCodeStr = `
+        save = () => {
+            this.formRef.current.validateFields().then((values) => {
+                console.log('===即将保存的数据是====\\n', values);
+            });
+        };`;
+                componentStr = componentStr.replace(/>保存/, ' onClick={this.save}>保存');
             }
+
+            // * 这是公共的方式，大家都需要有的
             const itemAttrs = {
                 label: `'${task.attrs?.label?.value}'`,
                 name: `'${task.attrs?.name?.value || task.key}'`
             };
-            // * 这是公共的方式，大家都需要有的
             if (task.attrs?.required?.value) {
                 itemAttrs.rules = `{[
                                 {
@@ -86,8 +93,7 @@ export default class GenerateService {
                 `
                     <Col span={${valueOfSpan}}>
                         <Form.Item
-                            ${itemAttrsStr.join('\n                            ')}
-                        >
+                            ${itemAttrsStr.join('\n                            ')}>
                             ${componentStr}
                         </Form.Item>
                     </Col>`
@@ -95,29 +101,6 @@ export default class GenerateService {
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, task.importStr || '');
         }
 
-        const bts = [];
-        if (btnTasks.length > 0) {
-            this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, btnTasks[0].importStr);
-            btnTasks.forEach((task) => {
-                let componentStr = _.cloneDeep(task.componentStr);
-                // if (task.key === 'button') {
-                //     componentStr = componentStr
-                //         .replace(/>.*</g, `>${task.attrs.name.value}<`)
-                //         .replace(/>/, ` type='${task.attrs.type.value}'>`)
-                //         .replace(/>/, ` style={{marginRight: '16px'}} >`);
-                // }
-                bts.push(componentStr);
-            });
-            // 如果是按钮的话
-            items.push(
-                `
-                    <Col span={24}>
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            ${bts.join('')}
-                        </Form.Item>
-                    </Col>`
-            );
-        }
         if (items.length > 0) {
             this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, "import {Form,Row,Col} from 'antd';");
             return `                <Row gutter={{ xs: 8, sm: 16, md: 24 }}>${items.join('')}

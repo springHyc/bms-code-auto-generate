@@ -339,7 +339,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     </>
                 ),
                 componentStr: `<Button style={{ marginRight: '16px' }}>取消</Button>
-                        <Button type='primary'>保存</Button>`,
+                            <Button type='primary'>保存</Button>`,
                 importStr: "import { Button } from 'antd';"
             }
         ]
