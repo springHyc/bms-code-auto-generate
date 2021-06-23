@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { Button, Col, message, Row, Form } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Item, Notice, Kiosk } from './style-common';
+import { Item, Notice, Kiosk, Clone } from './style-common';
 import { INIT_DATA } from './optional-component-menus';
 import './index.less';
 import _ from 'lodash';
-import WrapperDelete from '../customize/wrapper-delete';
+import WrapperDelete from '../../components/wrapper-delete';
 import { v4 as uuidv4 } from 'uuid';
-import AttrEditContext from '../customize/attr-edit-context/';
+import AttrEditContext from '../../components/attr-edit-context';
 import GenerateService from './generate-service';
-import ShowCodeModal from '../customize/showCodeModal';
+import ShowCodeModal from '../../components/show-code-modal/';
 
 /**
  * 同一区域内排序
@@ -312,7 +312,7 @@ export default class CustomizeForm extends Component {
                                                 >
                                                     {menu.name}
                                                 </Item>
-                                                {snapshot.isDragging && <Item>{menu.name}</Item>}
+                                                {snapshot.isDragging && <Clone>{menu.name}</Clone>}
                                             </React.Fragment>
                                         )}
                                     </Draggable>

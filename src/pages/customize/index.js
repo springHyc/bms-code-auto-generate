@@ -8,10 +8,10 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { Item, Notice, Kiosk } from './style-common';
 import GenerateService from './generate-service';
-import ShowCodeModal from './showCodeModal';
-import WrapperDelete from './wrapper-delete';
+import ShowCodeModal from '../../components/show-code-modal';
+import WrapperDelete from '../../components/wrapper-delete';
 import Utils from './utils';
-import AttrEditContext from './attr-edit-context/';
+import AttrEditContext from '../../components/attr-edit-context/';
 
 /**
  * 同一区域内排序

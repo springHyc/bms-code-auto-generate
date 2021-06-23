@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import copy from 'copy-to-clipboard';
 import './index.less';
 import axios from 'axios-jsonp-pro';
-import API from './api';
+import API from '../../common/api';
 
 export default function ShowCodeModal({ visible, indexCodeStr, close, columnsCodeStr = null, mark = 'table' }) {
     const [down, setDown] = useState(false);

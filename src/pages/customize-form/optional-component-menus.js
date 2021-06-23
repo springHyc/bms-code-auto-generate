@@ -186,7 +186,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                     ></BrCheckboxAll>
                 ),
                 componentStr: `<BrCheckboxAll data={[{id: 1, name: 'A'},{ id: 2, name: 'B' },{id: 3, name: 'C'},{id: 4, name: 'E'}]}></BrCheckboxAll>`,
-                importStr: "import {BrCheckboxAll} from '@bairong/bmsui'; ",
+                importStr: "import { BrCheckboxAll } from '@bairong/bmsui'; ",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
@@ -283,7 +283,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                                     console.log('上传文件完成');
                                 };
                             }}></BrUploadFile>`,
-                importStr: "import {BrUploadFile} from '@bairong/bmsui'; ",
+                importStr: "import { BrUploadFile } from '@bairong/bmsui'; ",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },
@@ -309,7 +309,7 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                                     console.log('上传文件完成');
                                 };
                             }}></BrUploadImage>`,
-                importStr: "import {BrUploadImage} from '@bairong/bmsui'; ",
+                importStr: "import { BrUploadImage } from '@bairong/bmsui'; ",
                 attrs: {
                     label: { id: uuidv4(), key: 'label', text: 'label: 标签名', type: 'string', required: true, value: '名字自取' },
                     name: { id: uuidv4(), key: 'name', text: 'name: 字段名', type: 'string', required: true, value: '' },

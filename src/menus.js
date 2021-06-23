@@ -1,8 +1,8 @@
 import React from 'react';
 import { EditOutlined, FormOutlined } from '@ant-design/icons';
 // import TabDemo from './components/demo/tab';
-import Customize from './components/customize';
-import CustomizeForm from './components/customize-form';
+import Customize from './pages/customize';
+import CustomizeForm from './pages/customize-form';
 
 /**
  * 整个路由走的是hash路由。
