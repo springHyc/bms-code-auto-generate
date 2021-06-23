@@ -1,6 +1,5 @@
 import React from 'react';
 import { EditOutlined, FormOutlined } from '@ant-design/icons';
-// import TabDemo from './components/demo/tab';
 import Customize from './pages/customize';
 import CustomizeForm from './pages/customize-form';
 
@@ -14,17 +13,16 @@ import CustomizeForm from './pages/customize-form';
  *
  */
 const MENUS = [
-    // todo 暂时放到第一位
     {
         path: '/form',
-        key: 2,
+        key: 1,
         name: '拖拽生成Form表单',
         icon: <FormOutlined />,
         component: CustomizeForm
     },
     {
         path: '/customize',
-        key: 1,
+        key: 2,
         name: '拖拽生成Table页面',
         icon: <EditOutlined />,
         component: Customize
