@@ -10,7 +10,14 @@ import CustomizeForm from './pages/customize-form';
  * icon: 对应的图标， 必填
  * component： 对应页面的组件，非必填，如果有二级menu则不必填，如果没有则必填，不然无法展示
  * subset：二级menu，目前仅支持二级menu，里面参数同上
- *
+ *     subset: [
+           {
+               path: '/default/normal-page',
+               name: '普通列表页',
+               icon: <TableOutlined />,
+               component: TabDemo
+           }
+       ]
  */
 const MENUS = [
     {
@@ -27,19 +34,6 @@ const MENUS = [
         icon: <EditOutlined />,
         component: Customize
     }
-    // {
-    //     path: '/default',
-    //     name: '生成默认页面',
-    //     icon: <SnippetsOutlined />,
-    //     subset: [
-    //         {
-    //             path: '/default/normal-page',
-    //             name: '普通列表页',
-    //             icon: <TableOutlined />,
-    //             component: TabDemo
-    //         }
-    //     ]
-    // }
 ];
 
 export default MENUS;
