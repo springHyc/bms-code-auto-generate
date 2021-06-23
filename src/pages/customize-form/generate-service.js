@@ -58,11 +58,11 @@ export default class GenerateService {
             } else if (task.key === 'button') {
                 this.importCodeStr = StringService.addImportCodeStr(this.importCodeStr, task.importStr);
                 this.assistCodeStr = `
-        save = () => {
-            this.formRef.current.validateFields().then((values) => {
-                console.log('===即将保存的数据是====\\n', values);
-            });
-        };`;
+    save = () => {
+        this.formRef.current.validateFields().then((values) => {
+            console.log('===即将保存的数据是====\\n', values);
+        });
+    };`;
                 componentStr = componentStr.replace(/>保存/, ' onClick={this.save}>保存');
             }
 
