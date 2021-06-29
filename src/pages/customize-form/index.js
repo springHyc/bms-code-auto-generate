@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, message, Row, Form } from 'antd';
+import { Button, Col, message, Row, Form, InputNumber } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Item, Notice, Kiosk, Clone } from './style-common';
@@ -330,7 +330,14 @@ export default class CustomizeForm extends Component {
             <div className='customize-form-wrapper'>
                 <div className='create-code'>
                     <Button onClick={() => this.changeNumberOfColumns(1)}>单列布局</Button>
-                    <Button onClick={() => this.changeNumberOfColumns(2)}>两列布局</Button>
+                    N列布局：
+                    <InputNumber
+                        placeholder='N列布局'
+                        value={this.state.numberOfColumns}
+                        max={10}
+                        min={1}
+                        onChange={(value) => this.changeNumberOfColumns(value)}
+                    />
                     <Button type='primary' onClick={this.generateCode}>
                         生成代码
                     </Button>
