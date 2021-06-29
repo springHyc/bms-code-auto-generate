@@ -95,7 +95,6 @@ kill -9 pid
 npm install -g pm2
 ## 改用pm2来启动程序--watch表示，监控程序运行状态，一旦：服务异常：自动重启;服务发生变化：自动重启
 pm2 start index.js --watch
-
 # 拷贝前端
 # 在本地项目执行命令
 # 正确来说，应该在服务器上执行这个命令
