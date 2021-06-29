@@ -4,7 +4,8 @@
     "description": "生成文件目录和文件内容",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "daily": "cross-env NODE_ENV=daily pm2 startOrRestart ecosystem.config.js"
     },
     "author": "hehe",
     "license": "ISC",
