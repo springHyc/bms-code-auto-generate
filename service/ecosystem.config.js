@@ -15,7 +15,7 @@ module.exports = {
             ref: 'origin/node',
             repo: 'git@github.com:springHyc/bms-code-auto-generate.git',
             path: '/srv/hehe/bms-code-auto-generate3',
-            'post-deploy': 'git pull && cd service &&  && npm install&& npm run daily',
+            'post-deploy': 'git pull && cd service &&  && npm install && npm run daily',
             env: {
                 NODE_ENV: 'daily'
             }
