@@ -1,9 +1,9 @@
 module.exports = {
     apps: [
         {
-            name: 'generate2',
+            name: 'generate3',
             script: './index.js',
-            instances: 1,
+            // instances: 1,
             watch: true,
             ignore_watch: ['[/\\]./', 'node_modules', 'tmp']
         }
