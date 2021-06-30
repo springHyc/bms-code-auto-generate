@@ -3,7 +3,7 @@ const express = require('express');
 const FileService = require('./fileService');
 
 const app = express();
-const port = 3002;
+const port = 3003;
 let moduleName = 'home';
 
 //加入这个配置,就可以在请求对象req中得到req.body,并通过req.body来获取post请求,请求体内容

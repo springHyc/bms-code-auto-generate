@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: 'generate',
+            name: 'generate2',
             script: './index.js',
             instances: 1,
             watch: true,
