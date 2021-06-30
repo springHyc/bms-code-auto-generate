@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: 'genetate',
+            name: 'generate',
             script: './index.js',
             instances: 1,
             watch: true,
@@ -15,7 +15,7 @@ module.exports = {
             ref: 'origin/node',
             repo: 'git@github.com:springHyc/bms-code-auto-generate.git',
             path: '/srv/bms-code-auto-generate',
-            'post-deploy': ' git pull  && cd service && npm run daily',
+            'post-deploy': 'git pull  && cd service && npm run daily',
             env: {
                 NODE_ENV: 'daily'
             }
