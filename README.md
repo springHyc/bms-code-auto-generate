@@ -35,7 +35,7 @@
   - 可直接复制
   - 可生成文件并下载 zip 包
 - [ ] 添加正则校验
-- [x] 解决拖拽过程中定位不准确的 bug
+- 解决拖拽过程中定位不准确的 bug
 
 在使用过程中，有任何想法与问题，随时来找我啊，这样才能更加完善功能，更加 happy 的 code。
 
@@ -84,7 +84,7 @@ ssh root@47.105.170.226
 cd /srv/bms-code-auto-generate
 git pull origin master
 
-# 远程启动后端
+# 远程启动后端，如果已经启动着，需要先关闭再重新启动
 nohup node index.js &
 # 关闭后端服务
 ps aux | grep node
@@ -97,15 +97,18 @@ npm install -g pm2
 pm2 start index.js --watch
 # 拷贝前端
 # 在本地项目执行命令
-# 正确来说，应该在服务器上执行这个命令
+# 正确来说，应该在服务器上执行这个命令，鉴于我的阿里云服务器内存很小，就在本地执行。但是基于工作经历来说，我们有的线上项目，大型后，在线上服务器进行build也会很慢，有时候还会卡死，所以在本地build也没什么薄饼。
 npm run build
 
-# 拷贝
+# 拷贝（在本地执行）
 # 服务器上的路径，/srv/front，直接将文件夹重命名为front
 # 注意：一定要在该项目目录下进行
 scp -r build root@ssh root@47.105.170.226:/srv
 
-# 重命名
+# 在服务器执行
+# 登录服务器
+ssh root@47.105.170.226
+cd /srv/
 # 删除旧的文件
 rm -rf front/
 # 重命名build为front
