@@ -23,7 +23,7 @@ app.all('*', function (req, res, next) {
  * 测试接口
  */
 app.get('/api/', (req, res) => {
-    res.send("<span style='font-size: 18px;'}>欢迎使用拖拽自动生成代码工具的后台生成文件目录系统，V2</span>");
+    res.send("<span style='font-size: 18px;'}>欢迎使用拖拽自动生成代码工具的后台生成文件目录系统，V3:port=3003</span>");
 });
 
 /*
