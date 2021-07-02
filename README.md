@@ -115,6 +115,10 @@ rm -rf front/
 mv build front
 ```
 
+### 备注
+
+当改变了`ecosystem.config.js`内的配置时，需要删除进程（`pm2 delete xxx`）再启动进程（pm2 start）才有效。
+
 ## v2.0(tag)
 
 - 能复制代码，只是简单代码，不能运行
