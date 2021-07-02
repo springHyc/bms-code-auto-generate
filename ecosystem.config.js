@@ -6,7 +6,7 @@ module.exports = {
             cwd: './service/',
             // instances: 1,
             watch: false,
-            ignore_watch: ['[/\\]./', 'node_modules', 'tmp', 'service/tmp'],
+            // ignore_watch: ['[/\\]./', 'node_modules', 'tmp', 'service/tmp'],
             log_date_format: 'YYYY-MM-DD HH:mm Z'
         },
         {
