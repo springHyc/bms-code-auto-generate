@@ -7,7 +7,8 @@
         "build": "node scripts/build.js",
         "test": "node scripts/test.js",
         "node-daily": "NODE_ENV=daily pm2 startOrRestart ecosystem.config.js",
-        "deploy": "pm2 deploy ecosystem.config.js daily"
+        "deploy": "pm2 deploy ecosystem.config.js daily",
+        "deploy-front": "npm run build && scp -r build root@ssh root@47.105.170.226:/srv/hehe/bms-code-auto-generate3"
     },
     "dependencies": {
         "@ant-design/colors": "^4.0.1",
