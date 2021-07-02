@@ -6,7 +6,8 @@
         "dev": "node scripts/start.js",
         "build": "node scripts/build.js",
         "test": "node scripts/test.js",
-        "node-daily": "NODE_ENV=daily  pm2 startOrRestart ecosystem.config.js"
+        "node-daily": "NODE_ENV=daily  pm2 startOrRestart ecosystem.config.js",
+        "deploy": "pm2 deploy ecosystem.config.js daily"
     },
     "dependencies": {
         "@ant-design/colors": "^4.0.1",
