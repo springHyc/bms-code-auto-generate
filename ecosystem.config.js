@@ -5,7 +5,7 @@ module.exports = {
             script: './index.js',
             cwd: './service/',
             // instances: 1,
-            watch: true,
+            watch: false,
             ignore_watch: ['[/\\]./', 'node_modules', 'tmp', 'service/tmp'],
             log_date_format: 'YYYY-MM-DD HH:mm Z'
         },
