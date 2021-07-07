@@ -39,7 +39,15 @@
 
 在使用过程中，有任何想法与问题，随时来找我啊，这样才能更加完善功能，更加 happy 的 code。
 
-## 一键部署（未成功）
+## 部署
+
+### 一键部署
+
+```shell
+npm run deploy
+```
+
+### 半自动化部署版本
 
 ```shell
 # 输入密码这一步是怎么搞定的？
@@ -47,13 +55,14 @@ ssh root@47.105.170.226
 cd /srv/bms-code-auto-generate
 git pull origin master
 # 只需要一遍即可
-pm2 start index.js --watch
+pm2 start index.js
 
+# 在本机执行
 npm run build
 scp -r build root@ssh root@47.105.170.226:/srv
+# 登录服务器
 rm -rf front/
 mv build front
-
 ```
 
 ## 如何将本地的公钥放到服务器上，避免登录服务器输入密码
