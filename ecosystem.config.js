@@ -19,6 +19,17 @@ module.exports = {
             env: {
                 NODE_ENV: 'daily'
             }
+        },
+        production: {
+            user: 'root',
+            host: ['47.105.170.226'],
+            ref: 'origin/node',
+            repo: 'git@github.com:springHyc/bms-code-auto-generate.git',
+            path: '/srv/bms-code-auto-generate',
+            'post-deploy': 'git pull && cd service && npm install && cd ../ && npm run deploy-node',
+            env: {
+                NODE_ENV: 'production'
+            }
         }
     }
 };
