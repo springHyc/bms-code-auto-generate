@@ -6,14 +6,10 @@
         "dev": "node scripts/start.js",
         "build": "node scripts/build.js",
         "test": "node scripts/test.js",
-        "deploy-node": "NODE_ENV=daily pm2 startOrRestart ecosystem.config.js",
-        "deploy-node-pro": "NODE_ENV=production pm2 startOrRestart ecosystem.config.js",
-        "deploy-end-daily": "pm2 deploy ecosystem.config.js daily",
-        "deploy-end-pro": "pm2 deploy ecosystem.config.js production",
-        "deploy-front": "npm run build && scp -r build root@47.105.170.226:/srv/hehe/bms-code-auto-generate3",
-        "deploy-front-pro": "npm run build && scp -r build root@47.105.170.226:/srv/bms-code-auto-generate2",
-        "deploy-daily": "npm run deploy-end && npm run deploy-front",
-        "deploy-pro": "npm run deploy-end-pro && npm run deploy-front-pro"
+        "deploy-node": "NODE_ENV=production pm2 startOrRestart ecosystem.config.js",
+        "deploy-end": "pm2 deploy ecosystem.config.js production",
+        "deploy-front": "npm run build && scp -r build root@47.105.170.226:/srv/bms-code-auto-generate2",
+        "deploy": "npm run deploy-end && npm run deploy-front"
     },
     "dependencies": {
         "@ant-design/colors": "^4.0.1",
