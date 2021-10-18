@@ -1,0 +1,21 @@
+@import '../style/default.less';
+
+@upload-file-prefix-cls: ~'@{br-prefix}-upload-file';
+
+.@{upload-file-prefix-cls} {
+    width: 100%;
+    &-btn-wrapper {
+        display: flex;
+        align-items: center;
+        .anticon-paper-clip,
+        .anticon-delete {
+            color: rgba(0, 0, 0, 0.45);
+        }
+        .anticon-delete {
+            margin-left: auto;
+        }
+        &:hover {
+            background-color: #f5f5f5;
+        }
+    }
+}

@@ -1,0 +1,56 @@
+tr.row-dragging {
+    td {
+        letter-spacing: 0.62px;
+        vertical-align: middle;
+        min-width: 125px;
+        max-width: 400px; // 最大宽度，table会自己改变，在scroll:{x:true}时不至于过长
+        width: 125px;
+        // 操作列中
+        .br-operate-wrapper {
+            button,
+            span,
+            a,
+            span a {
+                margin-right: 16px;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+            // 特殊处理link类型的Button按钮
+            button.ant-btn-link {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+        .ant-form-item-control-input,
+        .ant-legacy-form-item-control-input {
+            min-height: 0;
+        }
+        // 行内编辑时的样式:为了行高不变 -- start--
+        .ant-row.ant-form-item,
+        .ant-row.ant-legacy-form-item {
+            margin: -1px 0 !important;
+            // antd@3.x有40px的高度
+            .ant-form-item-control-wrapper .ant-form-item-control,
+            .ant-legacy-form-item-control-wrapper .ant-legacy-form-item-control {
+                line-height: normal;
+            }
+        }
+        // 行内编辑时的样式:为了行高不变 -- end--
+    }
+}
+
+.row-dragging {
+    background: #fafafa;
+    border: 1px solid #ccc;
+    z-index: 9999;
+}
+
+.row-dragging td {
+    padding: 16px;
+    visibility: hidden;
+}
+
+.row-dragging .drag-visible {
+    visibility: visible;
+}
