@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Input, DatePicker, InputNumber, Select, Radio, Checkbox, Switch, Rate } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import { BrCheckboxAll, BrUploadFile, BrUploadImage } from '@bairong/bmsui';
+import { BrCheckboxAll, BrUploadFile, BrUploadImage } from '../../common/components';
 
 const OPTIONAL_CONPONENT_MENUS_DATA = [
     {

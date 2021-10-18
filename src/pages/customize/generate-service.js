@@ -118,7 +118,7 @@ export default class GenerateService {
                     tableComponentStr = tableComponentStr.replace('columns={columns}', 'columns={this.getColumns()}');
                 }
             }
-            // 还要辅助处理 const {data} = this.props.Name;
+            // todo 还要辅助处理 const {data} = this.props.Name;
             this.renderConstCodeStr = `
         const data = this.props.Name;`;
             this.assistCodeStr = `

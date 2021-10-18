@@ -213,13 +213,13 @@ const OPTIONAL_CONPONENT_MENUS_DATA = [
                 <Table
                     rowKey={(row) => row.id}
                     columns={columns}
-                    dataSource={data && data.dataList}
+                    dataSource={data?.dataList}
                     locale={{ emptyText: '暂无数据' }}
                     className='br-table-wrapper'
                     pagination={{
                         showSizeChanger: true,
                         current: this.pageInfo.pageNum,
-                        total: Number(data.totalCount),
+                        total: Number(data?.totalCount),
                         pageSizeOptions: ['10', '20', '50', '100', '200'],
                         showQuickJumper: true,
                         showTotal(total) {
